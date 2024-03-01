@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using static UnityEngine.LightAnchor;
 
 [CreateAssetMenu(fileName = "idle-Random Wander", menuName = "Enemy Logic/Idle Logic/Random Wander")]
 public class EnemyIdleRandomWander : EnemyIdleSOBase

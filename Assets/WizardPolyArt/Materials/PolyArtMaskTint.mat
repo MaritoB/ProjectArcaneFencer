@@ -68,8 +68,6 @@ Material:
     - _Float1: 0
     - _Metal: 0
     - _Metallic: 0.3
-    - _QueueControl: 0
-    - _QueueOffset: 0
     - _Sm: 0
     - _Smoothness: 0
     - __dirty: 0
@@ -82,7 +80,7 @@ Material:
     - _InnerCloth: {r: 0.50735295, g: 0.45260414, b: 0.01119162, a: 0}
     - _OuterChlothes: {r: 0.024816178, g: 0.375, b: 0.07070238, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &2547477374244437433
+--- !u!114 &3845880364850936821
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

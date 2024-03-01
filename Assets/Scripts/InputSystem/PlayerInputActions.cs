@@ -251,6 +251,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
+ 
         }
 
         public void SetCallbacks(IPlayerActions instance)
