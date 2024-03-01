@@ -186,11 +186,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(int aDamageAmount)
     {
         CurrentHealth -= aDamageAmount;
-        inGameUI.UpdateCurrentHealthUI(CurrentHealth,MaxHealth);
+
         if(CurrentHealth <= 0 && !isDead)
         {
             isDead = true;
             Die();
+        }
+        if(inGameUI != null)
+        {
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth,MaxHealth);
+
         }
 
     }
