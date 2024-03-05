@@ -46,12 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CorridorPrefab: {fileID: 11402150, guid: 95db01f4cefe31642b5d1b8efb959a2d, type: 3}
   Size:
-    x: 5
-    z: 5
+    x: 0
+    z: 0
   Coordinates:
     x: 0
     z: 0
-  Num: 1
+  Num: 0
   TilePrefab: {fileID: 11474140, guid: 43d33f08e2f850947bd53c07f10bff94, type: 3}
   WallPrefab: {fileID: 123962, guid: f049d1d693fecc242baab99a11f727f3, type: 3}
   Setting:
@@ -61,4 +61,4 @@ MonoBehaviour:
     type: 3}
   MonsterPrefab: {fileID: 8715147753852310770, guid: 419874e3b9540454dac1dc893e38f98f,
     type: 3}
-  MonsterCount: 5
+  MonsterCount: 3

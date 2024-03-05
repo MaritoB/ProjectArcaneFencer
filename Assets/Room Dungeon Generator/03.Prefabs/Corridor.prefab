@@ -49,7 +49,7 @@ MonoBehaviour:
   Rooms:
   - {fileID: 11430952, guid: 7998a3dc42b265e4c97b222482e109d7, type: 3}
   - {fileID: 11430952, guid: 7998a3dc42b265e4c97b222482e109d7, type: 3}
-  Length: 0
+  Length: 1
   Coordinates:
-    x: 0
-    z: 0
+    x: -10
+    z: -10
