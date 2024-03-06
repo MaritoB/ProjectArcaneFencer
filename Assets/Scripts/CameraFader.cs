@@ -4,12 +4,60 @@ using UnityEngine;
 
 public class CameraFader : MonoBehaviour
 {
-    private ObjectFader _fader;
+    private List<ObjectFader> fadersCurrentlyHidden = new List<ObjectFader>();
+    private ObjectFader _faderFirst;
     [SerializeField] 
     GameObject Player;
+    [SerializeField]
+    LayerMask fadeableLayer;
     void Update()
     {
-        if(Player == null)
+        FadeAll();
+
+    }
+
+
+    public void FadeAll()
+    {
+        if (Player == null)
+        {
+            return;
+        }
+
+        Vector3 direction = Player.transform.position - transform.position;
+        Ray ray = new Ray(transform.position, direction);
+        RaycastHit[] hits = Physics.RaycastAll(ray, direction.magnitude, fadeableLayer);
+        foreach(ObjectFader fader in fadersCurrentlyHidden)
+        {
+            fader.DoFade = false;
+        }
+        fadersCurrentlyHidden.Clear();
+        foreach (RaycastHit hit in hits)
+        {
+            
+            if (hit.collider == null || hit.collider.gameObject == Player)
+            {
+                continue;
+            }
+             
+
+            ObjectFader fader = hit.collider.gameObject.GetComponent<ObjectFader>();
+            if (fader != null)
+            {
+                fader.enabled = true;
+                fader.DoFade = true;
+                fadersCurrentlyHidden.Add(fader);
+            }
+        }
+
+    }
+
+    // Función auxiliar para verificar si un objeto bloquea al jugador
+
+    public void FadeFirst()
+    {
+
+        if (Player == null)
         {
             return;
 
@@ -17,31 +65,30 @@ public class CameraFader : MonoBehaviour
         Vector3 direction = Player.transform.position - transform.position;
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
-            if(hit.collider == null)
+            if (hit.collider == null)
             {
                 return;
             }
             if (hit.collider.gameObject == Player)
             {
-                if (_fader != null)
+                if (_faderFirst != null)
                 {
-                    _fader.DoFade = false;
+                    _faderFirst.DoFade = false;
                 }
             }
             else
             {
-                if (_fader != null)
+                if (_faderFirst != null)
                 {
-                    _fader.DoFade = false;
+                    _faderFirst.DoFade = false;
                 }
-                _fader = hit.collider.gameObject.GetComponent<ObjectFader>();
-                if (_fader != null)
+                _faderFirst = hit.collider.gameObject.GetComponent<ObjectFader>();
+                if (_faderFirst != null)
                 {
-                    _fader.enabled = true;
-                    Debug.Log("Fade " + hit.collider.name);
-                    _fader.DoFade = true;
+                    _faderFirst.enabled = true;
+                    _faderFirst.DoFade = true;
                 }
             }
         }

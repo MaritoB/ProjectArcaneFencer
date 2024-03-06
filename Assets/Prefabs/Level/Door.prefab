@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4368815848278351000}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8754974931457240289}
   - component: {fileID: 8721050470447704563}
   - component: {fileID: 8728103811097087875}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 8754688364150894873}
   - component: {fileID: 8720196891920363117}
   - component: {fileID: 8728872159006607165}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: arch_wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 227814572402338186, guid: a578ee0f8198a4d43909700c19cbf82d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a578ee0f8198a4d43909700c19cbf82d, type: 3}
 --- !u!4 &6359347466488743732 stripped
 Transform:
@@ -370,7 +371,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5208839205806746349, guid: a578ee0f8198a4d43909700c19cbf82d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a578ee0f8198a4d43909700c19cbf82d, type: 3}
 --- !u!1 &8482054407288280475 stripped
 GameObject:

@@ -40,12 +40,14 @@ public class ObjectFader : MonoBehaviour
     }
     void ReseteFade()
     {
+        if(originalOpacity - material.color.a < 0.01) 
+        {
+            material.color = Color.white;
+            this.enabled = false;
+            return;
+        }
         Color currentColor = material.color;
         Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, originalOpacity, fadeSpeed * Time.deltaTime));
         material.color = smoothColor;
-        if(originalOpacity - material.color.a < 0.01) 
-        {
-            this.enabled = false;
-        }
     }
 }

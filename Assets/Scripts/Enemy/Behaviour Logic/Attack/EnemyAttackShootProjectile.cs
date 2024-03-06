@@ -38,6 +38,7 @@ public class EnemyAttackShootProjectile : EnemyAttackSOBase
             enemy.animator.SetTrigger("Attack");
             enemy.IsAttacking = true;
             _currentAttackTime = AttackSpeed;
+
         }
         if (!enemy.IsWithinStrikingDistance)
         {
