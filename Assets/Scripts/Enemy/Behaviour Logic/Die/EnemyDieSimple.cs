@@ -27,7 +27,6 @@ public class EnemyDieSimple : EnemyDieSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        enemy.MoveEnemy(Vector3.zero);
     }
 
     public override void DoPhysicsLogic()

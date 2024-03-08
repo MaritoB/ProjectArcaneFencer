@@ -21,4 +21,9 @@ public class AnimationEventHelper : MonoBehaviour
         if (enemy == null) return;
         enemy.IsAttacking = false;
     }
+    public void ResetCanMove()
+    {
+        if (enemy == null) return;
+        enemy.CanMove = true;
+    }
 }

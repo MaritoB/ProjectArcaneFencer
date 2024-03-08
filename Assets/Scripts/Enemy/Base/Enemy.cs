@@ -20,9 +20,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool IsWithinFleeDistance { get; set; }
     public  Animator animator;
     protected Vector3 _attackDirection;
-
     [SerializeField] protected Transform attackPosition;
     public bool IsAttacking = false;
+    public bool CanMove = true;
+    
 
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
@@ -35,6 +36,14 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyFleeSOBase EnemyFleeBaseInstance { get; set; }
     public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
 
+    public void GetKnockBack(Vector3 aForce)
+    {
+        CanMove = false;
+        Rigidbody.AddForce(aForce, ForceMode.Impulse);
+        animator.SetTrigger("KnockBack");
+    }
+
+
     public void Die()
     {
         //gameObject.SetActive(false);
@@ -45,6 +54,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void MoveEnemy(Vector3 aVelocity)
     {
+        if (!CanMove) return;
         Vector3 movementVelocity = new Vector3(aVelocity.x, 0, aVelocity.z);
         Rigidbody.velocity = movementVelocity;
         animator.SetFloat("Velocity", Rigidbody.velocity.magnitude);

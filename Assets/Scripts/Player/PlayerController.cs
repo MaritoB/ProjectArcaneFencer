@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [field: SerializeField] public float MaxHealth { get; set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
 
+    [SerializeField] SwordBase sword;
+
     private void Awake()
     {
         mCamera = Camera.main.gameObject.transform;
@@ -144,14 +146,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void SimpleMeleeAttack()
     {
+        if(sword == null)
+        {
+            return;
+        }
         Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
-            IDamageable enemy = collider.GetComponent<IDamageable>();
+            Enemy enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
                 MeleeHitPS.Emit(15);
-                enemy.TakeDamage(MeleeDamage);
+                //enemy.TakeDamage(sword.GetCurrentDamage());
+                sword.Attack(enemy);
             }
         }
         ParryProjectile();
@@ -224,13 +231,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public bool TryAttack()
     {
-        if (AttackStaminaCost > CurrentStamina)
+        if(sword == null)
+        {
+            return false;
+        }
+
+        if (sword.GetAttackStaminaCost() > CurrentStamina)
         {
             return false;
         }
         else
         {
-            CurrentStamina -= AttackStaminaCost;
+            CurrentStamina -= sword.GetAttackStaminaCost();
             UpdateStaminaUI();
             return true;
         }
