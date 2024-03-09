@@ -9,12 +9,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     [field: SerializeField] public float MaxHealth { get; set; } = 30;
     [field: SerializeField] public float CurrentHealth { get; set; }
     public Rigidbody Rigidbody { get; set; }
-    public StateMachine StateMachine { get; set; }
-    public EnemyIdleState EnemyIdleState { get; set; }
-    public EnemyChaseState EnemyChaseState { get; set; }
-    public EnemyFleeState EnemyFleeState { get; set; }
-    public EnemyAttackState EnemyAttackState { get; set; }
-    public EnemyDieState EnemyDieState { get; set; }
     public bool IsWithinAggroDistance { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     public bool IsWithinFleeDistance { get; set; }
@@ -25,25 +19,50 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool CanMove = true;
     
 
+    public StateMachine StateMachine { get; set; }
+    public EnemyIdleState EnemyIdleState { get; set; }
+    public EnemyChaseState EnemyChaseState { get; set; }
+    public EnemyFleeState EnemyFleeState { get; set; }
+    public EnemyAttackState EnemyAttackState { get; set; }
+    public EnemyKnockBackState EnemyKnockBackState { get; set; }
+    public EnemyDieState EnemyDieState { get; set; }
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
     [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
     [SerializeField] private EnemyFleeSOBase EnemyFleeBase;
+    [SerializeField] private EnemyKnockBackSOBase EnemyKnockBackBase;
     [SerializeField] private EnemyDieSOBase EnemyDieBase;
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
     public EnemyFleeSOBase EnemyFleeBaseInstance { get; set; }
+    public EnemyKnockBackSOBase EnemyKnockBackBaseInstance { get; set; }
     public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
 
     public void GetKnockBack(Vector3 aForce)
     {
-        CanMove = false;
-        Rigidbody.AddForce(aForce, ForceMode.Impulse);
-        animator.SetTrigger("KnockBack");
+        if (CurrentHealth > 0)
+        {
+            if (StateMachine == null || EnemyKnockBackState == null) { return; }
+            StateMachine.ChangeState(EnemyKnockBackState);
+            CanMove = false;
+            Rigidbody.AddForce(aForce, ForceMode.Impulse);
+
+        }
     }
 
-
+    public void SetStateToIdle()
+    {
+        CanMove = true;
+        if (StateMachine == null || EnemyIdleState == null) { return; }
+        StateMachine.ChangeState(EnemyIdleState);
+    }
+    public void SetStateToChase()
+    {
+        CanMove = true;
+        if (StateMachine == null || EnemyIdleState == null) { return; }
+        StateMachine.ChangeState(EnemyChaseState);
+    }
     public void Die()
     {
         //gameObject.SetActive(false);
@@ -94,12 +113,14 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
         EnemyFleeBaseInstance = Instantiate(EnemyFleeBase);
+        EnemyKnockBackBaseInstance = Instantiate(EnemyKnockBackBase);
         EnemyDieBaseInstance = Instantiate(EnemyDieBase);
 
         EnemyIdleBaseInstance.Initialize(gameObject, this, aPlayerTransform);
         EnemyChaseBaseInstance.Initialize(gameObject, this, aPlayerTransform);
         EnemyAttackBaseInstance.Initialize(gameObject, this, aPlayerTransform);
         EnemyFleeBaseInstance.Initialize(gameObject, this, aPlayerTransform);
+        EnemyKnockBackBaseInstance.Initialize(gameObject, this, aPlayerTransform);
         EnemyDieBaseInstance.Initialize(gameObject, this, aPlayerTransform);
 
         StateMachine = new StateMachine();
@@ -107,6 +128,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyChaseState = new EnemyChaseState(this, StateMachine);
         EnemyAttackState = new EnemyAttackState(this, StateMachine);
         EnemyFleeState = new EnemyFleeState(this, StateMachine);
+        EnemyKnockBackState = new EnemyKnockBackState(this, StateMachine);
         EnemyDieState = new EnemyDieState(this, StateMachine);
         StateMachine.Initialize(EnemyIdleState);
         _playerTransform = aPlayerTransform;

@@ -253,10 +253,12 @@ MonoBehaviour:
   animator: {fileID: 0}
   attackPosition: {fileID: 754349984280637054}
   IsAttacking: 0
+  CanMove: 1
   EnemyIdleBase: {fileID: 11400000, guid: 2795f97a1df5d9f459912eac6544a9d2, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: 3ee9331d37294aa479a28f8c9d136cd2, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 0e9ab4b57aa77ad4e9711e0f9ec3b3b2, type: 2}
   EnemyFleeBase: {fileID: 11400000, guid: a5da9463d3ef5014792522ca3feea481, type: 2}
+  EnemyKnockBackBase: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
   EnemyDieBase: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}
   attackRange: 1
   attackDamage: 5

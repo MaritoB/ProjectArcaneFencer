@@ -23,7 +23,16 @@ public class AnimationEventHelper : MonoBehaviour
     }
     public void ResetCanMove()
     {
-        if (enemy == null) return;
         enemy.CanMove = true;
+    }
+    public void SetStateToIdel()
+    {
+        if (enemy == null) return;
+        enemy.SetStateToIdle();
+    }
+    public void SetStateToChase()
+    {
+        if (enemy == null) return;
+        enemy.SetStateToChase();
     }
 }
