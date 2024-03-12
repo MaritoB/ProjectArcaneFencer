@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     float ParryRadius, MeleeAttackRadius;
     [SerializeField]
-    int MeleeDamage;
-    [SerializeField]
     LayerMask ProjectilesLayer;
     [SerializeField]
     LayerMask EnemiesLayer;
@@ -29,7 +27,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     int DashStaminaCost, RecoverStaminaOnParry;
     [SerializeField]
     float StaminaRecoveryRate, AttackStaminaCost;
-
+    public bool CanAttack = true;
+    public bool Attacking = false;
 
     #region
     public StateMachine PlayerStateMachine;
@@ -65,6 +64,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         Initialize();
+    }
+    public void LoadNextLevel()
+    {
+        inGameUI.FadeInLoadNextLevel();
     }
     public void Initialize()
     {
@@ -161,6 +164,8 @@ public class PlayerController : MonoBehaviour, IDamageable
                 sword.Attack(enemy);
             }
         }
+        CanAttack = true;
+        Attacking = false;
         ParryProjectile();
     }
 
@@ -171,6 +176,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public void ChangeStateToRun()
     {
+        if (Attacking)
+        {
+            return;
+        }
         PlayerStateMachine.ChangeState(PlayerRunState);
     }
 
@@ -197,7 +206,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if(CurrentHealth <= 0 && !isDead)
         {
             isDead = true;
-            Die();
+            Death();
         }
         if(inGameUI != null)
         {
@@ -207,10 +216,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-    public void Die()
+    public void Death()
     {
-        animator.SetTrigger("Die");
-        inGameUI.FadeIn();
+        animator.SetTrigger("Death");
+        inGameUI.FadeInResetLevel();
         this.enabled = false;
     }
 
@@ -231,6 +240,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public bool TryAttack()
     {
+        if (!CanAttack)
+        {
+            return false;
+        }
         if(sword == null)
         {
             return false;
@@ -244,6 +257,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             CurrentStamina -= sword.GetAttackStaminaCost();
             UpdateStaminaUI();
+            CanAttack = false;
             return true;
         }
 

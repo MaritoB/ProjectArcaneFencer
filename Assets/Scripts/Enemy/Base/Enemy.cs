@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         if (StateMachine == null || EnemyIdleState == null) { return; }
         StateMachine.ChangeState(EnemyChaseState);
     }
-    public void Die()
+    public void Death()
     {
         //gameObject.SetActive(false);
         if(StateMachine == null || EnemyDieState == null) { return; }
@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
         if (CurrentHealth <= 0)
         {
-            Die();
+            Death();
         }
     }
     public void AimPlayerPosition()

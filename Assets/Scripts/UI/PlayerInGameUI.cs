@@ -20,15 +20,23 @@ public class PlayerInGameUI : MonoBehaviour
         CurrentHealthSize = new Vector2(MaxHealth.rect.width, MaxHealth.rect.height);
         CurrentStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
     }
-    public void FadeIn()
+    public void FadeInResetLevel()
     {
-        if(animator == null)
+        if (animator == null)
         {
             return;
         }
-        animator.SetTrigger("FadeIn");
+        animator.SetTrigger("FadeInResetLevel");
     }
-    
+    public void FadeInLoadNextLevel()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        animator.SetTrigger("FadeInLoadNextLevel");
+    }
+
     public void UpdateCurrentHealthUI(float aCurrentHealth, float aMaxHealth)
     {
         if (aCurrentHealth < 0)
@@ -57,6 +65,12 @@ public class PlayerInGameUI : MonoBehaviour
     }
     public void ResetLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManagerSingleton.Instance.ResetLevel();
     }
+    public void LoadNextLevel()
+    {
+        SceneManagerSingleton.Instance.TryLoadNextScene();
+    }
+
+
 }

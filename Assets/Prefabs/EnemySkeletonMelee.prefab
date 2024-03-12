@@ -261,7 +261,7 @@ MonoBehaviour:
   EnemyKnockBackBase: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
   EnemyDieBase: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}
   attackRange: 1
-  attackDamage: 5
+  attackDamage: 20
   playerLayer:
     serializedVersion: 2
     m_Bits: 256

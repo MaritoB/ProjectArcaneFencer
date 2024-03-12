@@ -9822,7 +9822,7 @@ MonoBehaviour:
     m_Bits: 256
   WallsLayerMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2176
   isReadyToDisable: 0
 --- !u!54 &9171072717131984119
 Rigidbody:
