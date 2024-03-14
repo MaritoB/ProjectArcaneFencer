@@ -5,12 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack-Melee Parry Projectile", menuName = "Player Logic/Attack Logic/Melee Parry Projectile")]
 public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
 {
+    public float AttackDashForce;
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
         player.animator.SetTrigger("Attack1");
         player.animator.SetFloat("Velocity", 0f);
+        player.mRigidbody.velocity = Vector3.zero;
         player.Attacking = true;
+        //player.mRigidbody.AddForce(player.transform.forward *  AttackDashForce, ForceMode.Impulse);
     }
 
     public override void DoExitLogic()
@@ -22,7 +25,7 @@ public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
     {
         base.DoFrameUpdateLogic();
         player.RotateTowardMovementVector();
-        player.mRigidbody.velocity = Vector3.zero;
+        //player.mRigidbody.velocity = Vector3.zero;
 
         if (player.playerInputActions.Player.Attack.WasPressedThisFrame() && player.TryAttack())
         {

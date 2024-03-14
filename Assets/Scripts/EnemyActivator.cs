@@ -13,7 +13,7 @@ public class EnemyActivator : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        enemy.Initialize(other.transform);
+        enemy.SetPlayerTarget(other.transform);
     }
 
 

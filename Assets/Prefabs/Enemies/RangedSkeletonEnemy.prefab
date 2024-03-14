@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 8715147753852310769}
   - component: {fileID: 8715147753852310779}
   m_Layer: 6
-  m_Name: EnemySkeletonRange
+  m_Name: RangedSkeletonEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,18 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0070015e0a896c14da477a6d4598a1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 20
+  _enemyData: {fileID: 11400000, guid: e25ff28bea821fc439708845bf249481, type: 2}
+  _enemyStateData: {fileID: 11400000, guid: 60c8015ba0dd790479064c3496bd05bb, type: 2}
   <CurrentHealth>k__BackingField: 0
   animator: {fileID: 0}
   attackPosition: {fileID: 0}
   IsAttacking: 0
   CanMove: 1
-  EnemyIdleBase: {fileID: 11400000, guid: e099b5a48f9fb3b49b9d889af650758c, type: 2}
-  EnemyChaseBase: {fileID: 11400000, guid: 3ee9331d37294aa479a28f8c9d136cd2, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: 641422018c8466f45ba75c7134c6a40e, type: 2}
-  EnemyFleeBase: {fileID: 11400000, guid: a5da9463d3ef5014792522ca3feea481, type: 2}
-  EnemyKnockBackBase: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
-  EnemyDieBase: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}
   projectileSpawner: {fileID: 8715147753852310779}
 --- !u!54 &8715147753852310769
 Rigidbody:

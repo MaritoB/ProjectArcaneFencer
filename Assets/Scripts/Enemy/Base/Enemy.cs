@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
+    [SerializeField] protected EnemyData _enemyData;
+    [SerializeField] protected EnemyStateData _enemyStateData;
+
     private Transform _playerTransform = null;
-    [field: SerializeField] public float MaxHealth { get; set; } = 30;
     [field: SerializeField] public float CurrentHealth { get; set; }
     public Rigidbody Rigidbody { get; set; }
     public bool IsWithinAggroDistance { get; set; }
@@ -17,21 +19,16 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     [SerializeField] protected Transform attackPosition;
     public bool IsAttacking = false;
     public bool CanMove = true;
-    
 
     public StateMachine StateMachine { get; set; }
+
     public EnemyIdleState EnemyIdleState { get; set; }
     public EnemyChaseState EnemyChaseState { get; set; }
     public EnemyFleeState EnemyFleeState { get; set; }
     public EnemyAttackState EnemyAttackState { get; set; }
     public EnemyKnockBackState EnemyKnockBackState { get; set; }
     public EnemyDieState EnemyDieState { get; set; }
-    [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
-    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
-    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
-    [SerializeField] private EnemyFleeSOBase EnemyFleeBase;
-    [SerializeField] private EnemyKnockBackSOBase EnemyKnockBackBase;
-    [SerializeField] private EnemyDieSOBase EnemyDieBase;
+
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
@@ -102,38 +99,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         transform.rotation = LookAtRotationOnly_Y;
     }
-
-    // Start is called before the first frame update
-    void Awake()
+    public void SetPlayerTarget(Transform aPlayer)
     {
+        _playerTransform = aPlayer;
+        EnemyIdleBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyChaseBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyAttackBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyFleeBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyKnockBackBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyDieBaseInstance.SetPlayerTarget(aPlayer);
     }
-    public void Initialize(Transform aPlayerTransform)
-    {
-        EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
-        EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
-        EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
-        EnemyFleeBaseInstance = Instantiate(EnemyFleeBase);
-        EnemyKnockBackBaseInstance = Instantiate(EnemyKnockBackBase);
-        EnemyDieBaseInstance = Instantiate(EnemyDieBase);
 
-        EnemyIdleBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-        EnemyChaseBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-        EnemyAttackBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-        EnemyFleeBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-        EnemyKnockBackBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-        EnemyDieBaseInstance.Initialize(gameObject, this, aPlayerTransform);
-
-        StateMachine = new StateMachine();
-        EnemyIdleState = new EnemyIdleState(this, StateMachine);
-        EnemyChaseState = new EnemyChaseState(this, StateMachine);
-        EnemyAttackState = new EnemyAttackState(this, StateMachine);
-        EnemyFleeState = new EnemyFleeState(this, StateMachine);
-        EnemyKnockBackState = new EnemyKnockBackState(this, StateMachine);
-        EnemyDieState = new EnemyDieState(this, StateMachine);
-        StateMachine.Initialize(EnemyIdleState);
-        _playerTransform = aPlayerTransform;
-
-    }
     private void Update()
     {
         if (_playerTransform == null & StateMachine == null) return;
@@ -146,9 +122,32 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     private void Start()
     {
-        CurrentHealth = MaxHealth;
         Rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>(); CurrentHealth = _enemyData.maxHealth;
+        CurrentHealth = _enemyData.maxHealth;
+        //StateMachine Initialize
+        EnemyIdleBaseInstance = Instantiate(_enemyStateData.idleStateData);
+        EnemyChaseBaseInstance = Instantiate(_enemyStateData.chaseStateData);
+        EnemyAttackBaseInstance = Instantiate(_enemyStateData.attackStateData);
+        EnemyFleeBaseInstance = Instantiate(_enemyStateData.fleeStateData);
+        EnemyKnockBackBaseInstance = Instantiate(_enemyStateData.knockBackStateData);
+        EnemyDieBaseInstance = Instantiate(_enemyStateData.dieStateData);
+
+        EnemyIdleBaseInstance.Initialize(gameObject, this);
+        EnemyChaseBaseInstance.Initialize(gameObject, this);
+        EnemyAttackBaseInstance.Initialize(gameObject, this);
+        EnemyFleeBaseInstance.Initialize(gameObject, this);
+        EnemyKnockBackBaseInstance.Initialize(gameObject, this);
+        EnemyDieBaseInstance.Initialize(gameObject, this);
+
+        StateMachine = new StateMachine();
+        EnemyIdleState = new EnemyIdleState(this, StateMachine);
+        EnemyChaseState = new EnemyChaseState(this, StateMachine);
+        EnemyAttackState = new EnemyAttackState(this, StateMachine);
+        EnemyFleeState = new EnemyFleeState(this, StateMachine);
+        EnemyKnockBackState = new EnemyKnockBackState(this, StateMachine);
+        EnemyDieState = new EnemyDieState(this, StateMachine);
+        StateMachine.Initialize(EnemyIdleState);
 
     }
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)

@@ -47,9 +47,9 @@ public class EnemyAttackSimpleMelee : EnemyAttackSOBase
         base.DoPhysicsLogic();
     }
 
-    public override void Initialize(GameObject gameObject, Enemy enemy, Transform playerTransform)
+    public override void Initialize(GameObject gameObject, Enemy enemy)
     {
-        base.Initialize(gameObject, enemy, playerTransform);
+        base.Initialize(gameObject, enemy);
     }
 
     public override void ResetValues()

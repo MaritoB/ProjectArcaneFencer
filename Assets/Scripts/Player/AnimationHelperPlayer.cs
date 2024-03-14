@@ -28,4 +28,18 @@ public class AnimationHelperPlayer : MonoBehaviour
             controller.ChangeStateToRun();
         }
     }
+    public void CustomMeleeAttackEvent(float aWeaponDamagePercentage)
+    {
+        if (controller != null)
+        {
+            controller.CustomMeleeAttack(aWeaponDamagePercentage) ;
+        }
+    }
+    public void CustomDashEvent(int aDashForce)
+    {
+        if (controller != null)
+        {
+            controller.DashForward(aDashForce);
+        }
+    }
 }

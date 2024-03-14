@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588e8f7ec5686804ca82acf4ea76e4de, type: 3}
+  m_Name: RangedSkelton_StateData
+  m_EditorClassIdentifier: 
+  idleStateData: {fileID: 11400000, guid: 2795f97a1df5d9f459912eac6544a9d2, type: 2}
+  chaseStateData: {fileID: 11400000, guid: 3ee9331d37294aa479a28f8c9d136cd2, type: 2}
+  attackStateData: {fileID: 11400000, guid: 641422018c8466f45ba75c7134c6a40e, type: 2}
+  fleeStateData: {fileID: 11400000, guid: a5da9463d3ef5014792522ca3feea481, type: 2}
+  knockBackStateData: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
+  dieStateData: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}

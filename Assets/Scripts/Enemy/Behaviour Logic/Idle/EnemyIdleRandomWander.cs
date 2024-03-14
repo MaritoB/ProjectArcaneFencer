@@ -45,9 +45,9 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
         base.DoPhysicsLogic();
     }
 
-    public override void Initialize(GameObject gameObject, Enemy enemy, Transform aPlayerTransform)
+    public override void Initialize(GameObject gameObject, Enemy enemy)
     {
-        base.Initialize(gameObject, enemy, aPlayerTransform);
+        base.Initialize(gameObject, enemy);
     }
 
     public override void ResetValues()

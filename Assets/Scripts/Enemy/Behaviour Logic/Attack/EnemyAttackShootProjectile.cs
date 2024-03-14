@@ -55,9 +55,9 @@ public class EnemyAttackShootProjectile : EnemyAttackSOBase
         base.DoPhysicsLogic();
     }
 
-    public override void Initialize(GameObject gameObject, Enemy enemy, Transform PlayerTransform)
+    public override void Initialize(GameObject gameObject, Enemy enemy)
     {
-        base.Initialize(gameObject, enemy, PlayerTransform);
+        base.Initialize(gameObject, enemy);
         _rangeEnemy = gameObject.GetComponent<RangeEnemy>();
     }
 

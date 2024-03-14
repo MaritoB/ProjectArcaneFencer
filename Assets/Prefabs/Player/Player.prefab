@@ -21128,6 +21128,7 @@ MonoBehaviour:
   RecoverStaminaOnParry: 20
   StaminaRecoveryRate: 10
   AttackStaminaCost: 10
+  AttackDashForce: 900
   CanAttack: 1
   Attacking: 0
   PlayerRunBase: {fileID: 11400000, guid: 302ab4dcfbbb1f94883c02fd9e81c7fa, type: 2}

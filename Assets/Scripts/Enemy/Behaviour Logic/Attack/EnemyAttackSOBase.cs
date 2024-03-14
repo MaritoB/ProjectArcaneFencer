@@ -13,12 +13,15 @@ public class EnemyAttackSOBase : ScriptableObject
 
 
 
-    public virtual void Initialize(GameObject gameObject, Enemy enemy, Transform PlayerTransform)
+    public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;
         transform = gameObject.transform;
         this.enemy = enemy;
-        playerTransform = PlayerTransform;
+    }
+    public virtual void SetPlayerTarget(Transform aPlayerTransform)
+    {
+        playerTransform = aPlayerTransform;
     }
     public bool CanAttack()
     {

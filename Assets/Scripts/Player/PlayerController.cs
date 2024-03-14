@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     int DashStaminaCost, RecoverStaminaOnParry;
     [SerializeField]
-    float StaminaRecoveryRate, AttackStaminaCost;
+    float StaminaRecoveryRate;
     public bool CanAttack = true;
     public bool Attacking = false;
 
@@ -146,10 +146,36 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         UpdateStaminaUI();
     }
+    public void DashForward(int aDashForce)
+    {
 
+        mRigidbody.AddForce(transform.forward * aDashForce, ForceMode.Impulse);
+    }
     public void SimpleMeleeAttack()
     {
         if(sword == null)
+        {
+            return;
+        }
+
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        foreach (Collider collider in ProjectileColliders)
+        {
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                MeleeHitPS.Emit(15);
+                //enemy.TakeDamage(sword.GetCurrentDamage());
+                sword.Attack(enemy,1);
+            }
+        }
+        CanAttack = true;
+        Attacking = false;
+        ParryProjectile();
+    }
+    public void CustomMeleeAttack(float  aWeaponDamagePercentage)
+    {
+        if (sword == null)
         {
             return;
         }
@@ -159,9 +185,9 @@ public class PlayerController : MonoBehaviour, IDamageable
             Enemy enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                MeleeHitPS.Emit(15);
+                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
                 //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy);
+                sword.Attack(enemy, aWeaponDamagePercentage);
             }
         }
         CanAttack = true;

@@ -31,9 +31,14 @@ public class SwordBase : MonoBehaviour
     {
         currentDamage = baseDamage;
     }
-    public void Attack(Enemy enemy)
+    public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
-        enemy.TakeDamage(currentDamage);
+        enemy.TakeDamage((int)(currentDamage * aWeaponDamagePercentage));
+        OnMeleeHit?.Invoke(enemy);
+    }
+    public void CustomAttack(Enemy enemy, int Damage)
+    {
+        enemy.TakeDamage(Damage);
         OnMeleeHit?.Invoke(enemy);
     }
     public void ApplyAllModifiers()

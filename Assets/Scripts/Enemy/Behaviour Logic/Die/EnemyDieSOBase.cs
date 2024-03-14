@@ -8,12 +8,15 @@ public class EnemyDieSOBase : ScriptableObject
     protected Transform transform;
     protected Transform playerTransform;
     protected GameObject gameObject;
-    public virtual void Initialize(GameObject gameObject, Enemy enemy, Transform PlayerTransform)
+    public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;
         transform = gameObject.transform;
         this.enemy = enemy;
-        playerTransform = PlayerTransform;
+    }
+    public virtual void SetPlayerTarget(Transform aPlayerTransform)
+    {
+        playerTransform = aPlayerTransform;
     }
 
     public virtual void DoEnterLogic() { }
