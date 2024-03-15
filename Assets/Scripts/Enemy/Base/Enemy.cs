@@ -36,6 +36,15 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyKnockBackSOBase EnemyKnockBackBaseInstance { get; set; }
     public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
 
+    RoomEvent roomEvent = null;
+    public void SetOwner(RoomEvent room)
+    {
+        roomEvent = room;
+    }
+    public void InformDeathToOwner()
+    {
+        roomEvent.InformEnemyDeath();
+    }
     public void GetKnockBack(Vector3 aForce)
     {
         if (CurrentHealth > 0)
@@ -47,7 +56,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
         }
     }
-
+    public void ResetStats()
+    {
+        CurrentHealth = _enemyData.maxHealth;
+    }
+      
     public void SetStateToIdle()
     {
         CanMove = true;
@@ -71,7 +84,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void MoveEnemy(Vector3 aVelocity)
     {
         if (!CanMove) return;
-        Vector3 movementVelocity = new Vector3(aVelocity.x, 0, aVelocity.z);
+        Vector3 movementVelocity = new Vector3(aVelocity.x, Rigidbody.velocity.y, aVelocity.z);
         Rigidbody.velocity = movementVelocity;
         animator.SetFloat("Velocity", Rigidbody.velocity.magnitude);
     }
@@ -83,6 +96,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         if (CurrentHealth <= 0)
         {
             Death();
+            if (roomEvent != null)
+            {
+                roomEvent.InformEnemyDeath();
+            }
         }
     }
     public void AimPlayerPosition()
@@ -123,7 +140,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     private void Start()
     {
         Rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>(); CurrentHealth = _enemyData.maxHealth;
+        animator = GetComponentInChildren<Animator>();
         CurrentHealth = _enemyData.maxHealth;
         //StateMachine Initialize
         EnemyIdleBaseInstance = Instantiate(_enemyStateData.idleStateData);
