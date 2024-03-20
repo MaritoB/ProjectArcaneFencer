@@ -21127,8 +21127,6 @@ MonoBehaviour:
   DashStaminaCost: 20
   RecoverStaminaOnParry: 20
   StaminaRecoveryRate: 10
-  AttackStaminaCost: 10
-  AttackDashForce: 900
   CanAttack: 1
   Attacking: 0
   PlayerRunBase: {fileID: 11400000, guid: 302ab4dcfbbb1f94883c02fd9e81c7fa, type: 2}
@@ -21203,7 +21201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dcc034499679478f6c7f2b595d1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponModifierList: []
+  weaponModifierList:
+  - {fileID: 11400000, guid: 41294f32f8b687f409317c39222ae11f, type: 2}
   baseDamage: 10
   attackStaminaCost: 10
   currentDamage: 0

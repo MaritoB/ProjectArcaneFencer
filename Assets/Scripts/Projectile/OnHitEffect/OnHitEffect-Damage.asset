@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9d432ed8c49ad4e9b6107fd6f8f6d1, type: 3}
   m_Name: OnHitEffect-Damage
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 20

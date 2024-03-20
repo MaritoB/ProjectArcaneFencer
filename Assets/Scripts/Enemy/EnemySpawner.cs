@@ -58,6 +58,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (EnemyPoolDictionary.TryGetValue(aEnemyType , out EnemyPoolInfo EnemyPool))
         {
+            //busca inactivos
             for (int i = 0; i < EnemyPool.pool.Count; i++)
             {
                 if (!EnemyPool.pool[i].gameObject.activeInHierarchy)
@@ -65,6 +66,16 @@ public class EnemySpawner : MonoBehaviour
                     return EnemyPool.pool[i];
                 }
             }
+            //busca activos muertos
+            for (int i = 0; i < EnemyPool.pool.Count; i++)
+            {
+                if (!EnemyPool.pool[i].IsAlive)
+                {
+                    EnemyPool.pool[i].ResetStats();
+                    return EnemyPool.pool[i];
+                }
+            }
+            //crea nuevos si estan todos vivos y activos
             GameObject enemyGO = Instantiate(EnemyPool.prefab, Vector3.zero, Quaternion.identity);
             Enemy enemy = enemyGO.GetComponent<Enemy>();
             EnemyPool.pool.Add(enemy);
@@ -85,7 +96,6 @@ public class EnemySpawner : MonoBehaviour
         {
             enemy.gameObject.SetActive(true);
             enemy.transform.position = RandomSpawnPosition;
-            enemy.ResetStats();
         }
         return enemy;
     }
@@ -106,13 +116,19 @@ public class EnemySpawner : MonoBehaviour
     }
     private Vector3 GenerateRandomPositionInsideRoom(Transform roomTransform)
     {
-        // Obtener los límites de la habitación
-        Vector3 minBounds = roomTransform.position - roomTransform.localScale / 2;
-        Vector3 maxBounds = roomTransform.position + roomTransform.localScale / 2;
-
-        // Generar una posición aleatoria dentro de los límites de la habitación
-        Vector3 spawnPoint = new Vector3(Random.Range(minBounds.x, maxBounds.x), roomTransform.position.y, Random.Range(minBounds.z, maxBounds.z));
-
+ 
+        Vector3 localMinBounds = -roomTransform.localScale / 2;
+        Vector3 localMaxBounds = roomTransform.localScale / 2;
+        Quaternion parentRotation = roomTransform.parent.rotation;
+        Vector3 rotatedMinBounds = parentRotation * localMinBounds;
+        Vector3 rotatedMaxBounds = parentRotation * localMaxBounds;
+        Vector3 minBounds = roomTransform.position + rotatedMinBounds;
+        Vector3 maxBounds = roomTransform.position + rotatedMaxBounds;
+        Vector3 spawnPoint = new Vector3(
+            Random.Range(minBounds.x, maxBounds.x),
+            roomTransform.position.y,
+            Random.Range(minBounds.z, maxBounds.z)
+        );
         return spawnPoint;
     }
     private bool IsPositionValid(Vector3 position)

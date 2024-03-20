@@ -85,10 +85,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8715147753852310770}
-  m_LocalRotation: {x: 0, y: 0.090024225, z: 0, w: 0.9959396}
-  m_LocalPosition: {x: -2.61, y: 1.58, z: 21}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8710776855556343087}
   - {fileID: 8715147754201338192}
@@ -96,7 +96,7 @@ Transform:
   - {fileID: 8715147755061286557}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 10.33, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8715147753852310775
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -125,11 +125,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: e25ff28bea821fc439708845bf249481, type: 2}
   _enemyStateData: {fileID: 11400000, guid: 60c8015ba0dd790479064c3496bd05bb, type: 2}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
   <CurrentHealth>k__BackingField: 0
   animator: {fileID: 0}
   attackPosition: {fileID: 0}
   IsAttacking: 0
   CanMove: 1
+  IsAlive: 1
   projectileSpawner: {fileID: 8715147753852310779}
 --- !u!54 &8715147753852310769
 Rigidbody:

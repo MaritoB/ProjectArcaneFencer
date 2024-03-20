@@ -44799,7 +44799,7 @@ AnimationClip:
     intParameter: 500
     messageOptions: 0
   - time: 0.6333333
-    functionName: CustomMeleeAttackEvent
+    functionName: FirstMeleeAttackEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 1

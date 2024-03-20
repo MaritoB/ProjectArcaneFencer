@@ -32,7 +32,28 @@ public class AnimationHelperPlayer : MonoBehaviour
     {
         if (controller != null)
         {
-            controller.CustomMeleeAttack(aWeaponDamagePercentage) ;
+            controller.CustomMeleeAttack(aWeaponDamagePercentage);
+        }
+    }
+    public void FirstMeleeAttackEvent(float aWeaponDamagePercentage)
+    {
+        if (controller != null)
+        {
+            controller.FirstMeleeAttack(aWeaponDamagePercentage);
+        }
+    }
+    public void SecondMeleeAttackEvent(float aWeaponDamagePercentage)
+    {
+        if (controller != null)
+        {
+            controller.SecondMeleeAttack(aWeaponDamagePercentage);
+        }
+    }
+    public void ThirdMeleeAttackEvent(float aWeaponDamagePercentage)
+    {
+        if (controller != null)
+        {
+            controller.ThirdMeleeAttack(aWeaponDamagePercentage);
         }
     }
     public void CustomDashEvent(int aDashForce)

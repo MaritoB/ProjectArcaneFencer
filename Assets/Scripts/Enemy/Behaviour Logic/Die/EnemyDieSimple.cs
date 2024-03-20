@@ -13,10 +13,10 @@ public class EnemyDieSimple : EnemyDieSOBase
     {
         base.DoEnterLogic();
         enemy.animator.SetTrigger("Die");
-        enemy.Rigidbody.velocity = Vector3.zero;
-        enemy.Rigidbody.useGravity = false;
+        enemy.mRigidbody.velocity = Vector3.zero;
+        enemy.mRigidbody.useGravity = false;
         enemy.GetComponent<CapsuleCollider>().enabled = false;
-        enemy.enabled = false;
+        //enemy.enabled = false;
     }
 
     public override void DoExitLogic()

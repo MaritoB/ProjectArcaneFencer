@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
     [SerializeField] protected EnemyData _enemyData;
     [SerializeField] protected EnemyStateData _enemyStateData;
-
-    private Transform _playerTransform = null;
+    public LayerMask wallLayer;
+    private  Transform _playerTransform = null;
     [field: SerializeField] public float CurrentHealth { get; set; }
-    public Rigidbody Rigidbody { get; set; }
+    public Rigidbody mRigidbody { get; set; }
     public bool IsWithinAggroDistance { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     public bool IsWithinFleeDistance { get; set; }
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     [SerializeField] protected Transform attackPosition;
     public bool IsAttacking = false;
     public bool CanMove = true;
-
+    public bool IsAlive = true;
     public StateMachine StateMachine { get; set; }
 
     public EnemyIdleState EnemyIdleState { get; set; }
@@ -52,13 +53,21 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
             if (StateMachine == null || EnemyKnockBackState == null) { return; }
             StateMachine.ChangeState(EnemyKnockBackState);
             CanMove = false;
-            Rigidbody.AddForce(aForce, ForceMode.Impulse);
+            mRigidbody.AddForce(aForce, ForceMode.Impulse);
 
         }
     }
     public void ResetStats()
     {
         CurrentHealth = _enemyData.maxHealth;
+        //mRigidbody.
+        mRigidbody.velocity = Vector3.zero;
+        mRigidbody.useGravity = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+        animator.SetTrigger("Revive");
+        IsAttacking = false;
+        IsAlive = true;
+        SetStateToChase();
     }
       
     public void SetStateToIdle()
@@ -70,12 +79,15 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void SetStateToChase()
     {
         CanMove = true;
-        if (StateMachine == null || EnemyIdleState == null) { return; }
+        if (StateMachine == null || EnemyChaseState == null) {
+            Debug.Log("SetStateToChase Early Return");
+            return; }
         StateMachine.ChangeState(EnemyChaseState);
     }
     public void Death()
-    {
+    {        
         //gameObject.SetActive(false);
+        IsAlive = false; 
         if(StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
 
@@ -84,9 +96,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void MoveEnemy(Vector3 aVelocity)
     {
         if (!CanMove) return;
-        Vector3 movementVelocity = new Vector3(aVelocity.x, Rigidbody.velocity.y, aVelocity.z);
-        Rigidbody.velocity = movementVelocity;
-        animator.SetFloat("Velocity", Rigidbody.velocity.magnitude);
+        Vector3 movementVelocity = new Vector3(aVelocity.x, mRigidbody.velocity.y, aVelocity.z);
+        mRigidbody.velocity = movementVelocity;
+        animator.SetFloat("Velocity", mRigidbody.velocity.magnitude);
     }
 
     public void TakeDamage(int aDamageAmount)
@@ -129,18 +141,19 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     private void Update()
     {
-        if (_playerTransform == null & StateMachine == null) return;
+        if (!IsAlive && _playerTransform == null && StateMachine == null) return;
         StateMachine.CurrentState.FrameUpdate();
     }
     private void FixedUpdate()
     {
-        if (_playerTransform == null & StateMachine == null) return;
+        if (!IsAlive &&_playerTransform == null && StateMachine == null) return;
         StateMachine.CurrentState.PhysicsUpdate();
     }
     private void Start()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        mRigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        GetComponent<CapsuleCollider>().enabled = true;
         CurrentHealth = _enemyData.maxHealth;
         //StateMachine Initialize
         EnemyIdleBaseInstance = Instantiate(_enemyStateData.idleStateData);
@@ -199,6 +212,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         EnemyDamaged,
         PlayFootstepSound
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == wallLayer) 
+        {
+            Quaternion newRotation = new Quaternion(0,25,0,0);
+            Vector3 newVelocity = newRotation * mRigidbody.velocity;
+            mRigidbody.velocity = newVelocity;
+            CanMove = false;
+
+        }
     }
 
 }

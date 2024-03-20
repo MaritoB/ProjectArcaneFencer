@@ -19,7 +19,6 @@ public class EnemyActivator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
         if (!other.CompareTag("Player")) return;
         enemy.SetPlayerToNull();
     }

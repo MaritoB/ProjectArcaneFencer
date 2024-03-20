@@ -112,8 +112,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float GetCurrentStamina() { return CurrentStamina; }
     public void PerfomrProjectileAttackSkill()
     {
-        if (PlayerStateMachine == null) return;
         ProjectileSkillInstance.UseSkill(projectileSpawner);
+    }
+    public void PerfomrProjectileAttackSkill(Vector3 aDirection)
+    {
+        ProjectileSkillInstance.UseSkill(projectileSpawner, aDirection);
     }
     public void ParryProjectile()
     {
@@ -138,13 +141,23 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void RecoverStamina(int aAmount)
     {
-        if(aAmount < 0) return;
+        if (aAmount < 0) return;
         CurrentStamina += aAmount;
         if (CurrentStamina > MaxStamina)
         {
             CurrentStamina = MaxStamina;
         }
         UpdateStaminaUI();
+    }
+    private void RecoverLife(int aAmount)
+    {
+        if (aAmount < 0) return;
+        CurrentHealth += aAmount;
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+        inGameUI.UpdateCurrentHealthUI(CurrentHealth, MaxHealth);
     }
     public void DashForward(int aDashForce)
     {
@@ -188,6 +201,79 @@ public class PlayerController : MonoBehaviour, IDamageable
                 MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
                 //enemy.TakeDamage(sword.GetCurrentDamage());
                 sword.Attack(enemy, aWeaponDamagePercentage);
+            }
+        }
+        CanAttack = true;
+        Attacking = false;
+        ParryProjectile();
+    }
+    public void FirstMeleeAttack(float aWeaponDamagePercentage)
+    {
+        if (sword == null)
+        {
+            return;
+
+        }
+        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        foreach (Collider collider in EnemyColliders)
+        {
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
+                //enemy.TakeDamage(sword.GetCurrentDamage());
+                sword.Attack(enemy, aWeaponDamagePercentage);
+                sword.FirstStrikeModifiers(enemy);
+                RecoverLife(5);
+            }
+        }
+        CanAttack = true;
+        Attacking = false;
+        ParryProjectile();
+    }
+    public void SecondMeleeAttack(float aWeaponDamagePercentage)
+    {
+        if (sword == null)
+        {
+            return;
+
+        }
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        foreach (Collider collider in ProjectileColliders)
+        {
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
+                //enemy.TakeDamage(sword.GetCurrentDamage());
+                sword.Attack(enemy, aWeaponDamagePercentage);
+                sword.SecondStrikeModifiers(enemy);
+                PerfomrProjectileAttackSkill((enemy.transform.position - transform.position ).normalized);
+            }
+        }
+        PerfomrProjectileAttackSkill();
+        //PerfomrProjectileAttackSkill();
+        CanAttack = true;
+        Attacking = false;
+        ParryProjectile();
+    }
+    public void ThirdMeleeAttack(float aWeaponDamagePercentage)
+    {
+        if (sword == null)
+        {
+            return;
+
+        }
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        foreach (Collider collider in ProjectileColliders)
+        {
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
+                //enemy.TakeDamage(sword.GetCurrentDamage());
+                sword.Attack(enemy, aWeaponDamagePercentage);
+                sword.ThirdStrikeModifiers(enemy);
             }
         }
         CanAttack = true;

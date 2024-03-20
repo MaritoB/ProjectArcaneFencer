@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IEnemyMoveable 
 {
-    Rigidbody Rigidbody { get; set; }
+    Rigidbody mRigidbody { get; set; }
     void MoveEnemy(Vector3 Velocity);
 
 }

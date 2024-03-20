@@ -84291,7 +84291,7 @@ AnimationClip:
     intParameter: 1200
     messageOptions: 0
   - time: 1.4333333
-    functionName: CustomMeleeAttackEvent
+    functionName: ThirdMeleeAttackEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 3

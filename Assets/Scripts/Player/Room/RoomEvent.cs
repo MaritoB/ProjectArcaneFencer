@@ -75,8 +75,6 @@ public class RoomEvent : MonoBehaviour
     {
         Enemy enemy = EnemySpawner.Instance.SpawnEnemyFromPool(enemyType, spawnArea);
         enemy.SetOwner(this);
-
-
     }
     public void SpawnHorde(Horde horde)
     {

@@ -7,7 +7,7 @@ public class SwordBase : MonoBehaviour
 {
 
     public delegate void OnMeleeHitDelegate(Enemy enemy);
-    public event OnMeleeHitDelegate OnMeleeHit;
+    public event OnMeleeHitDelegate OnFirstMeleeHit,OnSecondMeleeHit, OnThirdMeleeHit;
     public List<WeaponModifierSO> weaponModifierList;
     
     [SerializeField]int baseDamage;
@@ -34,12 +34,22 @@ public class SwordBase : MonoBehaviour
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
         enemy.TakeDamage((int)(currentDamage * aWeaponDamagePercentage));
-        OnMeleeHit?.Invoke(enemy);
     }
     public void CustomAttack(Enemy enemy, int Damage)
     {
         enemy.TakeDamage(Damage);
-        OnMeleeHit?.Invoke(enemy);
+    }
+    public void FirstStrikeModifiers(Enemy enemy)
+    {
+        OnFirstMeleeHit?.Invoke(enemy);
+    }
+    public void SecondStrikeModifiers(Enemy enemy)
+    {
+        OnSecondMeleeHit?.Invoke(enemy);
+    }
+    public void ThirdStrikeModifiers(Enemy enemy)
+    {
+        OnThirdMeleeHit?.Invoke(enemy);
     }
     public void ApplyAllModifiers()
     {
@@ -54,13 +64,6 @@ public class SwordBase : MonoBehaviour
     {
         ApplyAllModifiers();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     internal float GetAttackStaminaCost()
     {
         return attackStaminaCost;

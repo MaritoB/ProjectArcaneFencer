@@ -1,12 +1,12 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "KnockBackModifier", menuName = "WeaponModifiers/Knock Back")]
+[CreateAssetMenu(fileName = "KnockBackModifier", menuName = "WeaponModifiers/KnockBackOnThirdStrike")]
 public class KnockBackModifier : WeaponModifierSO
 {
     public int KnockBackForce;
     Transform player;
     public override void ApplyModifier(SwordBase sword)
     {
-        sword.OnMeleeHit += KnockBackEnemy;
+        sword.OnThirdMeleeHit += KnockBackEnemy;
         player = sword.transform;
     }
     public void KnockBackEnemy(Enemy enemy)

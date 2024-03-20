@@ -17,6 +17,8 @@ public class EnemyKnockBack : EnemyKnockBackSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        enemy.IsAttacking = false;
+        enemy.CanMove = true;
     }
 
     public override void DoFrameUpdateLogic()
