@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588e8f7ec5686804ca82acf4ea76e4de, type: 3}
-  m_Name: RangedSkelton_StateData
+  m_Name: RangedStandingSkelton_StateData
   m_EditorClassIdentifier: 
-  idleStateData: {fileID: 11400000, guid: 2795f97a1df5d9f459912eac6544a9d2, type: 2}
+  idleStateData: {fileID: 11400000, guid: e099b5a48f9fb3b49b9d889af650758c, type: 2}
   chaseStateData: {fileID: 11400000, guid: 3ee9331d37294aa479a28f8c9d136cd2, type: 2}
   chaseRunForSecondsStateData: {fileID: 11400000, guid: 9f11163fec7f4394e9595377c3c894a3,
     type: 2}

@@ -42,7 +42,12 @@ public class ChainAfterHitEffect : AfterHitEffectSOBase
         {
             if (!targetsDictionary.ContainsKey(hitCollider))
             {
-                targetsDictionary.Add(hitCollider, new ChainTarget { targetCollider = hitCollider, used = false });
+                Enemy enemy = hitCollider.GetComponent<Enemy>();
+                if(enemy != null && enemy.IsAlive)
+                {
+                    targetsDictionary.Add(hitCollider, new ChainTarget { targetCollider = hitCollider, used = false });
+
+                }
             }
         }
     }

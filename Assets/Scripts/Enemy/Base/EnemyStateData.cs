@@ -5,6 +5,7 @@ public class EnemyStateData : ScriptableObject
 {
     public EnemyIdleSOBase idleStateData;
     public EnemyChaseSOBase chaseStateData;
+    public EnemyChaseSOBase chaseRunForSecondsStateData;
     public EnemyAttackSOBase attackStateData;
     public EnemyFleeSOBase fleeStateData;
     public EnemyKnockBackSOBase knockBackStateData;

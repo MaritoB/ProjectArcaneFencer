@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
@@ -9,13 +10,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     [SerializeField] protected EnemyData _enemyData;
     [SerializeField] protected EnemyStateData _enemyStateData;
     public LayerMask wallLayer;
-    private  Transform _playerTransform = null;
+    private Transform _playerTransform = null;
     [field: SerializeField] public float CurrentHealth { get; set; }
     public Rigidbody mRigidbody { get; set; }
     public bool IsWithinAggroDistance { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     public bool IsWithinFleeDistance { get; set; }
-    public  Animator animator;
+    public Animator animator;
     protected Vector3 _attackDirection;
     [SerializeField] protected Transform attackPosition;
     public bool IsAttacking = false;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public EnemyIdleState EnemyIdleState { get; set; }
     public EnemyChaseState EnemyChaseState { get; set; }
+    public EnemyChaseState EnemyChaseRunForSecondsState { get; set; }
     public EnemyFleeState EnemyFleeState { get; set; }
     public EnemyAttackState EnemyAttackState { get; set; }
     public EnemyKnockBackState EnemyKnockBackState { get; set; }
@@ -48,11 +50,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void GetKnockBack(Vector3 aForce)
     {
-        if (CurrentHealth > 0)
+        if (IsAlive)
         {
             if (StateMachine == null || EnemyKnockBackState == null) { return; }
             StateMachine.ChangeState(EnemyKnockBackState);
-            CanMove = false;
             mRigidbody.AddForce(aForce, ForceMode.Impulse);
 
         }
@@ -69,26 +70,35 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         IsAlive = true;
         SetStateToChase();
     }
-      
+    public void DashForward(int aDashForce)
+    {
+        if(!IsAlive) { return; }
+        mRigidbody.AddForce(transform.forward* aDashForce, ForceMode.Impulse);
+        CanMove = false;
+    }
+    public void StopMovement()
+    {
+        if (!IsAlive) { return; }
+        mRigidbody.velocity = Vector3.zero;
+    }
+
     public void SetStateToIdle()
     {
+        if (IsAlive && StateMachine == null || EnemyIdleState == null) { return; }
         CanMove = true;
-        if (StateMachine == null || EnemyIdleState == null) { return; }
         StateMachine.ChangeState(EnemyIdleState);
     }
     public void SetStateToChase()
     {
+        if (IsAlive && StateMachine == null || EnemyChaseState == null) { return; }
         CanMove = true;
-        if (StateMachine == null || EnemyChaseState == null) {
-            Debug.Log("SetStateToChase Early Return");
-            return; }
         StateMachine.ChangeState(EnemyChaseState);
     }
     public void Death()
-    {        
+    {
         //gameObject.SetActive(false);
-        IsAlive = false; 
-        if(StateMachine == null || EnemyDieState == null) { return; }
+        IsAlive = false;
+        if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
 
     }
@@ -122,7 +132,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         transform.rotation = LookAtRotationOnly_Y;
     }
-    public void AimDirection( Vector3 direction)
+    public void AimDirection(Vector3 direction)
     {
         Quaternion LookAtRotation = Quaternion.LookRotation(direction);
         Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
@@ -132,7 +142,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         _playerTransform = aPlayer;
         EnemyIdleBaseInstance.SetPlayerTarget(aPlayer);
-        EnemyChaseBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyChaseBaseInstance.SetPlayerTarget(aPlayer); 
         EnemyAttackBaseInstance.SetPlayerTarget(aPlayer);
         EnemyFleeBaseInstance.SetPlayerTarget(aPlayer);
         EnemyKnockBackBaseInstance.SetPlayerTarget(aPlayer);
@@ -146,7 +156,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     private void FixedUpdate()
     {
-        if (!IsAlive &&_playerTransform == null && StateMachine == null) return;
+        if (!IsAlive && _playerTransform == null && StateMachine == null) return;
         StateMachine.CurrentState.PhysicsUpdate();
     }
     private void Start()
@@ -173,6 +183,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         StateMachine = new StateMachine();
         EnemyIdleState = new EnemyIdleState(this, StateMachine);
         EnemyChaseState = new EnemyChaseState(this, StateMachine);
+        EnemyChaseRunForSecondsState = new EnemyChaseState(this, StateMachine);
         EnemyAttackState = new EnemyAttackState(this, StateMachine);
         EnemyFleeState = new EnemyFleeState(this, StateMachine);
         EnemyKnockBackState = new EnemyKnockBackState(this, StateMachine);
@@ -212,17 +223,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         EnemyDamaged,
         PlayFootstepSound
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.collider.gameObject.layer == wallLayer) 
-        {
-            Quaternion newRotation = new Quaternion(0,25,0,0);
-            Vector3 newVelocity = newRotation * mRigidbody.velocity;
-            mRigidbody.velocity = newVelocity;
-            CanMove = false;
-
-        }
     }
 
 }

@@ -176,8 +176,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754349982783443275}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 40
+  m_Drag: 5
   m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   _enemyStateData: {fileID: 11400000, guid: 132a9fee696b2614491fbb7639112623, type: 2}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2240
   <CurrentHealth>k__BackingField: 0
   animator: {fileID: 0}
   attackPosition: {fileID: 754349984280637054}
@@ -349,7 +349,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &754349983876897249
 MonoBehaviour:

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationEventHelper : MonoBehaviour
+public class EnemyAnimationEvents : MonoBehaviour
 {
     Enemy enemy;
     // Start is called before the first frame update
@@ -20,6 +20,7 @@ public class AnimationEventHelper : MonoBehaviour
     {
         if (enemy == null) return;
         enemy.IsAttacking = false;
+        enemy.CanMove = true;
     }
     public void ResetCanMove()
     {
@@ -34,5 +35,16 @@ public class AnimationEventHelper : MonoBehaviour
     {
         if (enemy == null) return;
         enemy.SetStateToChase();
+    }
+    public void DashForwardEvent(int aDashForce)
+    {
+        if (enemy == null) return;
+        enemy.DashForward(aDashForce);
+    }
+
+        public void StopMovementEvent()
+    {
+        if (enemy == null) return;
+        enemy.StopMovement();
     }
 }

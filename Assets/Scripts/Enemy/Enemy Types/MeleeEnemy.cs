@@ -13,7 +13,7 @@ public class MeleeEnemy : Enemy
     public override void Attack()
     {
         base.Attack();
-        IsAttacking = false;
+        //IsAttacking = false;
         attackPosition.localScale = Vector3.one * attackRange;
         Collider[] HitPlayers = Physics.OverlapSphere(attackPosition.position, attackRange, playerLayer);
 
@@ -24,3 +24,4 @@ public class MeleeEnemy : Enemy
     }
 
 }
+

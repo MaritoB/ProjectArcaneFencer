@@ -1,10 +1,14 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Chase-Run Away", menuName = "Enemy Logic/Chase Logic/Run Away ")]
-public class EnemyChaseRunAway : EnemyChaseSOBase
+[CreateAssetMenu(fileName = "Chase-RunForSeconds", menuName = "Enemy Logic/Chase Logic/RunForSeconds ")]
+public class EnemyChaseRunForSeconds : EnemyChaseSOBase
 {
     [SerializeField] private float _runAwaySpeed = 1f;
+    [SerializeField] private float MinSeconds = 0.5f;
+    [SerializeField] private float MaxSeconds = 1.5f;
+    private float CurrentSeconds;
+    Vector3 RunDirection;
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -13,6 +17,10 @@ public class EnemyChaseRunAway : EnemyChaseSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        Debug.Log("ChangeDirection");
+        CurrentSeconds = Random.Range(MinSeconds, MaxSeconds);
+        Quaternion newRotation = new Quaternion(0, CurrentSeconds, 0, 0);
+        RunDirection = (newRotation * enemy.mRigidbody.velocity).normalized;
     }
 
     public override void DoExitLogic()
@@ -22,13 +30,13 @@ public class EnemyChaseRunAway : EnemyChaseSOBase
 
     public override void DoFrameUpdateLogic()
     {
-        base.DoFrameUpdateLogic();
-        Vector3 RunDirection = -(playerTransform.position - transform.position).normalized;
-        enemy.MoveEnemy(RunDirection * _runAwaySpeed);
-        if (!enemy.IsWithinAggroDistance)
+        base.DoFrameUpdateLogic(); CurrentSeconds -= Time.deltaTime;
+        if (CurrentSeconds < 0)
         {
             enemy.StateMachine.ChangeState(enemy.EnemyIdleState);
         }
+        enemy.AimDirection(RunDirection);
+        enemy.MoveEnemy(RunDirection * _runAwaySpeed);
     }
 
     public override void DoPhysicsLogic()

@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamageable
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Animator animator;
     [SerializeField]
     PlayerInGameUI inGameUI;
-    bool isDead = false;
+    bool isAlive = true;
     [SerializeField]
     public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS;
     [SerializeField]
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     float StaminaRecoveryRate;
     public bool CanAttack = true;
     public bool Attacking = false;
-
     #region
     public StateMachine PlayerStateMachine;
     [SerializeField]
@@ -133,9 +133,9 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 ParryParticleSystem.Emit(30);
             }
-            collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
             // Recover Stamina on Parry
             RecoverStamina(RecoverStaminaOnParry);
+            collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
         }
     }
 
@@ -161,7 +161,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public void DashForward(int aDashForce)
     {
-
         mRigidbody.AddForce(transform.forward * aDashForce, ForceMode.Impulse);
     }
     public void SimpleMeleeAttack()
@@ -315,9 +314,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         CurrentHealth -= aDamageAmount;
 
-        if(CurrentHealth <= 0 && !isDead)
+        if(CurrentHealth <= 0 && isAlive)
         {
-            isDead = true;
+            isAlive = false;
             Death();
         }
         if(inGameUI != null)

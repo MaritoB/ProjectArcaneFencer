@@ -12,6 +12,8 @@ public class EnemyKnockBack : EnemyKnockBackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        enemy.CanMove = false;
+        enemy.animator.SetTrigger("KnockBack");
     }
 
     public override void DoExitLogic()
@@ -24,7 +26,7 @@ public class EnemyKnockBack : EnemyKnockBackSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        enemy.MoveEnemy(Vector3.zero);
+        //enemy.MoveEnemy(Vector3.zero);
     }
 
     public override void DoPhysicsLogic()

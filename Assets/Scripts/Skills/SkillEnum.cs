@@ -1,0 +1,6 @@
+public enum Skill
+{
+    RECOVERLIFEONHIT,
+    KNOCKBACK,
+    CHAINLIGHTNIGN
+}

@@ -14,7 +14,6 @@ public class EnemyAttackSimpleMelee : EnemyAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        enemy.MoveEnemy(Vector3.zero);
     }
 
     public override void DoExitLogic()
@@ -25,7 +24,8 @@ public class EnemyAttackSimpleMelee : EnemyAttackSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        enemy.MoveEnemy(Vector3.zero);
+        enemy.AimPlayerPosition();
+       // enemy.MoveEnemy(Vector3.zero);
         if (enemy.IsAttacking) return;
 
         if (!enemy.IsWithinStrikingDistance)

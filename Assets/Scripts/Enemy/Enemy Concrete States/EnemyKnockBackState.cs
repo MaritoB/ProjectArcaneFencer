@@ -19,8 +19,6 @@ public class EnemyKnockBackState : EnemyState
     {
         base.EnterState();
         enemy.EnemyKnockBackBaseInstance.DoEnterLogic();
-        enemy.CanMove = false;
-        enemy.animator.SetTrigger("KnockBack");
     }
 
 

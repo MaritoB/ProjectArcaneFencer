@@ -23,9 +23,6 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        enemy.AimPlayerPosition();
-        Vector3 Direction = (playerTransform.position - enemy.transform.position).normalized;
-        enemy.MoveEnemy(Direction * _MovementSpeed);
         if (enemy.IsWithinStrikingDistance)
         {
             enemy.StateMachine.ChangeState(enemy.EnemyAttackState);
@@ -34,6 +31,13 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         {
             enemy.StateMachine.ChangeState(enemy.EnemyIdleState);
         }
+        if(playerTransform == null)
+        {
+            return;
+        }
+        enemy.AimPlayerPosition();
+        Vector3 Direction = (playerTransform.position - enemy.transform.position).normalized;
+        enemy.MoveEnemy(Direction * _MovementSpeed);
     }
 
     public override void DoPhysicsLogic()
