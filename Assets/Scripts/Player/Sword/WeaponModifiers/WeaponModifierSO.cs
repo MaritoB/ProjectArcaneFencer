@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponModifierSO : ScriptableObject
 {
     public string modifierName;
     public string modifierDescription;
-
-    public virtual void ApplyModifier(SwordBase sword)
+    public int modifierLevel;
+    public Sprite modifierSprite;
+    public virtual void ApplyModifier(PlayerController aPlayer)
     {
 
     }

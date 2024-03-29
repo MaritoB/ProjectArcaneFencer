@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RangedStandingSkeleton_EnemyData
   m_EditorClassIdentifier: 
   maxHealth: 30
+  soulsAmount: 50

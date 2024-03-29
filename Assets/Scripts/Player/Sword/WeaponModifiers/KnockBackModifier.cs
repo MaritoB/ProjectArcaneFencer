@@ -1,17 +1,17 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "KnockBackModifier", menuName = "WeaponModifiers/KnockBackOnThirdStrike")]
+[CreateAssetMenu(fileName = "_KnockBackModifier", menuName = "WeaponModifiers/KnockBackOnThirdStrike")]
 public class KnockBackModifier : WeaponModifierSO
 {
     public int KnockBackForce;
-    Transform player;
-    public override void ApplyModifier(SwordBase sword)
+    Transform playerTransform;
+    public override void ApplyModifier(PlayerController aPlayer)
     {
-        sword.OnThirdMeleeHit += KnockBackEnemy;
-        player = sword.transform;
+        aPlayer.sword.OnThirdMeleeHit += KnockBackEnemy;
+        playerTransform = aPlayer.transform;
     }
     public void KnockBackEnemy(Enemy enemy)
     {
-        Vector3 force = (enemy.transform.position - player.position).normalized * KnockBackForce;
+        Vector3 force = (enemy.transform.position - playerTransform.position).normalized * KnockBackForce;
         force.y = 0;
         enemy.GetKnockBack(force);
     }

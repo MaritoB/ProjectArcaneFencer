@@ -19,27 +19,27 @@ public class PlayerAttackState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.PlayerAttackBaseInstance.DoEnterLogic();
+        player.mPlayerAttackBaseInstance.DoEnterLogic();
     }
 
 
     public override void ExitState()
     {
         base.ExitState();
-        player.PlayerAttackBaseInstance.DoExitLogic();
+        player.mPlayerAttackBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        player.PlayerAttackBaseInstance.DoFrameUpdateLogic();
+        player.mPlayerAttackBaseInstance.DoFrameUpdateLogic();
     }
 
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        player.PlayerAttackBaseInstance.DoPhysicsLogic();
+        player.mPlayerAttackBaseInstance.DoPhysicsLogic();
     }
 
 }

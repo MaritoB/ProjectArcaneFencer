@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MeleeSkeleton_EnemyData
   m_EditorClassIdentifier: 
   maxHealth: 50
+  soulsAmount: 50

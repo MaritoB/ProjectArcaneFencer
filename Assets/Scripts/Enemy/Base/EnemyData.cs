@@ -4,5 +4,6 @@
 public class EnemyData : ScriptableObject
 {
     public float maxHealth = 30f;
+    public int soulsAmount;
     // Agrega aquí otros datos del enemigo, como velocidad, daño, etc.
 }

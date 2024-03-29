@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         //gameObject.SetActive(false);
         IsAlive = false;
+        SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
         if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
 
@@ -117,7 +118,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
         if (CurrentHealth <= 0)
         {
-            Death();
+            if (IsAlive)
+            {
+                Death();
+            }
+
             if (roomEvent != null)
             {
                 roomEvent.InformEnemyDeath();
@@ -126,7 +131,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void AimPlayerPosition()
     {
-        if (_playerTransform == null) { return; }
+        if (_playerTransform == null || !IsAlive) { return; }
         _attackDirection = (_playerTransform.position - transform.position).normalized;
         Quaternion LookAtRotation = Quaternion.LookRotation(_attackDirection);
         Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);

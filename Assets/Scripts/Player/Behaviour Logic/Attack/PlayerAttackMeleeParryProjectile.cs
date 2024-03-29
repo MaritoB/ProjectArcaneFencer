@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "Attack-Melee Parry Projectile", menuName = "Player Logic/Attack Logic/Melee Parry Projectile")]
 public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
@@ -12,13 +14,24 @@ public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
         player.animator.SetTrigger("Attack1");
         player.animator.SetFloat("Velocity", 0f);
         player.mRigidbody.velocity = Vector3.zero;
-        player.Attacking = true;
+        player.isAttacking = true;
+        player.playerInputActions.Player.Attack.started += AttackEvent;
+
         //player.mRigidbody.AddForce(player.transform.forward *  AttackDashForce, ForceMode.Impulse);
+    }
+
+    private void AttackEvent(InputAction.CallbackContext context)
+    {
+        if(player.TryAttack())
+        {
+            player.PlayerStateMachine.ChangeState(player.mPlayerAttackState);
+        }
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        player.playerInputActions.Player.Attack.started -= AttackEvent;
     }
 
     public override void DoFrameUpdateLogic()
@@ -29,7 +42,7 @@ public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
 
         if (player.playerInputActions.Player.Attack.WasPressedThisFrame() && player.TryAttack())
         {
-            player.PlayerStateMachine.ChangeState(player.PlayerAttackState);
+            player.PlayerStateMachine.ChangeState(player.mPlayerAttackState);
         }
 
     }

@@ -17,27 +17,27 @@ public class PlayerMovementState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.PlayerRunInstance.DoEnterLogic();
+        player.mPlayerRunInstance.DoEnterLogic();
     }
 
 
     public override void ExitState()
     {
         base.ExitState();
-        player.PlayerRunInstance.DoExitLogic();
+        player.mPlayerRunInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        player.PlayerRunInstance.DoFrameUpdateLogic();
+        player.mPlayerRunInstance.DoFrameUpdateLogic();
     }
 
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        player.PlayerRunInstance.DoPhysicsLogic();
+        player.mPlayerRunInstance.DoPhysicsLogic();
     }
 
 }

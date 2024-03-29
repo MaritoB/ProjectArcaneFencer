@@ -1,8 +1,14 @@
-using System.Diagnostics.Contracts;
+
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    //public PlayerInputManager InputManager;
+    public  PlayerInput playerInput;
+    public PlayerData playerData;
     public PlayerInputActions playerInputActions;
     public Rigidbody mRigidbody;
     public Transform mCamera;
@@ -13,58 +19,82 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Animator animator;
     [SerializeField]
     PlayerInGameUI inGameUI;
-    bool isAlive = true;
     [SerializeField]
     public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS;
-    [SerializeField]
-    float ParryRadius, MeleeAttackRadius;
+    public delegate void OnParryDelegate();
+    public event OnParryDelegate OnParry;
     [SerializeField]
     LayerMask ProjectilesLayer;
     [SerializeField]
     LayerMask EnemiesLayer;
     [SerializeField]
-    float MaxStamina, CurrentStamina;
-    [SerializeField]
-    int DashStaminaCost, RecoverStaminaOnParry;
-    [SerializeField]
-    float StaminaRecoveryRate;
+    float CurrentStamina;
+    bool isAlive = true;
+    public bool isBlocking = false;
+    public bool isDashing = false;
+    public bool isAttacking = false;
     public bool CanAttack = true;
-    public bool Attacking = false;
+    public bool DashChanellingPerk = false;
     #region
     public StateMachine PlayerStateMachine;
     [SerializeField]
-    private PlayerMovementBase PlayerRunBase;
+    private PlayerMovementBase mPlayerRunBase;
     [SerializeField]
-    private PlayerMovementBase PlayerDash;
-    public PlayerMovementBase PlayerRunInstance { get; set; }
-    public PlayerMovementBase PlayerDashInstance { get; set; }
-    public PlayerMovementState PlayerRunState { get; set; }
-    public PlayerDashState PlayerDashState { get; set; }
+    private PlayerMovementBase mPlayerDash;
+
+    public PlayerMovementState mPlayerRunState { get; set; }
+    public PlayerDashState mPlayerDashState { get; set; }
+    public PlayerAttackState mPlayerAttackState { get; set; }
+    public PlayerBlockState mPlayerBlockState { get; set; }
 
     [SerializeField]
     private PlayerAttackSOBase PlayerAttackBase, PlayerAttackParry;
-    public PlayerAttackSOBase PlayerAttackBaseInstance { get; set; }
-    public PlayerAttackState PlayerAttackState { get; set; }
+    [SerializeField]
+    private PlayerBlockSOBase PlayerBlock;
+
+    public PlayerMovementBase mPlayerRunInstance { get; set; }
+    public PlayerMovementBase mPlayerDashInstance { get; set; }
+    public PlayerAttackSOBase mPlayerAttackBaseInstance { get; set; }
+    public PlayerBlockSOBase mPlayerBlockInstance { get; set; }
     #endregion
-    public ProjectileSkillSOBase ProjectileSkillInstance;
+    public ProjectileSkillSOBase mProjectileSkillInstance;
+
 
     [SerializeField]
     public  ProjectileSkillSOBase SingleProjectileSkill, TripleProjectileSkill;
-    [field: SerializeField] public float MaxHealth { get; set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
 
-    [SerializeField] SwordBase sword;
+    [SerializeField] public  SwordBase sword;
+    [SerializeField] Transform MagicSphereShield;
+    [SerializeField] Transform SwordTransform;
 
+    public void HideSword()
+    {
+        SwordTransform.gameObject.SetActive(false);
+    }
+    public void ShowSword()
+    {
+        SwordTransform.gameObject.SetActive(true);
+    }
     private void Awake()
     {
+        if(playerData == null)
+        {
+            Debug.Log("Null PlayerData");
+            return;
+        }
+        playerData = Instantiate(playerData);
+
         mCamera = Camera.main.gameObject.transform;
-        CurrentHealth = MaxHealth;
-        CurrentStamina = MaxStamina;
+        inGameUI.SetPlayer(this);
+        CurrentHealth = playerData.MaxHealth;
+        CurrentStamina = playerData.MaxStamina;
         mRigidbody = GetComponent<Rigidbody>();
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         Initialize();
     }
+
     public void LoadNextLevel()
     {
         inGameUI.FadeInLoadNextLevel();
@@ -73,68 +103,105 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         SingleProjectileSkill = Instantiate(SingleProjectileSkill);
         TripleProjectileSkill = Instantiate(TripleProjectileSkill);
-        PlayerRunInstance = Instantiate(PlayerRunBase);
-        PlayerDashInstance = Instantiate(PlayerDash);
+        mPlayerRunInstance = Instantiate(mPlayerRunBase);
+        mPlayerDashInstance = Instantiate(mPlayerDash);
+        mPlayerBlockInstance = Instantiate(PlayerBlock);
 
-        PlayerAttackBaseInstance = Instantiate(PlayerAttackBase);
+        mPlayerAttackBaseInstance = Instantiate(PlayerAttackBase);
         PlayerAttackParry = Instantiate(PlayerAttackParry);
-        ProjectileSkillInstance = SingleProjectileSkill;
-        PlayerDashInstance.Initialize(gameObject, this);
-        PlayerRunInstance.Initialize(gameObject, this);
-        PlayerAttackBaseInstance.Initialize(gameObject, this);
+        mProjectileSkillInstance = SingleProjectileSkill;
+        mPlayerDashInstance.Initialize(gameObject, this);
+        mPlayerRunInstance.Initialize(gameObject, this);
+        mPlayerAttackBaseInstance.Initialize(gameObject, this);
+        mPlayerBlockInstance.Initialize(gameObject, this);
 
 
         PlayerStateMachine = new StateMachine();
-        PlayerDashState = new PlayerDashState(PlayerStateMachine, this);
-        PlayerRunState = new PlayerMovementState(PlayerStateMachine, this);
-        PlayerAttackState = new PlayerAttackState(PlayerStateMachine, this);
-        PlayerStateMachine.Initialize(PlayerRunState);
+        mPlayerDashState = new PlayerDashState(PlayerStateMachine, this);
+        mPlayerRunState = new PlayerMovementState(PlayerStateMachine, this);
+        mPlayerAttackState = new PlayerAttackState(PlayerStateMachine, this);
+        mPlayerBlockState = new PlayerBlockState(PlayerStateMachine, this);
+        PlayerStateMachine.Initialize(mPlayerRunState);
 
+    }
+    public void RecoverStamina(float aAmount)
+    {
+        if(aAmount < 0)
+        {
+            return;
+        }
+        CurrentStamina += aAmount;
+        if(CurrentStamina> playerData.MaxStamina)
+        {
+            CurrentStamina = playerData.MaxStamina;
+        }
+        UpdateStaminaUI();
     }
     private void Update()
     {
-        if(CurrentStamina < MaxStamina)
+        if(CurrentStamina < playerData.MaxStamina)
         {
-            CurrentStamina += Time.deltaTime * StaminaRecoveryRate;
-            UpdateStaminaUI();
+            RecoverStamina(Time.deltaTime * playerData.StaminaRecoveryRate);
         }
         if (PlayerStateMachine == null) return;
         PlayerStateMachine.CurrentState.FrameUpdate();
 
     }
+    public bool UseStamina(float aStaminaCost)
+    {
+        if (aStaminaCost > CurrentStamina || CurrentStamina < 1 )
+        {
+            return false;
+        }
+
+        CurrentStamina -= aStaminaCost;
+        UpdateStaminaUI();
+        return true;
+    }
     public void UpdateStaminaUI()
     {
         if(inGameUI != null)
         {
-            inGameUI.UpdateCurrentStaminaUI(CurrentStamina, MaxStamina);
+            inGameUI.UpdateCurrentStaminaUI(CurrentStamina, playerData.MaxStamina);
         }
+    }
+    public void TurnOnShield()
+    {
+        isBlocking = true;
+        //MagicSphereShield.gameObject.SetActive(true);
+    }
+    public void TurnOffShield()
+    {
+        isBlocking = false;
+        animator.SetTrigger("BlockFinish");
     }
     public float GetCurrentStamina() { return CurrentStamina; }
     public void PerfomrProjectileAttackSkill()
     {
-        ProjectileSkillInstance.UseSkill(projectileSpawner);
+        mProjectileSkillInstance.UseSkill(projectileSpawner);
     }
     public void PerfomrProjectileAttackSkill(Vector3 aDirection)
     {
-        ProjectileSkillInstance.UseSkill(projectileSpawner, aDirection);
+        mProjectileSkillInstance.UseSkill(projectileSpawner, aDirection);
     }
     public void ParryProjectile()
     {
-        if (ProjectileSkillInstance == null) return;
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, ParryRadius, ProjectilesLayer);
+        if (mProjectileSkillInstance == null) return;
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.ParryRadius, ProjectilesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             // Shoot Forward
             // ProjectileSkillInstance.UseSkill(projectileSpawner);
 
             // Reflect projectile
-            ProjectileSkillInstance.UseSkill(projectileSpawner, (collider.GetComponent<Rigidbody>().velocity * -1).normalized);
+            mProjectileSkillInstance.UseSkill(projectileSpawner, (collider.GetComponent<Rigidbody>().velocity * -1).normalized);
             if (ParryParticleSystem != null)
             {
                 ParryParticleSystem.Emit(30);
             }
             // Recover Stamina on Parry
-            RecoverStamina(RecoverStaminaOnParry);
+            OnParry?.Invoke();
+            //RecoverStamina(playerData.RecoverStaminaOnParry);
             collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
         }
     }
@@ -143,9 +210,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (aAmount < 0) return;
         CurrentStamina += aAmount;
-        if (CurrentStamina > MaxStamina)
+        if (CurrentStamina > playerData.MaxStamina)
         {
-            CurrentStamina = MaxStamina;
+            CurrentStamina = playerData.MaxStamina;
         }
         UpdateStaminaUI();
     }
@@ -153,11 +220,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (aAmount < 0) return;
         CurrentHealth += aAmount;
-        if (CurrentHealth > MaxHealth)
+        if (CurrentHealth > playerData.MaxHealth)
         {
-            CurrentHealth = MaxHealth;
+            CurrentHealth = playerData.MaxHealth;
         }
-        inGameUI.UpdateCurrentHealthUI(CurrentHealth, MaxHealth);
+        inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
     }
     public void DashForward(int aDashForce)
     {
@@ -170,7 +237,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
         }
 
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -182,7 +249,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
         CanAttack = true;
-        Attacking = false;
+        isAttacking = false;
         ParryProjectile();
     }
     public void CustomMeleeAttack(float  aWeaponDamagePercentage)
@@ -191,7 +258,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             return;
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -203,7 +270,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
         CanAttack = true;
-        Attacking = false;
+        isAttacking = false;
         ParryProjectile();
     }
     public void FirstMeleeAttack(float aWeaponDamagePercentage)
@@ -213,7 +280,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in EnemyColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -227,8 +294,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
         CanAttack = true;
-        Attacking = false;
+        isAttacking = false;
         ParryProjectile();
+    }
+    public void ParryModifier()
+    {
+        OnParry?.Invoke();
     }
     public void SecondMeleeAttack(float aWeaponDamagePercentage)
     {
@@ -237,7 +308,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -253,7 +324,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         PerfomrProjectileAttackSkill();
         //PerfomrProjectileAttackSkill();
         CanAttack = true;
-        Attacking = false;
+        isAttacking = false;
         ParryProjectile();
     }
     public void ThirdMeleeAttack(float aWeaponDamagePercentage)
@@ -263,7 +334,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -276,7 +347,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
         CanAttack = true;
-        Attacking = false;
+        isAttacking = false;
         ParryProjectile();
     }
 
@@ -287,11 +358,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public void ChangeStateToRun()
     {
-        if (Attacking)
+        if (isAttacking)
         {
             return;
         }
-        PlayerStateMachine.ChangeState(PlayerRunState);
+        PlayerStateMachine.ChangeState(mPlayerRunState);
     }
 
     private void FixedUpdate()
@@ -313,7 +384,17 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(int aDamageAmount)
     {
         CurrentHealth -= aDamageAmount;
-
+        if (isBlocking)
+        {
+            if (UseStamina(aDamageAmount * playerData.StaminaDrainPercentajeOnBlock))
+            {
+                return;
+            }
+            else
+            {
+                TurnOffShield();
+            }
+        }
         if(CurrentHealth <= 0 && isAlive)
         {
             isAlive = false;
@@ -321,7 +402,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         if(inGameUI != null)
         {
-            inGameUI.UpdateCurrentHealthUI(CurrentHealth,MaxHealth);
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
 
         }
 
@@ -329,6 +410,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Death()
     {
+        sword.ResetAllModifiers();
         animator.SetTrigger("Death");
         inGameUI.FadeInResetLevel();
         this.enabled = false;
@@ -336,14 +418,18 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public bool TryDash()
     {
-        if (DashStaminaCost > CurrentStamina || (playerInputActions.Player.Movement.ReadValue<Vector2>() == Vector2.zero))
+        if (isDashing)
+        {
+            return false;
+        }
+        if (playerData.DashStaminaCost > CurrentStamina)
         {
             return false;
 
         }
         else
         {
-            CurrentStamina -= DashStaminaCost;
+            CurrentStamina -= playerData.DashStaminaCost;
             UpdateStaminaUI();
             return true;
         }
@@ -372,5 +458,19 @@ public class PlayerController : MonoBehaviour, IDamageable
             return true;
         }
 
+    }
+
+    internal void Heal(int aAmount)
+    {
+        if (aAmount <0)
+        {
+            return;
+        }
+        CurrentHealth += aAmount;
+        if (CurrentHealth > playerData.MaxHealth) 
+        {
+            CurrentHealth = playerData.MaxHealth;
+        }
+        inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
     }
 }

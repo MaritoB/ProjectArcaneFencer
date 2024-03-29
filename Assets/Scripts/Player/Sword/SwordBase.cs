@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,28 +6,44 @@ public class SwordBase : MonoBehaviour
 
     public delegate void OnMeleeHitDelegate(Enemy enemy);
     public event OnMeleeHitDelegate OnFirstMeleeHit,OnSecondMeleeHit, OnThirdMeleeHit;
-    public List<WeaponModifierSO> weaponModifierList;
+    public List<WeaponModifierSO> AllWeaponModifierList;
+    PlayerController playerController;
     
     [SerializeField]int baseDamage;
-
     //[SerializeField] float attackSpeed;
 
     [SerializeField] int attackStaminaCost;
 
     [SerializeField] int currentDamage;
+    
     public int GetBaseDamage() { return baseDamage; }
     public int GetCurrentDamage() { return currentDamage; }
-    public void AddDamage(int aDamage)
+    public void SetDamage(int aDamage)
     {
         if (aDamage < 0)
         {
             return;
         }
-        currentDamage += aDamage;
-    } 
+        currentDamage = aDamage;
+    }
+
     void ResetBaseValues()
     {
         currentDamage = baseDamage;
+    }
+    public void AplyNewWeaponModifier(WeaponModifierSO aMod)
+    {
+        int modIndex = AllWeaponModifierList.FindIndex((x => x.modifierName == aMod.modifierName));
+        if (modIndex !=  -1)
+        {
+            AllWeaponModifierList[modIndex].modifierLevel++;
+            ApplyAllModifiers();
+
+        }
+        else
+        {
+            Debug.Log("WeaponModifier index not found");
+        }
     }
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
@@ -54,15 +68,40 @@ public class SwordBase : MonoBehaviour
     public void ApplyAllModifiers()
     {
         ResetBaseValues();
-        foreach(WeaponModifierSO modifier in weaponModifierList)
+        foreach(WeaponModifierSO modifier in AllWeaponModifierList)
         {
-            modifier.ApplyModifier(this);
+            if (modifier.modifierLevel < 1) continue;
+            modifier.ApplyModifier(playerController);
+            Debug.Log(modifier.modifierName + $" {modifier.modifierLevel}");
         }
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public WeaponModifierSO GetRandomModifier()
     {
-        ApplyAllModifiers();
+        if (AllWeaponModifierList.Count == 0) return null;
+        int index = UnityEngine.Random.Range(0, AllWeaponModifierList.Count);
+        return AllWeaponModifierList[index];
+    }
+    void Start()
+    { 
+        /*
+        for (int i = 0; i < AllWeaponModifierList.Count; ++i)
+        {
+            AllWeaponModifierList[i] = Instantiate(AllWeaponModifierList[i]);
+
+        }
+         */
+        
+        playerController = GetComponent<PlayerController>();
+
+        //ApplyAllModifiers();
+    }
+    public void ResetAllModifiers()
+    {
+        for (int i = 0; i < AllWeaponModifierList.Count; ++i)
+        {
+            AllWeaponModifierList[i].modifierLevel = 0;
+        }
     }
     internal float GetAttackStaminaCost()
     {

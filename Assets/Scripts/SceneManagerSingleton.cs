@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class SceneManagerSingleton : MonoBehaviour
 {
+    public int TotalSouls = 0;
     private static SceneManagerSingleton instance;
-
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     public static SceneManagerSingleton Instance
     {
         get
@@ -21,7 +25,16 @@ public class SceneManagerSingleton : MonoBehaviour
             return instance;
         }
     }
+    public void AddSouls(int aSoulsAmount)
+    {
+        if (aSoulsAmount < 0) return;
+        TotalSouls += aSoulsAmount;
+    }
 
+    public void WinLevel()
+    {
+
+    }
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

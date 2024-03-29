@@ -63,4 +63,11 @@ public class AnimationHelperPlayer : MonoBehaviour
             controller.DashForward(aDashForce);
         }
     }
+    public void TurnOnMagicShieldEvent()
+    {
+        if (controller != null)
+        {
+            controller.TurnOnShield();
+        }
+    }
 }

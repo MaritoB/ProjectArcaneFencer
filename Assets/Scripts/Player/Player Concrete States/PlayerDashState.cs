@@ -16,27 +16,27 @@ public class PlayerDashState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        player.PlayerDashInstance.DoEnterLogic();
+        player.mPlayerDashInstance.DoEnterLogic();
     }
 
 
     public override void ExitState()
     {
         base.ExitState();
-        player.PlayerDashInstance.DoExitLogic();
+        player.mPlayerDashInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        player.PlayerDashInstance.DoFrameUpdateLogic();
+        player.mPlayerDashInstance.DoFrameUpdateLogic();
     }
 
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        player.PlayerDashInstance.DoPhysicsLogic();
+        player.mPlayerDashInstance.DoPhysicsLogic();
     }
 
 }

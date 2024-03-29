@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,13 @@ public class PlayerInGameUI : MonoBehaviour
     // Start is called before the first frame update
     Animator animator;
     [SerializeField]
+    ItemModifierUI itemModifierUI1, itemModifierUI2, itemModifierUI3;
+    [SerializeField]
     RectTransform MaxHealth, CurrentHealth, MaxStamina, CurrentStamina;
     private Vector2 MaxHealthSize, MaxStaminaSize;
     private Vector2 CurrentHealthSize, CurrentStaminaSize;
+    PlayerController playerController;
+    [SerializeField] RectTransform aWeaponModPanel;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -19,6 +24,35 @@ public class PlayerInGameUI : MonoBehaviour
         MaxStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
         CurrentHealthSize = new Vector2(MaxHealth.rect.width, MaxHealth.rect.height);
         CurrentStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
+        
+    }
+    public void SetPlayer(PlayerController playerController)
+    {
+        if (playerController == null) return;
+        this.playerController = playerController;
+        SetupSkillUI();
+    }
+    public void SelectModifier(WeaponModifierSO aModifier)
+    {
+    }
+
+    public void SetupSkillUI()
+    {
+        if (playerController == null) return;
+        WeaponModifierSO mod1, mod2, mod3;
+        mod1 = playerController.sword.GetRandomModifier();
+        mod2 = playerController.sword.GetRandomModifier();
+        mod3 = playerController.sword.GetRandomModifier();
+        while (mod1 == mod2) {
+            mod2 = playerController.sword.GetRandomModifier();
+        }
+        while (mod1 == mod3|| mod2==mod3)
+        {
+            mod3 = playerController.sword.GetRandomModifier();
+        }
+        itemModifierUI1.UpdateItemModifierUI(mod1, this);
+        itemModifierUI2.UpdateItemModifierUI(mod2, this);
+        itemModifierUI3.UpdateItemModifierUI(mod3, this);
     }
     public void FadeInResetLevel()
     {
@@ -27,6 +61,14 @@ public class PlayerInGameUI : MonoBehaviour
             return;
         }
         animator.SetTrigger("FadeInResetLevel");
+    }
+    public void FadeInResetGame()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        animator.SetTrigger("FadeInResetGame");
     }
     public void FadeInLoadNextLevel()
     {
@@ -71,6 +113,14 @@ public class PlayerInGameUI : MonoBehaviour
     {
         SceneManagerSingleton.Instance.TryLoadNextScene();
     }
+    public void ResetGame()
+    {
+        SceneManagerSingleton.Instance.LoadScene(0);
+    }
 
-
+    internal void AplyNewWeaponModifier(WeaponModifierSO aMod)
+    {
+        playerController.sword.AplyNewWeaponModifier(aMod);
+        aWeaponModPanel.gameObject.SetActive(false);
+    }
 }

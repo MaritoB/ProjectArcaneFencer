@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db065ca5283d2c47a489408316a5549, type: 3}
+  m_Name: _Dash Freedom
+  m_EditorClassIdentifier: 
+  modifierName: 'Dash Freedom '
+  modifierDescription: Your Dash is now Chanelling, the Stamina cost is decreased
+    to 8, but the Speed is decreased to 500and Time is Decreased to 0,15.
+  modifierLevel: 2
+  modifierSprite: {fileID: 21300000, guid: b2aa4c6db0a199d46b4652c088e8420a, type: 3}
+  ModifiedDashSpeedBase: 400
+  DashSpeedLevelMultiplier: 50
+  ModifiedDashTimeBase: 0.15
+  DashTimeLevelMultiplier: 0.05
+  DashCostLevelMultiplier: -0.5
+  ModifiedDashStaminaCostbase: 8
+  isChannellingDash: 1
