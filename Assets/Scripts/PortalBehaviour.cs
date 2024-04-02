@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class PortalBehaviour : MonoBehaviour
@@ -7,6 +6,7 @@ public class PortalBehaviour : MonoBehaviour
     Animator animator;
     PlayerController player;
     public bool CloseAndDisable = false;
+    public FMODUnity.EventReference PortalSound;
 
     private void Start()
     {
@@ -24,6 +24,10 @@ public class PortalBehaviour : MonoBehaviour
         {
             animator.SetTrigger("OpenPortal");
         }
+    }
+    public void PlayPortalSoundEvent()
+    {
+        AudioManager.instance.PlayOneShot(PortalSound, transform.position);
     }
     public void LoadNextLevelEvent()
     {

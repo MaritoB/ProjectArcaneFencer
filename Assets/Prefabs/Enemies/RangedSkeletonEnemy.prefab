@@ -123,8 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0070015e0a896c14da477a6d4598a1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyData: {fileID: 11400000, guid: e25ff28bea821fc439708845bf249481, type: 2}
-  _enemyStateData: {fileID: 11400000, guid: 60c8015ba0dd790479064c3496bd05bb, type: 2}
+  enemyData: {fileID: 11400000, guid: e25ff28bea821fc439708845bf249481, type: 2}
+  enemySoundData: {fileID: 11400000, guid: a2446dc00228ad448b4602d4f3c73dee, type: 2}
+  enemyStateData: {fileID: 11400000, guid: 60c8015ba0dd790479064c3496bd05bb, type: 2}
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -134,6 +135,7 @@ MonoBehaviour:
   IsAttacking: 0
   CanMove: 1
   IsAlive: 1
+  isUnstopable: 0
   projectileSpawner: {fileID: 8715147753852310779}
 --- !u!54 &8715147753852310769
 Rigidbody:

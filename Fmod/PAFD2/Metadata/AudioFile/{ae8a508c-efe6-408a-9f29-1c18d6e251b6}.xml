@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{ae8a508c-efe6-408a-9f29-1c18d6e251b6}">
+		<property name="assetPath">
+			<value>Diablo II Sounds/skill/barbarian/find3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.46004535147392289</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f9f4e14a-4e4b-4f40-a5a4-f26cdf67b796}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{72d3141c-ca95-4a98-8799-1d8f49940ca2}">
+		<property name="assetPath">
+			<value>Diablo II Sounds/ambient/Event/drip3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.76707482993197273</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f9f4e14a-4e4b-4f40-a5a4-f26cdf67b796}</destination>
+		</relationship>
+	</object>
+</objects>

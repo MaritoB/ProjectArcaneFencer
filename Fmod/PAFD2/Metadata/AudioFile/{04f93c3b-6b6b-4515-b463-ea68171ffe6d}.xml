@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{04f93c3b-6b6b-4515-b463-ea68171ffe6d}">
+		<property name="assetPath">
+			<value>Diablo II Sounds/monster/diablo/laugh3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>4.1761451247165535</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f9f4e14a-4e4b-4f40-a5a4-f26cdf67b796}</destination>
+		</relationship>
+	</object>
+</objects>

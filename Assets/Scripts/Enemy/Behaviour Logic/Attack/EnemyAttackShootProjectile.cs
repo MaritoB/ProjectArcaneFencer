@@ -17,6 +17,9 @@ public class EnemyAttackShootProjectile : EnemyAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        enemy.animator.SetTrigger("Attack");
+        enemy.IsAttacking = true;
+        _currentAttackTime = enemy.enemyData.AttackRate;
     }
 
     public override void DoExitLogic()
@@ -37,8 +40,8 @@ public class EnemyAttackShootProjectile : EnemyAttackSOBase
         {
             enemy.animator.SetTrigger("Attack");
             enemy.IsAttacking = true;
-            _currentAttackTime = AttackSpeed;
-
+            _currentAttackTime = enemy.enemyData.AttackRate;
+            return;
         }
         if (!enemy.IsWithinStrikingDistance)
         {

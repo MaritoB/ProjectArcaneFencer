@@ -3,7 +3,9 @@
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Enemy Data")]
 public class EnemyData : ScriptableObject
 {
-    public float maxHealth = 30f;
+    public float maxHealth;
     public int soulsAmount;
-    // Agrega aquí otros datos del enemigo, como velocidad, daño, etc.
+    public float attackRange;
+    public int attackDamage;
+    public float AttackRate;
 }

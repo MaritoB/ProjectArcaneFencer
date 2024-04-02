@@ -56,6 +56,38 @@ public class AnimationHelperPlayer : MonoBehaviour
             controller.ThirdMeleeAttack(aWeaponDamagePercentage);
         }
     }
+    public void PlayFootStepSoundEvent()
+    {
+
+        if (controller != null)
+        {
+            controller.PlayFootStepSounds();
+        }
+    }
+    public void PlayAttack1SoundEvent()
+    {
+
+        if (controller != null)
+        {
+            controller.PlayAttack1Sounds();
+        }
+    }
+    public void PlayAttack2SoundEvent()
+    {
+
+        if (controller != null)
+        {
+            controller.PlayAttack2Sounds();
+        }
+    }
+    public void PlayAttack3SoundEvent()
+    {
+
+        if (controller != null)
+        {
+            controller.PlayAttack3Sounds();
+        }
+    }
     public void CustomDashEvent(int aDashForce)
     {
         if (controller != null)

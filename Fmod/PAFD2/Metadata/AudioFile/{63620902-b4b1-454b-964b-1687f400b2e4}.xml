@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{63620902-b4b1-454b-964b-1687f400b2e4}">
+		<property name="assetPath">
+			<value>Diablo II Sounds/skill/sorceress/teleport.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.76884353741496603</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f9f4e14a-4e4b-4f40-a5a4-f26cdf67b796}</destination>
+		</relationship>
+	</object>
+</objects>

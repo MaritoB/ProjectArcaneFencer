@@ -196,8 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d552dcb10bd92f1418868a4df6fdf873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyData: {fileID: 11400000, guid: 32a31640f80ff8f428f99599adfad11a, type: 2}
-  _enemyStateData: {fileID: 11400000, guid: 132a9fee696b2614491fbb7639112623, type: 2}
+  enemyData: {fileID: 11400000, guid: 32a31640f80ff8f428f99599adfad11a, type: 2}
+  enemySoundData: {fileID: 11400000, guid: b4d737fd393296146b3359bab2b4a3b5, type: 2}
+  enemyStateData: {fileID: 11400000, guid: 132a9fee696b2614491fbb7639112623, type: 2}
   wallLayer:
     serializedVersion: 2
     m_Bits: 2240
@@ -207,8 +208,7 @@ MonoBehaviour:
   IsAttacking: 0
   CanMove: 1
   IsAlive: 1
-  attackRange: 1
-  attackDamage: 15
+  isUnstopable: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -349,7 +349,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.5
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &754349983876897249
 MonoBehaviour:
@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754349984280637055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -0.26, z: 1.55}
+  m_LocalPosition: {x: 0.42, y: 0, z: 1.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -422,8 +422,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2275823132295707218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.071, y: -0.175, z: 0.57}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 754349984280637054}

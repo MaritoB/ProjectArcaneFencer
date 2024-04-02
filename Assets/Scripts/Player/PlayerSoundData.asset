@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be297baa9c0fd342b342cb1f1346ae8, type: 3}
+  m_Name: PlayerSoundData
+  m_EditorClassIdentifier: 
+  PlayerAttack1:
+    Guid:
+      Data1: 1939113377
+      Data2: 1308994509
+      Data3: 634352805
+      Data4: 1183906576
+    Path: event:/Player/AttackSword1
+  PlayerAttack2:
+    Guid:
+      Data1: 1919842253
+      Data2: 1189686205
+      Data3: -299402089
+      Data4: 147626121
+    Path: event:/Player/AttackSword2
+  PlayerAttack3:
+    Guid:
+      Data1: -1686209195
+      Data2: 1332137249
+      Data3: -2015033701
+      Data4: 1423241029
+    Path: event:/Player/AttackSword3
+  PlayerOnHit:
+    Guid:
+      Data1: -555926154
+      Data2: 1278493978
+      Data3: 50498458
+      Data4: -473899680
+    Path: event:/Player/OnHit
+  PlayerDeath:
+    Guid:
+      Data1: 2069104186
+      Data2: 1280349019
+      Data3: -870625347
+      Data4: -1926808638
+    Path: event:/Player/Death
+  PlayerDash:
+    Guid:
+      Data1: -559300525
+      Data2: 1273950761
+      Data3: -698426178
+      Data4: 1749649899
+    Path: event:/Player/Dash
+  PlayerShield:
+    Guid:
+      Data1: 435673196
+      Data2: 1195132529
+      Data3: 69341060
+      Data4: 1972732464
+    Path: event:/Player/Shield
+  PlayerParry:
+    Guid:
+      Data1: -599296036
+      Data2: 1096723984
+      Data3: -633848157
+      Data4: 930633240
+    Path: event:/Player/Parry
+  PlayerStep:
+    Guid:
+      Data1: 1659705550
+      Data2: 1184382034
+      Data3: -356915314
+      Data4: 517312120
+    Path: event:/Player/FootSteps

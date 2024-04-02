@@ -9,6 +9,7 @@ public class RangeEnemy : Enemy
     public override void Attack()
     {
         base.Attack();
+        IsAttacking = false;
         if (projectileSpawner != null)
         {
             projectileSpawner.ShootProjectileForwardFromPool();

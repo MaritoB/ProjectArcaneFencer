@@ -81,6 +81,13 @@ public class PlayerSimpleRun : PlayerMovementBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
+        if (player.playerInputActions.Player.Block.IsPressed())
+        {
+            if (!player.isBlocking)
+            {
+                player.PlayerStateMachine.ChangeState(player.mPlayerBlockState);
+            }
+        }
     }
 
 

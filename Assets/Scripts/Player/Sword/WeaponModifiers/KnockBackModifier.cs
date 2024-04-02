@@ -2,16 +2,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "_KnockBackModifier", menuName = "WeaponModifiers/KnockBackOnThirdStrike")]
 public class KnockBackModifier : WeaponModifierSO
 {
-    public int KnockBackForce;
+    public int KnockBackForceBase, KnockBackForceMutiplier;
+    int currentKnockbackForce;
     Transform playerTransform;
     public override void ApplyModifier(PlayerController aPlayer)
     {
+        currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier* modifierLevel;
+        aPlayer.sword.OnThirdMeleeHit -= KnockBackEnemy;
         aPlayer.sword.OnThirdMeleeHit += KnockBackEnemy;
         playerTransform = aPlayer.transform;
+        modifierDescription = "push enemies away to the ground with " + currentKnockbackForce + " Force.";
+        UpdateDescription();
     }
+    public override void UpdateDescription()
+    {
+        currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
+        modifierDescription = "push enemies away to the ground with " + currentKnockbackForce + " Force.";
+    }
+
     public void KnockBackEnemy(Enemy enemy)
     {
-        Vector3 force = (enemy.transform.position - playerTransform.position).normalized * KnockBackForce;
+        if(enemy == null) {
+            return;
+        }
+        Vector3 force = (enemy.transform.position - playerTransform.position).normalized * currentKnockbackForce;
         force.y = 0;
         enemy.GetKnockBack(force);
     }

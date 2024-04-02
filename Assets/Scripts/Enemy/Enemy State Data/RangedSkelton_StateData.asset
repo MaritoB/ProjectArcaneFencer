@@ -19,4 +19,5 @@ MonoBehaviour:
   attackStateData: {fileID: 11400000, guid: 641422018c8466f45ba75c7134c6a40e, type: 2}
   fleeStateData: {fileID: 11400000, guid: a5da9463d3ef5014792522ca3feea481, type: 2}
   knockBackStateData: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
+  hitStunStateData: {fileID: 11400000, guid: 8cc40590518e6f64bb492061cb4d64ae, type: 2}
   dieStateData: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}

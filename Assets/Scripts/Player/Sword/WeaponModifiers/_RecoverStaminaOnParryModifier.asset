@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4433653c087b7d349a4625fa62dde148, type: 3}
   m_Name: _RecoverStaminaOnParryModifier
   m_EditorClassIdentifier: Assembly-CSharp::RecoverLifeOnParryModifierRecoverStaminaOnParryModifier
-  modifierName: Recover Stamina on Parry
-  modifierDescription: Recover 18 Stamina  Parrying projectiles
-  modifierLevel: 1
-  modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
+  modifierName: Recover Stamina On Parry
+  modifierDescription: Recover 15 Stamina  Parrying projectiles
+  modifierLevel: 0
+  modifierSprite: {fileID: 21300000, guid: b2aa4c6db0a199d46b4652c088e8420a, type: 3}
   RecoverStaminaOnParryBase: 10
-  RecoverStaminaOnParryMultiplier: 2
+  RecoverStaminaOnParryMultiplier: 5

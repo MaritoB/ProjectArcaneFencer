@@ -20,6 +20,6 @@ MonoBehaviour:
   DashStaminaCost: 15
   RecoverStaminaOnParry: 25
   StaminaRecoveryRate: 10
-  ParryRadius: 1.5
-  MeleeAttackRadius: 1.5
+  ParryRadius: 1
+  MeleeAttackRadius: 1
   StaminaDrainPercentajeOnBlock: 0.7

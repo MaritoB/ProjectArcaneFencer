@@ -2389,6 +2389,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1819573828, guid: a15a1424c05f8044cabb438037739e4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2925488915474577587, guid: a15a1424c05f8044cabb438037739e4e,
         type: 3}
       propertyPath: m_Name
@@ -4399,6 +4403,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1729484188727638475, guid: cb51cd0a4b944274d94996d6f2708d79,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729484188727638475, guid: cb51cd0a4b944274d94996d6f2708d79,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729484188727638475, guid: cb51cd0a4b944274d94996d6f2708d79,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1906603334422167004, guid: cb51cd0a4b944274d94996d6f2708d79,
         type: 3}
       propertyPath: m_Name
@@ -4537,17 +4556,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5859447497833641905, guid: 8703dca54aa1bf94fa5cf02a4b92d32b,
-        type: 3}
-      propertyPath: AllWeaponModifierList.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5859447497833641905, guid: 8703dca54aa1bf94fa5cf02a4b92d32b,
-        type: 3}
-      propertyPath: AllWeaponModifierList.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a1fec250cfda32488c4229bce17173e,
-        type: 2}
     - target: {fileID: 5859447497833641910, guid: 8703dca54aa1bf94fa5cf02a4b92d32b,
         type: 3}
       propertyPath: inGameUI

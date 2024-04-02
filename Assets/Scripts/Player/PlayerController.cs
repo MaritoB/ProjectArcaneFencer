@@ -1,4 +1,5 @@
 
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     //public PlayerInputManager InputManager;
     public  PlayerInput playerInput;
     public PlayerData playerData;
+    public PlayerSoundData playerSoundData;
+        
     public PlayerInputActions playerInputActions;
     public Rigidbody mRigidbody;
     public Transform mCamera;
@@ -20,7 +23,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     PlayerInGameUI inGameUI;
     [SerializeField]
-    public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS;
+    public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS, BloodOnHit;
     public delegate void OnParryDelegate();
     public event OnParryDelegate OnParry;
     [SerializeField]
@@ -67,6 +70,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] public  SwordBase sword;
     [SerializeField] Transform MagicSphereShield;
     [SerializeField] Transform SwordTransform;
+    [SerializeField] Transform SwordPS;
+    public Transform AttackTransform;
 
     public void HideSword()
     {
@@ -84,7 +89,6 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
         }
         playerData = Instantiate(playerData);
-
         mCamera = Camera.main.gameObject.transform;
         inGameUI.SetPlayer(this);
         CurrentHealth = playerData.MaxHealth;
@@ -160,7 +164,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public void UpdateStaminaUI()
     {
-        if(inGameUI != null)
+        Vector3 newScalePS = SwordPS.transform.transform.localScale;
+        newScalePS.y = 0.1f + (CurrentStamina / playerData.MaxStamina);
+        SwordPS.transform.transform.localScale = newScalePS;
+        if (inGameUI != null)
         {
             inGameUI.UpdateCurrentStaminaUI(CurrentStamina, playerData.MaxStamina);
         }
@@ -169,6 +176,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         isBlocking = true;
         //MagicSphereShield.gameObject.SetActive(true);
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
     }
     public void TurnOffShield()
     {
@@ -201,11 +209,28 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
             // Recover Stamina on Parry
             OnParry?.Invoke();
+
+            AudioManager.instance.PlayOneShot(playerSoundData.PlayerParry, transform.position);
             //RecoverStamina(playerData.RecoverStaminaOnParry);
             collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
         }
     }
-
+    public void PlayAttack1Sounds()
+    {
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerAttack1, transform.position);
+    }
+    public void PlayAttack2Sounds()
+    {
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerAttack2, transform.position);
+    }
+    public void PlayAttack3Sounds()
+    {
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerAttack3, transform.position);
+    }
+    public void PlayFootStepSounds()
+    {
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerStep, transform.position);
+    }
     private void RecoverStamina(int aAmount)
     {
         if (aAmount < 0) return;
@@ -290,9 +315,9 @@ public class PlayerController : MonoBehaviour, IDamageable
                 //enemy.TakeDamage(sword.GetCurrentDamage());
                 sword.Attack(enemy, aWeaponDamagePercentage);
                 sword.FirstStrikeModifiers(enemy);
-                RecoverLife(5);
             }
         }
+        sword.FirstStrikePerformedModifiers();
         CanAttack = true;
         isAttacking = false;
         ParryProjectile();
@@ -318,11 +343,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 //enemy.TakeDamage(sword.GetCurrentDamage());
                 sword.Attack(enemy, aWeaponDamagePercentage);
                 sword.SecondStrikeModifiers(enemy);
-                PerfomrProjectileAttackSkill((enemy.transform.position - transform.position ).normalized);
             }
         }
-        PerfomrProjectileAttackSkill();
-        //PerfomrProjectileAttackSkill();
+
+        sword.SecondStrikePerformedModifiers();
         CanAttack = true;
         isAttacking = false;
         ParryProjectile();
@@ -346,6 +370,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 sword.ThirdStrikeModifiers(enemy);
             }
         }
+        sword.ThirdStrikePerformedModifiers();
         CanAttack = true;
         isAttacking = false;
         ParryProjectile();
@@ -383,17 +408,28 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(int aDamageAmount)
     {
-        CurrentHealth -= aDamageAmount;
+        if(aDamageAmount< 0) return;
+
         if (isBlocking)
         {
             if (UseStamina(aDamageAmount * playerData.StaminaDrainPercentajeOnBlock))
             {
+
+                AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
                 return;
             }
             else
             {
                 TurnOffShield();
             }
+        }
+        CurrentHealth -= aDamageAmount;
+        if(BloodOnHit != null)
+        {
+            BloodOnHit.Emit(aDamageAmount/3);
+            AudioManager.instance.PlayOneShot(playerSoundData.PlayerOnHit, transform.position);
+
+
         }
         if(CurrentHealth <= 0 && isAlive)
         {
@@ -403,7 +439,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         if(inGameUI != null)
         {
             inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
-
         }
 
     }
@@ -412,7 +447,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         sword.ResetAllModifiers();
         animator.SetTrigger("Death");
-        inGameUI.FadeInResetLevel();
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerDeath, transform.position);
+        inGameUI.FadeInResetGame();
         this.enabled = false;
     }
 
@@ -430,6 +466,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         else
         {
             CurrentStamina -= playerData.DashStaminaCost;
+            AudioManager.instance.PlayOneShot(playerSoundData.PlayerDash, transform.position);
             UpdateStaminaUI();
             return true;
         }

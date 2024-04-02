@@ -14,7 +14,7 @@ public class Horde
 
 public class RoomEvent : MonoBehaviour
 {
-
+    public FMODUnity.EventReference DoorSounds;
     public List<Door> doors;
     bool isEventPerformed = false;
     public Transform spawnArea;
@@ -47,6 +47,7 @@ public class RoomEvent : MonoBehaviour
     }
     public void CloseAllDoors()
     {
+        AudioManager.instance.PlayOneShot(DoorSounds, transform.position);
         foreach (Door door in doors)
         {
             door.Close();
@@ -54,6 +55,7 @@ public class RoomEvent : MonoBehaviour
     }
     public void OpenAllDoors()
     {
+        AudioManager.instance.PlayOneShot(DoorSounds, transform.position);
         foreach (Door door in doors)
         {
             door.Open();

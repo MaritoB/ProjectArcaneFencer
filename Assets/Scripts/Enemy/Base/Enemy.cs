@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
+using FMODUnity;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
-    [SerializeField] protected EnemyData _enemyData;
-    [SerializeField] protected EnemyStateData _enemyStateData;
+    public EnemyData enemyData;
+    public EnemySoundData enemySoundData;
+    public EnemyStateData enemyStateData;
     public LayerMask wallLayer;
     private Transform _playerTransform = null;
     [field: SerializeField] public float CurrentHealth { get; set; }
@@ -22,6 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool IsAttacking = false;
     public bool CanMove = true;
     public bool IsAlive = true;
+    public bool isUnstopable = false; 
     public StateMachine StateMachine { get; set; }
 
     public EnemyIdleState EnemyIdleState { get; set; }
@@ -29,15 +27,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyChaseState EnemyChaseRunForSecondsState { get; set; }
     public EnemyFleeState EnemyFleeState { get; set; }
     public EnemyAttackState EnemyAttackState { get; set; }
-    public EnemyKnockBackState EnemyKnockBackState { get; set; }
+    public EnemStunState EnemyStunState { get; set; }
     public EnemyDieState EnemyDieState { get; set; }
 
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
     public EnemyFleeSOBase EnemyFleeBaseInstance { get; set; }
-    public EnemyKnockBackSOBase EnemyKnockBackBaseInstance { get; set; }
+    public EnemyStunSOBase EnemyStunBaseInstance { get; set; }
     public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
+    public EnemyStunSOBase EnemyKnockbackInstance { get; set; }
+    public EnemyStunSOBase EnemyHitStunInstance { get; set; }
 
     RoomEvent roomEvent = null;
     public void SetOwner(RoomEvent room)
@@ -48,19 +48,26 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         roomEvent.InformEnemyDeath();
     }
+
     public void GetKnockBack(Vector3 aForce)
     {
+        mRigidbody.AddForce(aForce, ForceMode.Impulse);
         if (IsAlive)
         {
-            if (StateMachine == null || EnemyKnockBackState == null) { return; }
-            StateMachine.ChangeState(EnemyKnockBackState);
-            mRigidbody.AddForce(aForce, ForceMode.Impulse);
-
+            if (StateMachine == null || EnemyKnockbackInstance == null) { return; }
+            EnemyStunBaseInstance = EnemyKnockbackInstance;
+            StateMachine.ChangeState(EnemyStunState);
         }
+        else
+        {
+            StateMachine.ChangeState(EnemyDieState);
+            return;
+        }
+    
     }
     public void ResetStats()
     {
-        CurrentHealth = _enemyData.maxHealth;
+        CurrentHealth = enemyData.maxHealth;
         //mRigidbody.
         mRigidbody.velocity = Vector3.zero;
         mRigidbody.useGravity = true;
@@ -73,6 +80,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void DashForward(int aDashForce)
     {
         if(!IsAlive) { return; }
+        isUnstopable = true;
         mRigidbody.AddForce(transform.forward* aDashForce, ForceMode.Impulse);
         CanMove = false;
     }
@@ -80,49 +88,84 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         if (!IsAlive) { return; }
         mRigidbody.velocity = Vector3.zero;
+        animator.SetFloat("Velocity", 0f);
     }
 
     public void SetStateToIdle()
     {
-        if (IsAlive && StateMachine == null || EnemyIdleState == null) { return; }
+        if (!IsAlive)
+        {
+            StateMachine.ChangeState(EnemyDieState);
+            return;
+        }
+        if (IsAlive || StateMachine == null || EnemyIdleState == null) { return; }
         CanMove = true;
         StateMachine.ChangeState(EnemyIdleState);
     }
+
     public void SetStateToChase()
     {
-        if (IsAlive && StateMachine == null || EnemyChaseState == null) { return; }
+        if (CurrentHealth <1)
+        {
+            StateMachine.ChangeState(EnemyDieState);
+            return;
+        }
+        if (StateMachine == null || EnemyChaseState == null) { return; }
         CanMove = true;
         StateMachine.ChangeState(EnemyChaseState);
     }
     public void Death()
     {
-        //gameObject.SetActive(false);
         IsAlive = false;
-        SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyDeath, transform.position);
+        //SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
         if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
 
     }
+    public void PlayEnemyAttackSound()
+    {
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyAttack, transform.position);
+    }
+    public void PlayEnemyFootStepSound()
+    {
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyWalk, transform.position);
+    }
 
     public void MoveEnemy(Vector3 aVelocity)
     {
+        if (!IsAlive) return;
         if (!CanMove) return;
         Vector3 movementVelocity = new Vector3(aVelocity.x, mRigidbody.velocity.y, aVelocity.z);
         mRigidbody.velocity = movementVelocity;
         animator.SetFloat("Velocity", mRigidbody.velocity.magnitude);
     }
+    public void HitStun()
+    {
+        EnemyStunBaseInstance = EnemyHitStunInstance;
+        if (StateMachine != null )
+        {
+            StateMachine.ChangeState(EnemyStunState);
+        }
 
+    }
     public void TakeDamage(int aDamageAmount)
     {
+        if (!IsAlive || aDamageAmount<0) return;
         CurrentHealth -= aDamageAmount;
-
-        if (CurrentHealth <= 0)
+        if (CurrentHealth > 0)
         {
-            if (IsAlive)
-            {
-                Death();
-            }
 
+            AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
+            if (!isUnstopable)
+            {
+                HitStun();
+                IsAttacking = false;
+            }
+        }
+        else
+        {
+            Death();
             if (roomEvent != null)
             {
                 roomEvent.InformEnemyDeath();
@@ -150,18 +193,20 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyChaseBaseInstance.SetPlayerTarget(aPlayer); 
         EnemyAttackBaseInstance.SetPlayerTarget(aPlayer);
         EnemyFleeBaseInstance.SetPlayerTarget(aPlayer);
-        EnemyKnockBackBaseInstance.SetPlayerTarget(aPlayer);
+        EnemyHitStunInstance.SetPlayerTarget(aPlayer);
+        EnemyKnockbackInstance.SetPlayerTarget(aPlayer);
+        EnemyStunBaseInstance.SetPlayerTarget(aPlayer);
         EnemyDieBaseInstance.SetPlayerTarget(aPlayer);
     }
 
     private void Update()
     {
-        if (!IsAlive && _playerTransform == null && StateMachine == null) return;
+        if (!IsAlive || _playerTransform == null || StateMachine == null) return;
         StateMachine.CurrentState.FrameUpdate();
     }
     private void FixedUpdate()
     {
-        if (!IsAlive && _playerTransform == null && StateMachine == null) return;
+        if (!IsAlive || _playerTransform == null || StateMachine == null) return;
         StateMachine.CurrentState.PhysicsUpdate();
     }
     private void Start()
@@ -169,20 +214,22 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         mRigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         GetComponent<CapsuleCollider>().enabled = true;
-        CurrentHealth = _enemyData.maxHealth;
+        CurrentHealth = enemyData.maxHealth;
         //StateMachine Initialize
-        EnemyIdleBaseInstance = Instantiate(_enemyStateData.idleStateData);
-        EnemyChaseBaseInstance = Instantiate(_enemyStateData.chaseStateData);
-        EnemyAttackBaseInstance = Instantiate(_enemyStateData.attackStateData);
-        EnemyFleeBaseInstance = Instantiate(_enemyStateData.fleeStateData);
-        EnemyKnockBackBaseInstance = Instantiate(_enemyStateData.knockBackStateData);
-        EnemyDieBaseInstance = Instantiate(_enemyStateData.dieStateData);
+        EnemyIdleBaseInstance = Instantiate(enemyStateData.idleStateData);
+        EnemyChaseBaseInstance = Instantiate(enemyStateData.chaseStateData);
+        EnemyAttackBaseInstance = Instantiate(enemyStateData.attackStateData);
+        EnemyFleeBaseInstance = Instantiate(enemyStateData.fleeStateData);
+        EnemyDieBaseInstance = Instantiate(enemyStateData.dieStateData);
+        EnemyHitStunInstance = Instantiate(enemyStateData.hitStunStateData);
+        EnemyKnockbackInstance = Instantiate(enemyStateData.knockBackStateData);
+        EnemyStunBaseInstance = EnemyHitStunInstance;
 
         EnemyIdleBaseInstance.Initialize(gameObject, this);
         EnemyChaseBaseInstance.Initialize(gameObject, this);
         EnemyAttackBaseInstance.Initialize(gameObject, this);
         EnemyFleeBaseInstance.Initialize(gameObject, this);
-        EnemyKnockBackBaseInstance.Initialize(gameObject, this);
+        EnemyStunBaseInstance.Initialize(gameObject, this);
         EnemyDieBaseInstance.Initialize(gameObject, this);
 
         StateMachine = new StateMachine();
@@ -191,7 +238,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyChaseRunForSecondsState = new EnemyChaseState(this, StateMachine);
         EnemyAttackState = new EnemyAttackState(this, StateMachine);
         EnemyFleeState = new EnemyFleeState(this, StateMachine);
-        EnemyKnockBackState = new EnemyKnockBackState(this, StateMachine);
+        EnemyStunState = new EnemStunState(this, StateMachine);
         EnemyDieState = new EnemyDieState(this, StateMachine);
         StateMachine.Initialize(EnemyIdleState);
 
@@ -222,6 +269,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public virtual void Attack()
     {
+        isUnstopable = false;
     }
 
     public enum AnimationTriggerType

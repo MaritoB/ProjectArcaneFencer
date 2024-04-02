@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f426fe3c9d287e04b897891c4afa515b, type: 3}
   m_Name: _StaminaRecoveryRate
-  m_EditorClassIdentifier: Assembly-CSharp::StaminaRecoveryRate
-  modifierName: Stamina Recovery Rate
-  modifierDescription: 'Your Stamina Recovery Rate is '
+  m_EditorClassIdentifier: 
+  modifierName: 'Stamina Recovery Rate '
+  modifierDescription: Stamina Recovery Rate is 12
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: b2aa4c6db0a199d46b4652c088e8420a, type: 3}
   StaminaBase: 11
-  StaminaMultiplier: 2
+  StaminaMultiplier: 1

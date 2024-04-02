@@ -10,6 +10,7 @@ public class PlayerBlock : PlayerBlockSOBase
     {
         base.DoEnterLogic();
         player.animator.SetTrigger("BlockStart");
+        player.isBlocking = true;
         player.animator.SetFloat("Velocity", 0f);
         player.mRigidbody.velocity = Vector3.zero;
     }

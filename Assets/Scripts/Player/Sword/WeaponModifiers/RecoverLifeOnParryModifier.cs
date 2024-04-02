@@ -8,11 +8,16 @@ public class RecoverLifeOnParryModifier : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         LifeRecovery = RecoverLifeOnParryBase + RecoverLifeOnParryMultiplier * modifierLevel;
-        modifierDescription = "Recover " + LifeRecovery + " Life  Parrying projectiles";
         player = aPlayer;
         aPlayer.OnParry -= RecoverLifeOnParry;
         aPlayer.OnParry += RecoverLifeOnParry;
 
+        UpdateDescription();
+    }
+    public override void UpdateDescription()
+    {
+        LifeRecovery = RecoverLifeOnParryBase + RecoverLifeOnParryMultiplier * modifierLevel;
+        modifierDescription = "Recover " + LifeRecovery + " Life  Parrying projectiles";
     }
     public void RecoverLifeOnParry()
     {

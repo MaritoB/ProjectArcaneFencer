@@ -14,6 +14,7 @@ public class ItemModifierUI: MonoBehaviour
     {
         if (aModifier == null) return;
         ItemNameText.text = aModifier.modifierName;
+        aModifier.UpdateDescription();
         ItemDescriptionText.text = aModifier.modifierDescription;
         ItemLevelText.text = aModifier.modifierLevel.ToString();
         ItemImage.sprite = aModifier.modifierSprite;

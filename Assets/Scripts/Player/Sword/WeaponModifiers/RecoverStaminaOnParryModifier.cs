@@ -1,6 +1,6 @@
 using UnityEngine;
 [CreateAssetMenu(fileName = "_RecoverStaminaOnParryModifier", menuName = "WeaponModifiers/RecoverStaminaOnParryModifier")]
-public class RecoverLifeOnParryModifierRecoverStaminaOnParryModifier : WeaponModifierSO
+public class RecoverStaminaOnParryModifier : WeaponModifierSO
 {
     public int RecoverStaminaOnParryBase, RecoverStaminaOnParryMultiplier;
     int StaminaRecovery;
@@ -8,16 +8,17 @@ public class RecoverLifeOnParryModifierRecoverStaminaOnParryModifier : WeaponMod
     public override void ApplyModifier(PlayerController aPlayer)
     {
         StaminaRecovery = RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel;
-        modifierDescription = "Recover " + StaminaRecovery + " Stamina  Parrying projectiles";
         player = aPlayer;
         aPlayer.OnParry -= RecoverStaminaOnParry;
         aPlayer.OnParry += RecoverStaminaOnParry;
-        ;
-
+        UpdateDescription();
+    }
+    public override void UpdateDescription()
+    {
+        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel) + " Stamina  Parrying projectiles";
     }
     public void RecoverStaminaOnParry()
     {
-        Debug.Log("Stamina on Parry");
         player.RecoverStamina(StaminaRecovery);
         
     }

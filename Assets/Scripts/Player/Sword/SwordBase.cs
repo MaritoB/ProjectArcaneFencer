@@ -5,7 +5,9 @@ public class SwordBase : MonoBehaviour
 {
 
     public delegate void OnMeleeHitDelegate(Enemy enemy);
-    public event OnMeleeHitDelegate OnFirstMeleeHit,OnSecondMeleeHit, OnThirdMeleeHit;
+    public delegate void OnMeleePerformedDelegate();
+    public event OnMeleeHitDelegate OnFirstMeleeHit, OnSecondMeleeHit, OnThirdMeleeHit;
+    public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed;
     public List<WeaponModifierSO> AllWeaponModifierList;
     PlayerController playerController;
     
@@ -65,6 +67,18 @@ public class SwordBase : MonoBehaviour
     {
         OnThirdMeleeHit?.Invoke(enemy);
     }
+    public void FirstStrikePerformedModifiers()
+    {
+        OnFirstMeleePerformed?.Invoke();
+    }
+    public void SecondStrikePerformedModifiers()
+    {
+        OnSecondMeleePerformed?.Invoke();
+    }
+    public void ThirdStrikePerformedModifiers()
+    {
+        OnThirdMeleePerformed?.Invoke();
+    }
     public void ApplyAllModifiers()
     {
         ResetBaseValues();
@@ -83,7 +97,7 @@ public class SwordBase : MonoBehaviour
         return AllWeaponModifierList[index];
     }
     void Start()
-    { 
+    {
         /*
         for (int i = 0; i < AllWeaponModifierList.Count; ++i)
         {
@@ -91,13 +105,14 @@ public class SwordBase : MonoBehaviour
 
         }
          */
-        
+        currentDamage = baseDamage;
         playerController = GetComponent<PlayerController>();
 
         //ApplyAllModifiers();
     }
     public void ResetAllModifiers()
     {
+        currentDamage = baseDamage;
         for (int i = 0; i < AllWeaponModifierList.Count; ++i)
         {
             AllWeaponModifierList[i].modifierLevel = 0;
@@ -107,4 +122,5 @@ public class SwordBase : MonoBehaviour
     {
         return attackStaminaCost;
     }
+
 }

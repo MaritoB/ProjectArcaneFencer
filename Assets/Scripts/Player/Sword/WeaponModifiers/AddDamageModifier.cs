@@ -7,7 +7,12 @@ public class AddDamageModifier : WeaponModifierSO
     {
         int newDamage = AddedDamageBase + AddedDamageMultiplier * modifierLevel;
         aPlayer.sword.SetDamage(newDamage);
-        modifierDescription = "Add " + newDamage + " Damage";
 
+    }
+    public override void UpdateDescription()
+    {
+        base.UpdateDescription();
+
+        modifierDescription = "Add " + (AddedDamageBase + AddedDamageMultiplier * modifierLevel) + " Damage";
     }
 }

@@ -16,11 +16,35 @@ public class EnemyAnimationEvents : MonoBehaviour
         if (enemy == null) return;
         enemy.Attack();
     }
+    public void FinishHitStun()
+    {
+        if (enemy == null) return;
+        enemy.SetStateToChase();
+        enemy.IsAttacking = false;
+        if (enemy.IsAlive)
+        {
+            enemy.CanMove = true;
+        }
+    }
+    public void PlayAttackSoundEvent()
+    {
+        if (enemy == null) return;
+        enemy.PlayEnemyAttackSound();
+    }
+    public void PlayFootStepSoundEvent()
+    {
+        if (enemy == null) return;
+        enemy.PlayEnemyFootStepSound();
+    }
     public void FinishAttack()
     {
         if (enemy == null) return;
+
         enemy.IsAttacking = false;
-        enemy.CanMove = true;
+        if (enemy.IsAlive)
+        {
+           enemy.CanMove = true;
+        }
     }
     public void ResetCanMove()
     {

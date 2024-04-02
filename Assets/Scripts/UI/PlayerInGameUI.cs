@@ -41,12 +41,16 @@ public class PlayerInGameUI : MonoBehaviour
         if (playerController == null) return;
         WeaponModifierSO mod1, mod2, mod3;
         mod1 = playerController.sword.GetRandomModifier();
+        while (mod1 == null)
+        {
+            mod1 = playerController.sword.GetRandomModifier();
+        }
         mod2 = playerController.sword.GetRandomModifier();
-        mod3 = playerController.sword.GetRandomModifier();
-        while (mod1 == mod2) {
+        while (mod1 == mod2 || mod2 == null) {
             mod2 = playerController.sword.GetRandomModifier();
         }
-        while (mod1 == mod3|| mod2==mod3)
+        mod3 = playerController.sword.GetRandomModifier();
+        while (mod1 == mod3|| mod2==mod3 || mod3 == null)
         {
             mod3 = playerController.sword.GetRandomModifier();
         }

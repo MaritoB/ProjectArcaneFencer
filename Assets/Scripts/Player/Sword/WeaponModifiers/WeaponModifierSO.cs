@@ -11,5 +11,9 @@ public class WeaponModifierSO : ScriptableObject
     {
 
     }
+    public virtual void UpdateDescription()
+    {
+
+    }
     // Aquí podrías agregar más atributos según tus necesidades
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifierName: More Damage
   modifierDescription: Add 15 Damage
-  modifierLevel: 1
+  modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: a965e53c42968dc4b9f5138c268d7fb7, type: 3}
   AddedDamageBase: 10
   AddedDamageMultiplier: 5

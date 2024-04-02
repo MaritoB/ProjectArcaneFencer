@@ -8,7 +8,6 @@ public class EnemyAttackSOBase : ScriptableObject
     protected Transform transform;
     protected Transform playerTransform;
     protected GameObject gameObject;
-    [SerializeField] protected float AttackSpeed;
     protected float _currentAttackTime = 0f;
 
 

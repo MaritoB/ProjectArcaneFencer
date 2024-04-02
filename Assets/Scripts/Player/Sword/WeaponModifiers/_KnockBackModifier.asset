@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: _KnockBackModifier
   m_EditorClassIdentifier: 
   modifierName: KnockBack
-  modifierDescription: push enemys
+  modifierDescription: push enemies away to the ground with 800 Force.
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: 0c6d6cd11b30082479de6164c79b0dcb, type: 3}
-  KnockBackForce: 5
+  KnockBackForceBase: 300
+  KnockBackForceMutiplier: 100
