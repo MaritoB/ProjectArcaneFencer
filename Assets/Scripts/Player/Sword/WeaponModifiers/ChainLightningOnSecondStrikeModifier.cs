@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+
 using UnityEngine;
 [CreateAssetMenu(fileName = "_ChainLightningOnSecondStrikeModifier", menuName = "WeaponModifiers/ChainLightningOnSecondStrikeModifier")]
 public class ChainLightningOnSecondStrikeModifier : WeaponModifierSO

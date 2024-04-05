@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class EnemyActivator : MonoBehaviour
 {
     Enemy enemy;
-    private void Start()
+    private void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
     }

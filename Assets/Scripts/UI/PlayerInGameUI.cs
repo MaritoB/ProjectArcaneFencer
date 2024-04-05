@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerInGameUI : MonoBehaviour
 {
@@ -17,6 +13,7 @@ public class PlayerInGameUI : MonoBehaviour
     private Vector2 CurrentHealthSize, CurrentStaminaSize;
     PlayerController playerController;
     [SerializeField] RectTransform aWeaponModPanel;
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -57,6 +54,8 @@ public class PlayerInGameUI : MonoBehaviour
         itemModifierUI1.UpdateItemModifierUI(mod1, this);
         itemModifierUI2.UpdateItemModifierUI(mod2, this);
         itemModifierUI3.UpdateItemModifierUI(mod3, this);
+        aWeaponModPanel.gameObject.SetActive(true);
+        Time.timeScale = 0.01f;
     }
     public void FadeInResetLevel()
     {
@@ -126,5 +125,6 @@ public class PlayerInGameUI : MonoBehaviour
     {
         playerController.sword.AplyNewWeaponModifier(aMod);
         aWeaponModPanel.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

@@ -18,7 +18,7 @@ public class AoEDamageOnHit : OnHitEffectSOBase
             IDamageable damageableEnemy = enemy.GetComponent<IDamageable>();
             if (damageableEnemy != null)
             {
-                damageableEnemy.TakeDamage(damage);
+                damageableEnemy.TakeDamage(damage, null);
             }
         }
     }

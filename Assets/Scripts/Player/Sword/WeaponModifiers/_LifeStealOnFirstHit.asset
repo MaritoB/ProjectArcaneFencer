@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b9fb9463ce2f043bf4540ddd5460cc, type: 3}
-  m_Name: _AddDamageModifier
+  m_Script: {fileID: 11500000, guid: 453da29ffc39746448f95eef3330aab8, type: 3}
+  m_Name: _LifeStealOnFirstHit
   m_EditorClassIdentifier: 
-  modifierName: More Damage
-  modifierDescription: Add 5 Damage
+  modifierName: Life Steal On First Hit
+  modifierDescription: Life Steal On First Hit
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: a965e53c42968dc4b9f5138c268d7fb7, type: 3}
-  AddedDamageBase: 3
-  AddedDamageMultiplier: 2
+  LifeStealBase: 5
+  LifeStealMultiplier: 3

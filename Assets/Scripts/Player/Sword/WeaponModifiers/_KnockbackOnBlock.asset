@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b9fb9463ce2f043bf4540ddd5460cc, type: 3}
-  m_Name: _AddDamageModifier
+  m_Script: {fileID: 11500000, guid: fad269a88ea5e4f4dbfe62220a71b167, type: 3}
+  m_Name: _KnockbackOnBlock
   m_EditorClassIdentifier: 
-  modifierName: More Damage
-  modifierDescription: Add 5 Damage
+  modifierName: Knockback on Block
+  modifierDescription: 
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: a965e53c42968dc4b9f5138c268d7fb7, type: 3}
-  AddedDamageBase: 3
-  AddedDamageMultiplier: 2
+  KnockBackForceBase: 300
+  KnockBackForceMutiplier: 100

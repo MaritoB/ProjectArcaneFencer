@@ -254,10 +254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2347b2e80c1e8044cbd60b0cec5b3173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemModifierUI1: {fileID: 0}
+  itemModifierUI2: {fileID: 0}
+  itemModifierUI3: {fileID: 0}
   MaxHealth: {fileID: 1737666899}
   CurrentHealth: {fileID: 2097700565}
   MaxStamina: {fileID: 1317791593}
   CurrentStamina: {fileID: 1914592568}
+  aWeaponModPanel: {fileID: 0}
 --- !u!114 &25360196
 MonoBehaviour:
   m_ObjectHideFlags: 0

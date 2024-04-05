@@ -1,35 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
-[System.Serializable]
-public class Horde
+public class InfiniteRoomEvent : MonoBehaviour, IOwner
 {
-    public List<EnemyType> enemies;
-
-}
-
-public class RoomEvent : MonoBehaviour, IOwner
-{
-    public FMODUnity.EventReference DoorSounds;
-    public List<Door> doors;
     bool isEventPerformed = false;
     public Transform spawnArea;
-    public bool SpawnMelee;
-    public bool SpawnRanged;
     //public List<List<EnemyType>> Hordes = new List<List<EnemyType>>();
-
-    [Serialize] public List<Horde> Hordes;
+    public Horde InfiniteHorde;
     public int enemysRemaining;
     public int currentHorde = 0;
-
+    public PlayerController playerController;
+    Array EnemyTypes;
 
     // Start is called before the first frame update
     void Start()
     {
+        InfiniteHorde.enemies.Clear();
+        EnemyTypes = Enum.GetValues(typeof(EnemyType));
+        InfiniteHorde.enemies.Add(EnemyType.MELEESKELETON);
+        SpawnHorde(InfiniteHorde);
         /*
         Hordes.Clear();
         List<EnemyType> newHorde = new List<EnemyType> { EnemyType.MELEESKELETON, EnemyType.RANGEDSKELETON };
@@ -45,34 +34,7 @@ public class RoomEvent : MonoBehaviour, IOwner
     void Update()
     {
     }
-    public void CloseAllDoors()
-    {
-        AudioManager.instance.PlayOneShot(DoorSounds, transform.position);
-        foreach (Door door in doors)
-        {
-            door.Close();
-        }
-    }
-    public void OpenAllDoors()
-    {
-        AudioManager.instance.PlayOneShot(DoorSounds, transform.position);
-        foreach (Door door in doors)
-        {
-            door.Open();
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag != "Player")
-            return;
-        if (isEventPerformed)
-        {
-            return;
-        }
-        isEventPerformed = true;
-        SpawnHorde(Hordes[0]);
-        CloseAllDoors();
-    }
+   
     public void SpawnEnemy(EnemyType enemyType)
     {
         Enemy enemy = EnemySpawner.Instance.SpawnEnemyFromPool(enemyType, spawnArea);
@@ -93,15 +55,9 @@ public class RoomEvent : MonoBehaviour, IOwner
         --enemysRemaining;
         if (enemysRemaining <= 0)
         {
-            if (currentHorde < Hordes.Count)
-            {
-                SpawnHorde(Hordes[currentHorde]);
-            }
-            else
-            {
-
-                OpenAllDoors();
-            }
+            playerController.LevelUP();
+            InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
+            SpawnHorde(InfiniteHorde);
         }
     }
 }

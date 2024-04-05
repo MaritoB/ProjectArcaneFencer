@@ -13,10 +13,11 @@ public class EnemyKnockBack : EnemyStunSOBase
     {
         base.DoEnterLogic();
         if (enemy == null) return;
-
+        Debug.Log("Knockback Enter");
         enemy.IsAttacking = false;
         enemy.CanMove = false;
-        enemy.animator.SetTrigger("KnockBack");
+        enemy.IsStunned = true;
+        enemy.animator.SetTrigger("Knockback");
     }
 
     public override void DoExitLogic()
@@ -24,6 +25,7 @@ public class EnemyKnockBack : EnemyStunSOBase
         base.DoExitLogic();
         if (enemy == null) return;
         enemy.CanMove = true;
+        enemy.IsStunned = false;
     }
 
     public override void DoFrameUpdateLogic()

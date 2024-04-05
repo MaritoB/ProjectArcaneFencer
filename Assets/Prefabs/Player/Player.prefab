@@ -21229,13 +21229,18 @@ MonoBehaviour:
   AllWeaponModifierList:
   - {fileID: 11400000, guid: 6ef4b350f81d33e4ea5aa1f84e14b0dd, type: 2}
   - {fileID: 11400000, guid: 9ed89bc3d11a2b848be7c32096197918, type: 2}
+  - {fileID: 11400000, guid: 5a1fec250cfda32488c4229bce17173e, type: 2}
   - {fileID: 11400000, guid: 883a68f4b299ad6419eb0940d39f8671, type: 2}
   - {fileID: 11400000, guid: 4b7ef5312f9d85b4c874915c59242118, type: 2}
   - {fileID: 11400000, guid: 41294f32f8b687f409317c39222ae11f, type: 2}
+  - {fileID: 11400000, guid: 3d932bfa52079ef45b3ffa13c5d422e8, type: 2}
+  - {fileID: 11400000, guid: 7ec3caa2c8435dc429efd0abaa2e4f24, type: 2}
   - {fileID: 11400000, guid: 90f32db5f00c7b94e84d654a9b2d912d, type: 2}
   - {fileID: 11400000, guid: 147f24279bc8cfb4a913507c325cf21d, type: 2}
   - {fileID: 11400000, guid: 4924f211cb4947c4f82a16ba134a495e, type: 2}
-  - {fileID: 11400000, guid: 4b7ef5312f9d85b4c874915c59242118, type: 2}
+  - {fileID: 11400000, guid: de58acf8d7e0f5643a7c05f8edfd7007, type: 2}
+  - {fileID: 11400000, guid: 31bb418214916ec4bb108cac3950b518, type: 2}
+  - {fileID: 11400000, guid: b0ed1625a6bba1b449ff8d3696a5ea2e, type: 2}
   baseDamage: 10
   attackStaminaCost: 10
   currentDamage: 0

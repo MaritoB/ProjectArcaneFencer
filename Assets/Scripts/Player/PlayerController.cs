@@ -1,7 +1,4 @@
 
-using Mono.Cecil;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +8,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public  PlayerInput playerInput;
     public PlayerData playerData;
     public PlayerSoundData playerSoundData;
-        
+    public int CurrentLevel = 0;
     public PlayerInputActions playerInputActions;
     public Rigidbody mRigidbody;
     public Transform mCamera;
@@ -67,12 +64,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     public  ProjectileSkillSOBase SingleProjectileSkill, TripleProjectileSkill;
     [field: SerializeField] public float CurrentHealth { get; set; }
 
+    public delegate void OnBlockPerformedDelegate(Enemy enemy);
+    public event OnBlockPerformedDelegate OnBlockPerformed;
     [SerializeField] public  SwordBase sword;
     [SerializeField] Transform MagicSphereShield;
     [SerializeField] Transform SwordTransform;
     [SerializeField] Transform SwordPS;
     public Transform AttackTransform;
-
+    public void LevelUP()
+    {
+        CurrentLevel++;
+        inGameUI.SetupSkillUI();
+    }
     public void HideSword()
     {
         SwordTransform.gameObject.SetActive(false);
@@ -406,7 +409,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-    public void TakeDamage(int aDamageAmount)
+    public void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if(aDamageAmount< 0) return;
 
@@ -414,7 +417,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             if (UseStamina(aDamageAmount * playerData.StaminaDrainPercentajeOnBlock))
             {
+                if (aSource != null)
+                {
+                    Enemy enemy = aSource.GetComponent<Enemy>();
+                    if(enemy != null)
+                    {
+                        OnBlockPerformed?.Invoke(enemy);
 
+                    }
+                }
                 AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
                 return;
             }

@@ -10,7 +10,7 @@ public class DamageOnHit : OnHitEffectSOBase
         IDamageable damageable = collider.GetComponent<IDamageable>();
         if (damageable != null)
         {
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(damage, null);
         }
     }
 }

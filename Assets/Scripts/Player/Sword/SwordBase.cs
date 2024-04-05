@@ -49,11 +49,11 @@ public class SwordBase : MonoBehaviour
     }
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
-        enemy.TakeDamage((int)(currentDamage * aWeaponDamagePercentage));
+        enemy.TakeDamage((int)(currentDamage * aWeaponDamagePercentage), playerController.gameObject);
     }
     public void CustomAttack(Enemy enemy, int Damage)
     {
-        enemy.TakeDamage(Damage);
+        enemy.TakeDamage(Damage, playerController.gameObject);
     }
     public void FirstStrikeModifiers(Enemy enemy)
     {

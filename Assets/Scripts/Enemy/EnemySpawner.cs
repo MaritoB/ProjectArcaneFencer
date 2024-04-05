@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 public enum EnemyType
 {
     MELEESKELETON,
-    RANGEDSKELETON
+    RANGEDSKELETON,
+    RANGEDSTANDINGSKELETON
 }
 
 [System.Serializable]
@@ -22,10 +23,13 @@ public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance { get; private set; }
     public List<EnemyPoolInfo> EnemyPoolList;
-   public Dictionary<EnemyType, EnemyPoolInfo> EnemyPoolDictionary = new Dictionary<EnemyType, EnemyPoolInfo>();
+    List<EnemyType> EnemyTypes = new List<EnemyType>();
+    public Dictionary<EnemyType, EnemyPoolInfo> EnemyPoolDictionary = new Dictionary<EnemyType, EnemyPoolInfo>();
+
     
     void Start()
     {
+        EnemyTypes.Clear();
         foreach (EnemyPoolInfo enemyPoolInfo in EnemyPoolList)
         {
             enemyPoolInfo.pool.Clear();
@@ -41,7 +45,9 @@ public class EnemySpawner : MonoBehaviour
                 enemyPoolInfo.pool.Add(enemy);
             }
             EnemyPoolDictionary.Add(enemyPoolInfo.enemyType, enemyPoolInfo);
+            EnemyTypes.Add(enemyPoolInfo.enemyType);
         }
+        Debug.Log(EnemyTypes.ToString());
     }
     private void Awake()
     {
@@ -53,6 +59,10 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public EnemyType GetRandomEnemy()
+    {
+        return EnemyTypes[Random.Range(0, EnemyTypes.Count)];
     }
     private Enemy GetEnemyFromPool(EnemyType aEnemyType)
     {

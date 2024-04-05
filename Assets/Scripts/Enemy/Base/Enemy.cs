@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool IsAttacking = false;
     public bool CanMove = true;
     public bool IsAlive = true;
-    public bool isUnstopable = false; 
+    public bool IsUnstopable = false;
+    public bool IsStunned = false;
     public StateMachine StateMachine { get; set; }
 
     public EnemyIdleState EnemyIdleState { get; set; }
@@ -39,28 +40,29 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyStunSOBase EnemyKnockbackInstance { get; set; }
     public EnemyStunSOBase EnemyHitStunInstance { get; set; }
 
-    RoomEvent roomEvent = null;
-    public void SetOwner(RoomEvent room)
+    public IOwner owner = null;
+    public void SetOwner(IOwner aOwner)
     {
-        roomEvent = room;
+        owner = aOwner;
     }
     public void InformDeathToOwner()
     {
-        roomEvent.InformEnemyDeath();
+        owner.InformEnemyDeath();
     }
 
     public void GetKnockBack(Vector3 aForce)
     {
         mRigidbody.AddForce(aForce, ForceMode.Impulse);
-        if (IsAlive)
+        if (CurrentHealth >0)
         {
-            if (StateMachine == null || EnemyKnockbackInstance == null) { return; }
+            if (IsStunned ||  StateMachine == null || EnemyKnockbackInstance == null) { return; }
+            IsStunned = true;
             EnemyStunBaseInstance = EnemyKnockbackInstance;
             StateMachine.ChangeState(EnemyStunState);
         }
         else
         {
-            StateMachine.ChangeState(EnemyDieState);
+            Death();
             return;
         }
     
@@ -80,7 +82,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void DashForward(int aDashForce)
     {
         if(!IsAlive) { return; }
-        isUnstopable = true;
+        IsUnstopable = true;
         mRigidbody.AddForce(transform.forward* aDashForce, ForceMode.Impulse);
         CanMove = false;
     }
@@ -105,9 +107,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void SetStateToChase()
     {
-        if (CurrentHealth <1)
+        if (CurrentHealth <=0)
         {
-            StateMachine.ChangeState(EnemyDieState);
+            Death();
             return;
         }
         if (StateMachine == null || EnemyChaseState == null) { return; }
@@ -143,13 +145,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void HitStun()
     {
         EnemyStunBaseInstance = EnemyHitStunInstance;
-        if (StateMachine != null )
+        if (StateMachine != null && !IsStunned )
         {
             StateMachine.ChangeState(EnemyStunState);
         }
 
     }
-    public void TakeDamage(int aDamageAmount)
+    public void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if (!IsAlive || aDamageAmount<0) return;
         CurrentHealth -= aDamageAmount;
@@ -157,7 +159,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         {
 
             AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
-            if (!isUnstopable)
+            if (!IsUnstopable) 
             {
                 HitStun();
                 IsAttacking = false;
@@ -166,9 +168,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         else
         {
             Death();
-            if (roomEvent != null)
+            if (owner != null)
             {
-                roomEvent.InformEnemyDeath();
+                owner.InformEnemyDeath();
             }
         }
     }
@@ -231,6 +233,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyFleeBaseInstance.Initialize(gameObject, this);
         EnemyStunBaseInstance.Initialize(gameObject, this);
         EnemyDieBaseInstance.Initialize(gameObject, this);
+        EnemyHitStunInstance.Initialize(gameObject, this);
+        EnemyKnockbackInstance.Initialize(gameObject, this);
 
         StateMachine = new StateMachine();
         EnemyIdleState = new EnemyIdleState(this, StateMachine);
@@ -269,7 +273,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public virtual void Attack()
     {
-        isUnstopable = false;
+        IsUnstopable = false;
     }
 
     public enum AnimationTriggerType
