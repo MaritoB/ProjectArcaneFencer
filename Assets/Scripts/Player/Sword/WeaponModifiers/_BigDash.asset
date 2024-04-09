@@ -17,10 +17,10 @@ MonoBehaviour:
     Speed is 1100, and DashTime is 0,6.
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
-  ModifiedDashSpeedBase: 1000
+  ModifiedDashSpeedBase: 600
   DashSpeedLevelMultiplier: 100
-  ModifiedDashTimeBase: 0.4
+  ModifiedDashTimeBase: 0.3
   DashTimeLevelMultiplier: 0.05
   DashCostLevelMultiplier: -3
-  ModifiedDashStaminaCostbase: 35
+  ModifiedDashStaminaCostbase: 25
   isChannellingDash: 0

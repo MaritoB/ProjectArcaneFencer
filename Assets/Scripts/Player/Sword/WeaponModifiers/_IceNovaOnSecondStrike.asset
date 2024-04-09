@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04704790f91f4a34ea8ebae658a3c4ba, type: 3}
+  m_Name: _IceNovaOnSecondStrike
+  m_EditorClassIdentifier: 
+  modifierName: IceNovaOnSecondStrike
+  modifierDescription: 'your Second Strike have 100% chance to cast Ice Nova. Ice
+    Nova Damage : 30, Radius : 1,4'
+  modifierLevel: 0
+  modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
+  IceNovaEffectPrefab: {fileID: 1337242488471618507, guid: 1b82ceeef9d4c9c4da17f58ec66f6c75,
+    type: 3}
+  RadiusBase: 1
+  RadiusMultiplier: 0.1
+  DamageBase: 10
+  DamageMultiplier: 1
+  TriggerChanceBase: 25
+  TriggerChanceMultiplier: 5
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 64

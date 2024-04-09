@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 610516052460803251}
   - component: {fileID: 9138700141831160437}
   m_Layer: 0
-  m_Name: ChainLightningProjectilSpawner 1
+  m_Name: ChainLightningProjectilSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
