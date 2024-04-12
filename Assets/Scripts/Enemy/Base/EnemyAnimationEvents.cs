@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     Enemy enemy;
+    MeleeWithShieldEnemy enemyWithShield;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponentInParent<Enemy>();
+        enemyWithShield = GetComponentInParent<MeleeWithShieldEnemy>();
     }
 
     public void Attack()
@@ -25,6 +27,12 @@ public class EnemyAnimationEvents : MonoBehaviour
         {
             enemy.CanMove = true;
         }
+    }
+    public void StartBlocking()
+    {
+        if (enemyWithShield == null) return;
+        enemyWithShield.IsBlocking = true;
+
     }
     public void PlayAttackSoundEvent()
     {

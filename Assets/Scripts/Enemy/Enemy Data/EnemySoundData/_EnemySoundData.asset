@@ -40,3 +40,10 @@ MonoBehaviour:
       Data3: 116839065
       Data4: 119204475
     Path: event:/Enemy/Walk
+  EnemyBlock:
+    Guid:
+      Data1: -1364636174
+      Data2: 1267375607
+      Data3: 825295021
+      Data4: 1214310840
+    Path: event:/Enemy/Block

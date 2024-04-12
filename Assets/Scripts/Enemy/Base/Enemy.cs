@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         }
 
     }
-    public void TakeDamage(int aDamageAmount, GameObject aSource)
+    public virtual void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if (!IsAlive || aDamageAmount<0) return;
         CurrentHealth -= aDamageAmount;

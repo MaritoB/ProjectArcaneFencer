@@ -208,7 +208,8 @@ MonoBehaviour:
   IsAttacking: 0
   CanMove: 1
   IsAlive: 1
-  isUnstopable: 0
+  IsUnstopable: 0
+  IsStunned: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -501,7 +502,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1239292414419848, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1349150361055734, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_Name
@@ -570,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4786384786149970, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 95690985424869934, guid: dca8e056b77d49c4aafe4dbcc2bab713,
         type: 3}
