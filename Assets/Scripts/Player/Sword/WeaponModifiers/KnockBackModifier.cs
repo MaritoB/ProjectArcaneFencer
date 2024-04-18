@@ -7,17 +7,16 @@ public class KnockBackModifier : WeaponModifierSO
     Transform playerTransform;
     public override void ApplyModifier(PlayerController aPlayer)
     {
-        currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier* modifierLevel;
+        currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
         aPlayer.sword.OnThirdMeleeHit -= KnockBackEnemy;
         aPlayer.sword.OnThirdMeleeHit += KnockBackEnemy;
         playerTransform = aPlayer.transform;
-        modifierDescription = "push enemies away to the ground with " + currentKnockbackForce + " Force.";
         UpdateDescription();
     }
     public override void UpdateDescription()
     {
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        modifierDescription = "push enemies away to the ground with " + currentKnockbackForce + " Force.";
+        modifierDescription = "Third strike Knockback enemys with " + currentKnockbackForce + " Force.";
     }
 
     public void KnockBackEnemy(Enemy enemy)

@@ -5421,7 +5421,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    randomizeRotationDirection: 0.7
+    randomizeRotationDirection: 1
     maxNumParticles: 30
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -5683,12 +5683,12 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 15
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5798,7 +5798,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5868,26 +5868,17 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.060540043
-          value: 0.9242787
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.12499422
-          inSlope: 0.4299857
-          outSlope: 0.4299857
+          value: 1
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.15930322
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -9715,7 +9706,7 @@ GameObject:
   - component: {fileID: 9171072717131984124}
   - component: {fileID: 9171072717131984119}
   m_Layer: 10
-  m_Name: EnemyProjectile
+  m_Name: BigSlowEnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9730,7 +9721,7 @@ Transform:
   m_GameObject: {fileID: 9171072717131984125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.17, y: -0.17, z: -0.17}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8607744840707226710}
@@ -9813,8 +9804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c747230cb506b4bb5f4921e15941cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseProjectilSpeed: 8
-  _lifeTime: 3
+  _baseProjectilSpeed: 4
+  _lifeTime: 5
   OnHitParticleSystem: {fileID: 7748057460856521842}
   ProjectileParticleSystem: {fileID: 5109405604444525378}
   TargetLayerMask:

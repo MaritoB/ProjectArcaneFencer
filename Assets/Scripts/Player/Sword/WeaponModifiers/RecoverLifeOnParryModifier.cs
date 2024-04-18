@@ -17,7 +17,7 @@ public class RecoverLifeOnParryModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         LifeRecovery = RecoverLifeOnParryBase + RecoverLifeOnParryMultiplier * modifierLevel;
-        modifierDescription = "Recover " + LifeRecovery + " Life  Parrying projectiles";
+        modifierDescription = "Recover " + LifeRecovery + " HP Parrying projectiles";
     }
     public void RecoverLifeOnParry()
     {

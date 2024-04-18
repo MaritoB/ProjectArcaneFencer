@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: _Dash Freedom
   m_EditorClassIdentifier: 
   modifierName: 'Dash Freedom '
-  modifierDescription: Your Dash is now Chanelling, the Stamina cost is decreased
-    to 8, but the Speed is decreased to 500and Time is Decreased to 0,15.
+  modifierDescription: Dash Corto y barato
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: b2aa4c6db0a199d46b4652c088e8420a, type: 3}
   ModifiedDashSpeedBase: 400
-  DashSpeedLevelMultiplier: 200
-  ModifiedDashTimeBase: 0.3
-  DashTimeLevelMultiplier: -0.05
+  DashSpeedLevelMultiplier: 25
+  ModifiedDashTimeBase: 0.2
+  DashTimeLevelMultiplier: -0.02
   DashCostLevelMultiplier: -0.5
-  ModifiedDashStaminaCostbase: 8
+  ModifiedDashStaminaCostbase: 5
   isChannellingDash: 1

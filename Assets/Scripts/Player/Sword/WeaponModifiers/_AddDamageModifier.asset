@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9fb9463ce2f043bf4540ddd5460cc, type: 3}
   m_Name: _AddDamageModifier
   m_EditorClassIdentifier: 
-  modifierName: More Damage
+  modifierName: "Mas Da\xF1o!"
   modifierDescription: Add 5 Damage
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: a965e53c42968dc4b9f5138c268d7fb7, type: 3}

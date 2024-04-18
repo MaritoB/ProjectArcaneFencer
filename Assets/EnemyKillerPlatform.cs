@@ -10,6 +10,8 @@ public class EnemyKillerPlatform : MonoBehaviour
         if(enemy != null)
         {
             enemy.TakeDamage(100000, null);
+            enemy.TakeDamage(100000, null);
+            enemy.TakeDamage(100000, null);
         }
     }
 }

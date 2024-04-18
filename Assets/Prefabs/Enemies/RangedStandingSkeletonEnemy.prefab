@@ -5428,7 +5428,8 @@ MonoBehaviour:
   IsAttacking: 0
   CanMove: 1
   IsAlive: 1
-  isUnstopable: 0
+  IsUnstopable: 0
+  IsStunned: 0
   projectileSpawner: {fileID: 8715147753852310779}
 --- !u!54 &8715147753852310769
 Rigidbody:
@@ -5460,10 +5461,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnHitEffect: {fileID: 11400000, guid: 5c2d844f499dd6a4e8790e8c19f9b9ba, type: 2}
   AfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5, type: 2}
-  ProjectilePrefab: {fileID: 9171072717131984124, guid: 5bdc7857330c07441818a5529f8dcc58,
+  ProjectilePrefab: {fileID: 9171072717131984124, guid: 6bcda585ca856ca4b98fbfae60e367f5,
     type: 3}
   ShootPosition: {fileID: 8715147754167513207}
-  CastRate: 1
+  CastRate: 1.5
 --- !u!1 &8715147753969694099
 GameObject:
   m_ObjectHideFlags: 0

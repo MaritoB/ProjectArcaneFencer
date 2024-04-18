@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public enum EnemyType
 {
     MELEESKELETON,
+    MELEEWITHSHIELDSKELETON,
     RANGEDSKELETON,
     RANGEDSTANDINGSKELETON
 }

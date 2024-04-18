@@ -21,7 +21,7 @@ public class LifeStealOnFirstHit : WeaponModifierSO
         base.UpdateDescription();
 
         CurrentLifeSteal = LifeStealBase + LifeStealMultiplier * modifierLevel;
-        modifierDescription = modifierDescription = "Your First Strike Restore " + CurrentLifeSteal + "  Health on Hit";
+        modifierDescription = modifierDescription = "Your First Strike Recover " + CurrentLifeSteal + " HP per enemy hit.";
     }
     public void LifeSteal(Enemy enemy)
     {

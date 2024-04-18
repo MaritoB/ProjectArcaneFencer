@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _RecoverStaminaOnThirdStrike
   m_EditorClassIdentifier: 
   modifierName: RecoverStaminaOnThirdStrike
-  modifierDescription: Recover 10 Stamina  on Third strike
+  modifierDescription: Recover 5 Stamina  on Third strike
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
-  RecoverStaminaOnParryBase: 10
-  RecoverStaminaOnParryMultiplier: 5
+  RecoverStaminaOnParryBase: 5
+  RecoverStaminaOnParryMultiplier: 3

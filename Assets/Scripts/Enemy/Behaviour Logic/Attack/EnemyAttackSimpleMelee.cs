@@ -37,7 +37,7 @@ public class EnemyAttackSimpleMelee : EnemyAttackSOBase
         if (CanAttack())
         {
             enemy.IsAttacking = true;
-            _currentAttackTime = enemy.enemyData.AttackRate;
+            _currentAttackTime = enemy.GetAttackRate();
             enemy.animator.SetTrigger("Attack");
         }
     }

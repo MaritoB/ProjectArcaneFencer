@@ -16,7 +16,7 @@ public class KnockbackOnBlock : WeaponModifierSO
     public override void UpdateDescription()
     {
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        modifierDescription = "knockback enemy that hit your shield with " + currentKnockbackForce + " Force.";
+        modifierDescription = "Knockback enemy that hit your Magic Shield with " + currentKnockbackForce + " Force.";
     }
 
     public void KnockBackEnemy(Enemy enemy)

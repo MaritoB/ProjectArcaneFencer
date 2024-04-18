@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef89feeebbd30c49a5188f705b80426, type: 3}
   m_Name: RangedSkeleton_EnemyData
   m_EditorClassIdentifier: 
-  maxHealth: 25
-  soulsAmount: 50
+  maxHealthBase: 25
+  soulsAmountBase: 50
+  attackRangeBase: 0.5
+  attackDamageBase: 10
+  AttackRateBase: 1
+  maxHealthMultiplier: 2
+  soulsAmountMultiplier: 2
+  attackRangeMultiplier: 0
+  attackDamageMultiplier: 3
+  attackRateMultiplier: 0

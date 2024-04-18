@@ -1,22 +1,20 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InfiniteRoomEvent : MonoBehaviour, IOwner
 {
-    bool isEventPerformed = false;
     public Transform spawnArea;
     //public List<List<EnemyType>> Hordes = new List<List<EnemyType>>();
     public Horde InfiniteHorde;
     public int enemysRemaining;
-    public int currentHorde = 0;
+    public int CurrentLevel = 0;
     public PlayerController playerController;
-    Array EnemyTypes;
 
     // Start is called before the first frame update
     void Start()
     {
         InfiniteHorde.enemies.Clear();
-        EnemyTypes = Enum.GetValues(typeof(EnemyType));
         InfiniteHorde.enemies.Add(EnemyType.MELEESKELETON);
         SpawnHorde(InfiniteHorde);
         /*
@@ -38,17 +36,18 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
     public void SpawnEnemy(EnemyType enemyType)
     {
         Enemy enemy = EnemySpawner.Instance.SpawnEnemyFromPool(enemyType, spawnArea);
+        enemy.SetLevel(CurrentLevel);
         enemy.SetOwner(this);
     }
     public void SpawnHorde(Horde horde)
     {
+        CurrentLevel++;
         foreach (EnemyType enemy in horde.enemies)
         {
             SpawnEnemy(enemy);
         }
         enemysRemaining = horde.enemies.Count;
-        currentHorde++;
-    }
+}
 
     public void InformEnemyDeath()
     {
@@ -56,7 +55,11 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
         if (enemysRemaining <= 0)
         {
             playerController.LevelUP();
-            InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
+            if((CurrentLevel % 2) == 0)
+            {
+                InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
+
+            }
             SpawnHorde(InfiniteHorde);
         }
     }

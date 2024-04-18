@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 
 public class PlayerInGameUI : MonoBehaviour
@@ -9,11 +10,13 @@ public class PlayerInGameUI : MonoBehaviour
     ItemModifierUI itemModifierUI1, itemModifierUI2, itemModifierUI3;
     [SerializeField]
     RectTransform MaxHealth, CurrentHealth, MaxStamina, CurrentStamina;
+    [SerializeField]
+    TextMeshProUGUI LevelNumberText;
     private Vector2 MaxHealthSize, MaxStaminaSize;
     private Vector2 CurrentHealthSize, CurrentStaminaSize;
     PlayerController playerController;
     [SerializeField] RectTransform aWeaponModPanel;
-    
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -27,7 +30,7 @@ public class PlayerInGameUI : MonoBehaviour
     {
         if (playerController == null) return;
         this.playerController = playerController;
-        SetupSkillUI();
+        //SetupSkillUI();
     }
     public void SelectModifier(WeaponModifierSO aModifier)
     {
@@ -35,7 +38,9 @@ public class PlayerInGameUI : MonoBehaviour
 
     public void SetupSkillUI()
     {
+        aWeaponModPanel.gameObject.SetActive(true);
         if (playerController == null) return;
+        LevelNumberText.text = "Lvl : " + playerController.CurrentLevel;
         WeaponModifierSO mod1, mod2, mod3;
         mod1 = playerController.sword.GetRandomModifier();
         while (mod1 == null)
@@ -55,7 +60,7 @@ public class PlayerInGameUI : MonoBehaviour
         itemModifierUI2.UpdateItemModifierUI(mod2, this);
         itemModifierUI3.UpdateItemModifierUI(mod3, this);
         aWeaponModPanel.gameObject.SetActive(true);
-        Time.timeScale = 0.01f;
+        Time.timeScale = 0f;
     }
     public void FadeInResetLevel()
     {

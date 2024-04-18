@@ -1,5 +1,7 @@
 using UnityEngine;
 using FMODUnity;
+using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
@@ -8,6 +10,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyStateData enemyStateData;
     public LayerMask wallLayer;
     private Transform _playerTransform = null;
+
+    
+    [SerializeField] protected int currentLevel = 0;
+    [SerializeField] protected float currentAttackRange;
+    [SerializeField] protected float currentAttackRate;
+    [SerializeField] protected  int currentAttackDamage;
+    public float GetAttackRate() { return currentAttackRate; }
     [field: SerializeField] public float CurrentHealth { get; set; }
     public Rigidbody mRigidbody { get; set; }
     public bool IsWithinAggroDistance { get; set; }
@@ -69,7 +78,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void ResetStats()
     {
-        CurrentHealth = enemyData.maxHealth;
+        CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
         //mRigidbody.
         mRigidbody.velocity = Vector3.zero;
         mRigidbody.useGravity = true;
@@ -216,7 +225,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         mRigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         GetComponent<CapsuleCollider>().enabled = true;
-        CurrentHealth = enemyData.maxHealth;
+        CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
         //StateMachine Initialize
         EnemyIdleBaseInstance = Instantiate(enemyStateData.idleStateData);
         EnemyChaseBaseInstance = Instantiate(enemyStateData.chaseStateData);
@@ -274,6 +283,15 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public virtual void Attack()
     {
         IsUnstopable = false;
+    }
+
+    internal void SetLevel(int aCurrentLevel)
+    {
+        currentLevel = aCurrentLevel;
+        CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
+        currentAttackDamage = enemyData.attackDamageBase + enemyData.attackDamageMultiplier * currentLevel;
+        currentAttackRange = enemyData.attackRangeBase + enemyData.attackRangeMultiplier * currentLevel;
+       
     }
 
     public enum AnimationTriggerType

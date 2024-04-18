@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef89feeebbd30c49a5188f705b80426, type: 3}
   m_Name: MeleeSkeleton_EnemyData
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  soulsAmount: 50
-  attackRange: 0.5
-  attackDamage: 10
+  maxHealthBase: 25
+  soulsAmountBase: 50
+  attackRangeBase: 0.5
+  attackDamageBase: 10
+  AttackRateBase: 1.2
+  maxHealthMultiplier: 3
+  soulsAmountMultiplier: 2
+  attackRangeMultiplier: 0
+  attackDamageMultiplier: 2
+  attackRateMultiplier: -0.03

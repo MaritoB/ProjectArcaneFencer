@@ -15,11 +15,11 @@ MonoBehaviour:
   MaxHealth: 300
   MaxStamina: 100
   MovementSpeed: 200
-  DashSpeed: 1000
-  DashTime: 0.15
+  DashSpeed: 400
+  DashTime: 0.3
   DashStaminaCost: 15
   RecoverStaminaOnParry: 25
   StaminaRecoveryRate: 10
   ParryRadius: 1
   MeleeAttackRadius: 1
-  StaminaDrainPercentajeOnBlock: 0.7
+  StaminaDrainPercentajeOnBlock: 0.6

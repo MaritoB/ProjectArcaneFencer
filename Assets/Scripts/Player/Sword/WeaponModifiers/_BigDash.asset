@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: _BigDash
   m_EditorClassIdentifier: 
   modifierName: Big Dash
-  modifierDescription: Your Dash is no longer Chanelling the Stamina cost is 32 ,
-    Speed is 1100, and DashTime is 0,6.
+  modifierDescription: 
   modifierLevel: 0
   modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
-  ModifiedDashSpeedBase: 600
+  ModifiedDashSpeedBase: 400
   DashSpeedLevelMultiplier: 100
-  ModifiedDashTimeBase: 0.3
-  DashTimeLevelMultiplier: 0.05
+  ModifiedDashTimeBase: 0.4
+  DashTimeLevelMultiplier: 0.02
   DashCostLevelMultiplier: -3
   ModifiedDashStaminaCostbase: 25
   isChannellingDash: 0

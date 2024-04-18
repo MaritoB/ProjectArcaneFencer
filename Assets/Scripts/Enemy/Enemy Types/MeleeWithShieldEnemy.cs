@@ -14,12 +14,12 @@ public class MeleeWithShieldEnemy : Enemy
 
         IsAttacking = false;
         IsUnstopable = false;
-        attackPosition.localScale = Vector3.one * enemyData.attackRange;
-        Collider[] HitPlayers = Physics.OverlapSphere(attackPosition.position, enemyData.attackRange, playerLayer);
+        attackPosition.localScale = Vector3.one * currentAttackRange;
+        Collider[] HitPlayers = Physics.OverlapSphere(attackPosition.position, currentAttackRange, playerLayer);
 
         foreach (Collider player in HitPlayers)
         {
-            player.GetComponent<IDamageable>().TakeDamage(enemyData.attackDamage, this.gameObject);
+            player.GetComponent<IDamageable>().TakeDamage(currentAttackDamage, this.gameObject);
         }
     }
 
