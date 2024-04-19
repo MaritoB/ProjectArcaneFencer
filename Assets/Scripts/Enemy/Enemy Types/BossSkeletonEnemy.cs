@@ -38,13 +38,7 @@ public class BossSkeletonEnemy : Enemy
         CurrentHealth -= aDamageAmount;
         if (CurrentHealth > 0)
         {
-
             AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
-            if (!IsUnstopable)
-            {
-                HitStun();
-                IsAttacking = false;
-            }
         }
         else
         {

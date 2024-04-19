@@ -3,6 +3,7 @@ using FMODUnity;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using static UnityEngine.EventSystems.EventTrigger;
+using FMOD;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void GetKnockBack(Vector3 aForce)
     {
+        if(IsUnstopable) return;
         mRigidbody.AddForce(aForce, ForceMode.Impulse);
         if (CurrentHealth >0)
         {
@@ -154,9 +156,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void HitStun()
     {
-        EnemyStunBaseInstance = EnemyHitStunInstance;
+        if(IsUnstopable) return;
         if (StateMachine != null && !IsStunned )
         {
+            EnemyStunBaseInstance = EnemyHitStunInstance;
             StateMachine.ChangeState(EnemyStunState);
         }
 

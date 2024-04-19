@@ -11981,7 +11981,7 @@ MonoBehaviour:
   IsAttacking: 0
   CanMove: 1
   IsAlive: 1
-  IsUnstopable: 0
+  IsUnstopable: 1
   IsStunned: 0
   playerLayer:
     serializedVersion: 2
