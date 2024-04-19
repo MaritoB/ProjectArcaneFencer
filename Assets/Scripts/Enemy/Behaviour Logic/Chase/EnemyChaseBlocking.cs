@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyChaseBlocking : EnemyChaseSOBase
 {
     [SerializeField] private float _MovementSpeed = 1.5f;
-    MeleeWithShieldEnemy enemyWithShield = null;
+    BossSkeletonEnemy enemyWithShield = null;
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -16,7 +16,7 @@ public class EnemyChaseBlocking : EnemyChaseSOBase
         base.DoEnterLogic();
         if (enemyWithShield == null)
         {
-            enemyWithShield = enemy.GetComponent<MeleeWithShieldEnemy>();
+            enemyWithShield = enemy.GetComponent<BossSkeletonEnemy>();
         }
         if (enemyWithShield != null)
         {

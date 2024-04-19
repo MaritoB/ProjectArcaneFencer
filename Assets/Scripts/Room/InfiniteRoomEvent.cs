@@ -6,7 +6,7 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
 {
     public Transform spawnArea;
     //public List<List<EnemyType>> Hordes = new List<List<EnemyType>>();
-    public Horde InfiniteHorde;
+    public Horde InfiniteHorde, BossHorde;
     public int enemysRemaining;
     public int CurrentLevel = 0;
     public PlayerController playerController;
@@ -47,7 +47,7 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
             SpawnEnemy(enemy);
         }
         enemysRemaining = horde.enemies.Count;
-}
+    }
 
     public void InformEnemyDeath()
     {
@@ -55,10 +55,15 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
         if (enemysRemaining <= 0)
         {
             playerController.LevelUP();
-            if((CurrentLevel % 2) == 0)
+            if ((CurrentLevel % 2) == 0)
             {
                 InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
-
+            }
+            if ((CurrentLevel % 5) == 0)
+            {
+                BossHorde.enemies.Add(EnemyType.BOSSSKELETON);
+                SpawnHorde(BossHorde);
+                return;
             }
             SpawnHorde(InfiniteHorde);
         }

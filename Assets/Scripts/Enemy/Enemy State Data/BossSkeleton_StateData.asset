@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588e8f7ec5686804ca82acf4ea76e4de, type: 3}
+  m_Name: BossSkeleton_StateData
+  m_EditorClassIdentifier: 
+  idleStateData: {fileID: 11400000, guid: 2795f97a1df5d9f459912eac6544a9d2, type: 2}
+  chaseStateData: {fileID: 11400000, guid: a39b26e9aa0d790428bd6aec562f2959, type: 2}
+  chaseRunForSecondsStateData: {fileID: 11400000, guid: 9f11163fec7f4394e9595377c3c894a3,
+    type: 2}
+  attackStateData: {fileID: 11400000, guid: 6204453bc14a8bc48a652f0bf3cdd414, type: 2}
+  fleeStateData: {fileID: 11400000, guid: a5da9463d3ef5014792522ca3feea481, type: 2}
+  knockBackStateData: {fileID: 11400000, guid: 02b14f8bfb2be634b8a91abcfee43774, type: 2}
+  hitStunStateData: {fileID: 11400000, guid: 8cc40590518e6f64bb492061cb4d64ae, type: 2}
+  dieStateData: {fileID: 11400000, guid: e2c5bd4f82a4af64b9803500da8cb447, type: 2}

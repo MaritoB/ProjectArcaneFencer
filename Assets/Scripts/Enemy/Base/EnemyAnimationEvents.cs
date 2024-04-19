@@ -18,6 +18,11 @@ public class EnemyAnimationEvents : MonoBehaviour
         if (enemy == null) return;
         enemy.Attack();
     }
+    public void SpawnRandomEnemy()
+    {
+        if (enemy == null) return;
+        EnemySpawner.Instance.SpawnRandomEnemy();
+    }
     public void FinishHitStun()
     {
         if (enemy == null) return;

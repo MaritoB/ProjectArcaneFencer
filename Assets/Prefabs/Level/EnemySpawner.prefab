@@ -49,8 +49,18 @@ MonoBehaviour:
     prefab: {fileID: 754349982783443275, guid: 6c83a480390296146bb83babe4d1fbd9, type: 3}
     poolSize: 10
     pool: []
-  - enemyType: 1
+  - enemyType: 2
     prefab: {fileID: 8715147753852310770, guid: 419874e3b9540454dac1dc893e38f98f,
+      type: 3}
+    poolSize: 10
+    pool: []
+  - enemyType: 3
+    prefab: {fileID: 8715147753852310770, guid: e1406d518e3b9764288913594050c4bb,
+      type: 3}
+    poolSize: 10
+    pool: []
+  - enemyType: 1
+    prefab: {fileID: 8932216912398441921, guid: ad49c0c9c27c83f49a79b46dc0e48f41,
       type: 3}
     poolSize: 10
     pool: []

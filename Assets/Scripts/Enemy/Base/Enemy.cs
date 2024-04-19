@@ -2,6 +2,7 @@ using UnityEngine;
 using FMODUnity;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
@@ -292,6 +293,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         currentAttackDamage = enemyData.attackDamageBase + enemyData.attackDamageMultiplier * currentLevel;
         currentAttackRange = enemyData.attackRangeBase + enemyData.attackRangeMultiplier * currentLevel;
        
+    }
+
+    internal Vector3 GetDirectionToPlayer()
+    {
+        return _attackDirection = (_playerTransform.position - transform.position).normalized;
     }
 
     public enum AnimationTriggerType

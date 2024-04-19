@@ -7,7 +7,8 @@ public enum EnemyType
     MELEESKELETON,
     MELEEWITHSHIELDSKELETON,
     RANGEDSKELETON,
-    RANGEDSTANDINGSKELETON
+    RANGEDSTANDINGSKELETON,
+    BOSSSKELETON
 }
 
 [System.Serializable]
@@ -26,8 +27,10 @@ public class EnemySpawner : MonoBehaviour
     public List<EnemyPoolInfo> EnemyPoolList;
     List<EnemyType> EnemyTypes = new List<EnemyType>();
     public Dictionary<EnemyType, EnemyPoolInfo> EnemyPoolDictionary = new Dictionary<EnemyType, EnemyPoolInfo>();
+    Transform CurrentRoomTransform;
 
-    
+
+
     void Start()
     {
         EnemyTypes.Clear();
@@ -63,7 +66,12 @@ public class EnemySpawner : MonoBehaviour
     }
     public EnemyType GetRandomEnemy()
     {
-        return EnemyTypes[Random.Range(0, EnemyTypes.Count)];
+        EnemyType newEnemy = EnemyTypes[Random.Range(0, EnemyTypes.Count)];
+        if (newEnemy == EnemyType.BOSSSKELETON)
+        {
+            newEnemy = EnemyType.MELEESKELETON;
+        }
+        return newEnemy;
     }
     private Enemy GetEnemyFromPool(EnemyType aEnemyType)
     {
@@ -98,7 +106,10 @@ public class EnemySpawner : MonoBehaviour
             return null;
         }
     }
-
+    public void SpawnRandomEnemy()
+    {
+        SpawnEnemyFromPool(GetRandomEnemy(), CurrentRoomTransform);
+    }
     public Enemy SpawnEnemyFromPool(EnemyType enemyType, Transform roomTransform)
     {
         Vector3 RandomSpawnPosition = GetValidSpawnPoint(roomTransform);
@@ -127,7 +138,7 @@ public class EnemySpawner : MonoBehaviour
     }
     private Vector3 GenerateRandomPositionInsideRoom(Transform roomTransform)
     {
- 
+        CurrentRoomTransform = roomTransform;
         Vector3 localMinBounds = -roomTransform.localScale / 2;
         Vector3 localMaxBounds = roomTransform.localScale / 2;
         Quaternion parentRotation = roomTransform.parent.rotation;

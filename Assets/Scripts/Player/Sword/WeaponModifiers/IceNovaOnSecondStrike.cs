@@ -49,11 +49,9 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
     }
     public void TryCastIceNova()
     {
-        Debug.Log("ICE NOVA");
         int number = Random.Range(0, 100);
         if (number < currentTriggerChance)
         {
-            Debug.Log("ICE NOVA Casted");
             IceNovaEffect.Emit(25* modifierLevel);
             IceNovaEffect.transform.position = Player.transform.position;
             Collider[] enemiesColliders = Physics.OverlapSphere(Player.transform.position, currentRadius, EnemyLayer);
@@ -62,7 +60,6 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
                 IDamageable damageableEnemy = enemy.GetComponent<IDamageable>();
                 if (damageableEnemy != null)
                 {
-                    Debug.Log("ICE NOVA Hit");
                     damageableEnemy.TakeDamage(currentDamage, null);
                 }
             }

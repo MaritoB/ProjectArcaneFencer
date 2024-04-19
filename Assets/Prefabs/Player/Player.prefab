@@ -21128,6 +21128,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   playerData: {fileID: 11400000, guid: b6f09982efee8e64fb18394937e3f76f, type: 2}
   playerSoundData: {fileID: 11400000, guid: 0150c7ea6c2247e428bb301a06f1d1fd, type: 2}
+  CurrentLevel: 0
   mRigidbody: {fileID: 0}
   mCamera: {fileID: 0}
   RotationSpeed: 15
