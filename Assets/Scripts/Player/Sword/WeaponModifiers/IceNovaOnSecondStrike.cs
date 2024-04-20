@@ -1,13 +1,17 @@
 
-using System.Collections.Concurrent;
 using UnityEngine;
 [CreateAssetMenu(fileName = "_IceNovaOnSecondStrike", menuName = "WeaponModifiers/IceNovaOnSecondStrike")]
 public class IceNovaOnSecondStrike : WeaponModifierSO
 {
     public GameObject IceNovaEffectPrefab;
     ParticleSystem IceNovaEffect;
+    [SerializeField]
+    FMODUnity.EventReference IceNovaSfx;
+
+    
     public float RadiusBase, RadiusMultiplier;
     float currentRadius;
+
 
     public int DamageBase, DamageMultiplier;
     int currentDamage;
@@ -52,6 +56,7 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
         int number = Random.Range(0, 100);
         if (number < currentTriggerChance)
         {
+            AudioManager.instance.PlayOneShot(IceNovaSfx, Player.transform.position);
             IceNovaEffect.Emit(25* modifierLevel);
             IceNovaEffect.transform.position = Player.transform.position;
             Collider[] enemiesColliders = Physics.OverlapSphere(Player.transform.position, currentRadius, EnemyLayer);

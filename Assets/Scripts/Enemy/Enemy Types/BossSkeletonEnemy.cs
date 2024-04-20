@@ -1,5 +1,6 @@
 
 
+using System;
 using UnityEngine;
 
 public class BossSkeletonEnemy : Enemy
@@ -8,11 +9,16 @@ public class BossSkeletonEnemy : Enemy
     LayerMask playerLayer;
     public bool IsBlocking = true;
 
+    [SerializeField] BossSkeletonSoundData BossSoundData;
+
+    [SerializeField]
+    ParticleSystem DustPs;
     public override void Attack()
     {
         base.Attack();
         if (!IsAttacking || CurrentHealth <1) return;
-
+        DustPs.transform.position = attackPosition.position;
+        DustPs.Emit(30);
         IsAttacking = false;
         attackPosition.localScale = Vector3.one * currentAttackRange;
         Collider[] HitPlayers = Physics.OverlapSphere(attackPosition.position, currentAttackRange, playerLayer);
@@ -48,6 +54,43 @@ public class BossSkeletonEnemy : Enemy
                 owner.InformEnemyDeath();
             }
         }
+    }
+
+    internal void PlayWarcrySound()
+    {
+        if(BossSoundData == null)
+        {
+            BossSoundData = (BossSkeletonSoundData)enemySoundData;
+        }
+        if (BossSoundData == null)
+        { 
+            return; 
+        }
+        AudioManager.instance.PlayOneShot(BossSoundData.BossWarcry, transform.position);
+    }
+    internal void PlayRiseSkeletonSound()
+    {
+        if (BossSoundData == null)
+        {
+            BossSoundData = (BossSkeletonSoundData)enemySoundData;
+        }
+        if (BossSoundData == null)
+        {
+            return;
+        }
+        AudioManager.instance.PlayOneShot(BossSoundData.RiseSkeleton, transform.position);
+    }
+    internal void PlayHHitGorundSound()
+    {
+        if (BossSoundData == null)
+        {
+            BossSoundData = (BossSkeletonSoundData)enemySoundData;
+        }
+        if (BossSoundData == null)
+        {
+            return;
+        }
+        AudioManager.instance.PlayOneShot(BossSoundData.BossHeavyGroundHit, transform.position);
     }
 }
 

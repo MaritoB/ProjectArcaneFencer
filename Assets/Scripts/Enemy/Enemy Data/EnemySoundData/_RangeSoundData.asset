@@ -28,10 +28,10 @@ MonoBehaviour:
     Path: event:/Enemy/Death
   EnemyOnHit:
     Guid:
-      Data1: 1604358978
-      Data2: 1217183192
-      Data3: -460078148
-      Data4: 424853604
+      Data1: -1126626082
+      Data2: 1184179959
+      Data3: 147942307
+      Data4: -962165032
     Path: event:/Enemy/OnHit
   EnemyWalk:
     Guid:
@@ -42,8 +42,8 @@ MonoBehaviour:
     Path: event:/Enemy/Walk
   EnemyBlock:
     Guid:
-      Data1: -1364636174
-      Data2: 1267375607
-      Data3: 825295021
-      Data4: 1214310840
+      Data1: 1842758619
+      Data2: 1135041144
+      Data3: -1900926543
+      Data4: -2018979608
     Path: event:/Enemy/Block

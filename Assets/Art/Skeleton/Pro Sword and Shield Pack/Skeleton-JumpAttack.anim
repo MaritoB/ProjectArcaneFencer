@@ -73373,6 +73373,27 @@ AnimationClip:
     floatParameter: 0
     intParameter: 200
     messageOptions: 0
+  - time: 0.26666668
+    functionName: PlayFootStepSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: PlayFootStepSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.43333334
+    functionName: PlayAttackSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.5
     functionName: DashForwardEvent
     data: 
@@ -73394,8 +73415,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 150
     messageOptions: 0
+  - time: 1.2
+    functionName: PlayBossHitGroundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.2333333
     functionName: Attack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.1
+    functionName: PlayFootStepSoundEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -1,11 +1,10 @@
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    
+    [SerializeField]
+    EventReference MusicBase;
     public static AudioManager instance { get; private set; }
     private void Awake()
     {
@@ -13,6 +12,7 @@ public class AudioManager : MonoBehaviour
         {
         }
         instance = this;
+        RuntimeManager.PlayOneShot(MusicBase);
     }
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
     {

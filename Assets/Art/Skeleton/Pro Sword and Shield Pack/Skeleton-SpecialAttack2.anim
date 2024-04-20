@@ -55010,12 +55010,33 @@ AnimationClip:
     floatParameter: 0
     intParameter: 200
     messageOptions: 0
+  - time: 0.3
+    functionName: PlayFootStepSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.43333334
     functionName: DashForwardEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 200
+    messageOptions: 0
+  - time: 0.46666667
+    functionName: PlayAttackSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: PlayFootStepSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
     messageOptions: 0
   - time: 0.8
     functionName: Attack

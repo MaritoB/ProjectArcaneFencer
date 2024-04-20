@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e932c9649011ebb4f825af1c38ff25d9, type: 3}
+  m_Name: _BossSkeletonSoundData
+  m_EditorClassIdentifier: 
+  EnemyAttack:
+    Guid:
+      Data1: 548841316
+      Data2: 1264446287
+      Data3: -2106054989
+      Data4: 863808557
+    Path: event:/BossSkeleton/SlashSound
+  EnemyDeath:
+    Guid:
+      Data1: 1052046141
+      Data2: 1175751844
+      Data3: -959860816
+      Data4: -1163642305
+    Path: event:/BossSkeleton/Death
+  EnemyOnHit:
+    Guid:
+      Data1: -1126626082
+      Data2: 1184179959
+      Data3: 147942307
+      Data4: -962165032
+    Path: event:/Enemy/OnHit
+  EnemyWalk:
+    Guid:
+      Data1: -1733011696
+      Data2: 1233664801
+      Data3: 733135786
+      Data4: 780902102
+    Path: event:/BossSkeleton/Steps
+  EnemyBlock:
+    Guid:
+      Data1: 1842758619
+      Data2: 1135041144
+      Data3: -1900926543
+      Data4: -2018979608
+    Path: event:/Enemy/Block
+  BossWarcry:
+    Guid:
+      Data1: 2098010412
+      Data2: 1113029090
+      Data3: -1880970109
+      Data4: 583574597
+    Path: event:/BossSkeleton/Warcry
+  BossHeavyGroundHit:
+    Guid:
+      Data1: -1318308623
+      Data2: 1152791283
+      Data3: -794710601
+      Data4: -1291628558
+    Path: event:/BossSkeleton/JumpAttack
+  RiseSkeleton:
+    Guid:
+      Data1: -1233449325
+      Data2: 1338380321
+      Data3: 953541815
+      Data4: 1659941626
+    Path: event:/BossSkeleton/RiseSkeleton

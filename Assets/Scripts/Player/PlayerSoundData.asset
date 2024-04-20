@@ -21,18 +21,18 @@ MonoBehaviour:
     Path: event:/Player/AttackSword1
   PlayerAttack2:
     Guid:
+      Data1: 1939113377
+      Data2: 1308994509
+      Data3: 634352805
+      Data4: 1183906576
+    Path: event:/Player/AttackSword1
+  PlayerAttack3:
+    Guid:
       Data1: 1919842253
       Data2: 1189686205
       Data3: -299402089
       Data4: 147626121
     Path: event:/Player/AttackSword2
-  PlayerAttack3:
-    Guid:
-      Data1: -1686209195
-      Data2: 1332137249
-      Data3: -2015033701
-      Data4: 1423241029
-    Path: event:/Player/AttackSword3
   PlayerOnHit:
     Guid:
       Data1: -555926154
@@ -75,3 +75,10 @@ MonoBehaviour:
       Data3: -356915314
       Data4: 517312120
     Path: event:/Player/FootSteps
+  IceNova:
+    Guid:
+      Data1: -1612410038
+      Data2: 1264543412
+      Data3: 911137720
+      Data4: 1157697027
+    Path: event:/Player/IceNova

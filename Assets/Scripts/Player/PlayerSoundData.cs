@@ -5,5 +5,5 @@ using FMODUnity;
 public class PlayerSoundData : ScriptableObject
 {
     public EventReference PlayerAttack1, PlayerAttack2, PlayerAttack3,
-        PlayerOnHit, PlayerDeath, PlayerDash, PlayerShield, PlayerParry, PlayerStep; 
+        PlayerOnHit, PlayerDeath, PlayerDash, PlayerShield, PlayerParry, PlayerStep, IceNova; 
 }

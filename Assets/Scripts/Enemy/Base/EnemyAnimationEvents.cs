@@ -6,11 +6,13 @@ public class EnemyAnimationEvents : MonoBehaviour
 {
     Enemy enemy;
     MeleeWithShieldEnemy enemyWithShield;
+    BossSkeletonEnemy BossSkeleton;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponentInParent<Enemy>();
         enemyWithShield = GetComponentInParent<MeleeWithShieldEnemy>();
+        BossSkeleton = GetComponentInParent<BossSkeletonEnemy>();
     }
 
     public void Attack()
@@ -20,8 +22,25 @@ public class EnemyAnimationEvents : MonoBehaviour
     }
     public void SpawnRandomEnemy()
     {
-        if (enemy == null) return;
         EnemySpawner.Instance.SpawnRandomEnemy();
+    }
+    public void PlayBossWarcrySoundEvent()
+    {
+        if (BossSkeleton == null) return;
+        BossSkeleton.PlayWarcrySound();
+
+    }
+    public void PlayRiseSkeletonSoundEvent()
+    {
+        if (BossSkeleton == null) return;
+        BossSkeleton.PlayRiseSkeletonSound();
+
+    }
+    public void PlayBossHitGroundEvent()
+    {
+        if (BossSkeleton == null) return;
+        BossSkeleton.PlayHHitGorundSound();
+
     }
     public void FinishHitStun()
     {
