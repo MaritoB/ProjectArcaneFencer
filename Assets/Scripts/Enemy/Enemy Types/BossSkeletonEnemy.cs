@@ -49,10 +49,7 @@ public class BossSkeletonEnemy : Enemy
         else
         {
             Death();
-            if (owner != null)
-            {
-                owner.InformEnemyDeath();
-            }
+
         }
     }
 
@@ -80,7 +77,7 @@ public class BossSkeletonEnemy : Enemy
         }
         AudioManager.instance.PlayOneShot(BossSoundData.RiseSkeleton, transform.position);
     }
-    internal void PlayHHitGorundSound()
+    internal void PlayHitGorundSound()
     {
         if (BossSoundData == null)
         {
@@ -91,6 +88,20 @@ public class BossSkeletonEnemy : Enemy
             return;
         }
         AudioManager.instance.PlayOneShot(BossSoundData.BossHeavyGroundHit, transform.position);
+    }
+
+    internal void PlayGruntSlashSound()
+    {
+        if (BossSoundData == null)
+        {
+            BossSoundData = (BossSkeletonSoundData)enemySoundData;
+        }
+        if (BossSoundData == null)
+        {
+            return;
+        }
+        AudioManager.instance.PlayOneShot(BossSoundData.EnemyAttack, transform.position);
+
     }
 }
 

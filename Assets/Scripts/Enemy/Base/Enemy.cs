@@ -1,9 +1,4 @@
 using UnityEngine;
-using FMODUnity;
-using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using static UnityEngine.EventSystems.EventTrigger;
-using FMOD;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
 {
@@ -30,7 +25,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool IsAttacking = false;
     public bool CanMove = true;
     public bool IsAlive = true;
-    public bool IsUnstopable = false;
+    public bool IsUnstopable;
     public bool IsStunned = false;
     public StateMachine StateMachine { get; set; }
 
@@ -58,7 +53,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void InformDeathToOwner()
     {
-        owner.InformEnemyDeath();
+        Debug.Log("EnemyDeath");
+        if(owner != null)
+        {
+            owner.InformEnemyDeath();
+        }
     }
 
     public void GetKnockBack(Vector3 aForce)
@@ -75,7 +74,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         else
         {
             Death();
-            return;
         }
     
     }
@@ -94,7 +92,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void DashForward(int aDashForce)
     {
         if(!IsAlive) { return; }
-        IsUnstopable = true;
+        //IsUnstopable = true;
         mRigidbody.AddForce(transform.forward* aDashForce, ForceMode.Impulse);
         CanMove = false;
     }
@@ -131,7 +129,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void Death()
     {
         IsAlive = false;
-        AudioManager.instance.PlayOneShot(enemySoundData.EnemyDeath, transform.position);
+        //InformDeathToOwner();
         //SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
         if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
@@ -140,6 +138,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void PlayEnemyAttackSound()
     {
         AudioManager.instance.PlayOneShot(enemySoundData.EnemyAttack, transform.position);
+    }
+    public void PlayDeathSound()
+    {
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyDeath, transform.position);
     }
     public void PlayEnemyFootStepSound()
     {
@@ -168,10 +170,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         if (!IsAlive || aDamageAmount<0) return;
         CurrentHealth -= aDamageAmount;
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
         if (CurrentHealth > 0)
         {
-
-            AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
             if (!IsUnstopable) 
             {
                 HitStun();
@@ -181,10 +182,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         else
         {
             Death();
-            if (owner != null)
-            {
-                owner.InformEnemyDeath();
-            }
         }
     }
     public void AimPlayerPosition()
@@ -286,7 +283,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public virtual void Attack()
     {
-        IsUnstopable = false;
+        //IsUnstopable = false;
     }
 
     internal void SetLevel(int aCurrentLevel)

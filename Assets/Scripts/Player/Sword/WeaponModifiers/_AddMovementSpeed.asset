@@ -15,6 +15,6 @@ MonoBehaviour:
   modifierName: Add Movement Speed
   modifierDescription: Add 210 MovementSpeed
   modifierLevel: 0
-  modifierSprite: {fileID: 21300000, guid: b9a17a1d6b2bc024ab57dbe5cbfc141d, type: 3}
+  modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   AddedMovementSpeedBase: 210
   AddedMovementMultiplier: 20

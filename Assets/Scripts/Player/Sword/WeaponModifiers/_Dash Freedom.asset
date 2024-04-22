@@ -15,7 +15,7 @@ MonoBehaviour:
   modifierName: 'Dash Freedom '
   modifierDescription: Dash Corto y barato
   modifierLevel: 0
-  modifierSprite: {fileID: 21300000, guid: b2aa4c6db0a199d46b4652c088e8420a, type: 3}
+  modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   ModifiedDashSpeedBase: 400
   DashSpeedLevelMultiplier: 25
   ModifiedDashTimeBase: 0.2

@@ -24,6 +24,16 @@ public class EnemyAnimationEvents : MonoBehaviour
     {
         EnemySpawner.Instance.SpawnRandomEnemy();
     }
+    public void DeathFinishEvent()
+    {
+        if (enemy == null) return;
+        enemy.InformDeathToOwner();
+    }
+    public void PlayDeathSoundEvent()
+    {
+        if (enemy == null) return;
+        enemy.PlayDeathSound();
+    }
     public void PlayBossWarcrySoundEvent()
     {
         if (BossSkeleton == null) return;
@@ -39,7 +49,14 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void PlayBossHitGroundEvent()
     {
         if (BossSkeleton == null) return;
-        BossSkeleton.PlayHHitGorundSound();
+        BossSkeleton.PlayHitGorundSound();
+
+    }
+
+    public void PlayBossGruntSlashEvent()
+    {
+        if (BossSkeleton == null) return;
+        BossSkeleton.PlayGruntSlashSound();
 
     }
     public void FinishHitStun()
@@ -71,12 +88,12 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void FinishAttack()
     {
         if (enemy == null) return;
-
         enemy.IsAttacking = false;
         if (enemy.IsAlive)
         {
            enemy.CanMove = true;
         }
+        enemy.SetStateToChase();
     }
     public void ResetCanMove()
     {

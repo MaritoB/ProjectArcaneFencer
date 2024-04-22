@@ -15,6 +15,6 @@ MonoBehaviour:
   modifierName: Life Steal On First Hit
   modifierDescription: Your First Strike Restore 5  Health on Hit
   modifierLevel: 0
-  modifierSprite: {fileID: 21300000, guid: a965e53c42968dc4b9f5138c268d7fb7, type: 3}
+  modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   LifeStealBase: 1
   LifeStealMultiplier: 2

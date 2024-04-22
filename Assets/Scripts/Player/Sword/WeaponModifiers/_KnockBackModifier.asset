@@ -15,6 +15,6 @@ MonoBehaviour:
   modifierName: KnockBack
   modifierDescription: push enemies away to the ground with 800 Force.
   modifierLevel: 0
-  modifierSprite: {fileID: 21300000, guid: 0c6d6cd11b30082479de6164c79b0dcb, type: 3}
+  modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   KnockBackForceBase: 300
   KnockBackForceMutiplier: 100

@@ -73387,7 +73387,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.43333334
+  - time: 0.36666667
     functionName: PlayAttackSoundEvent
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -73408,14 +73408,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 300
     messageOptions: 0
-  - time: 1.1666666
+  - time: 1.0666667
     functionName: DashForwardEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 150
     messageOptions: 0
-  - time: 1.2
+  - time: 1.1666666
     functionName: PlayBossHitGroundEvent
     data: 
     objectReferenceParameter: {fileID: 0}

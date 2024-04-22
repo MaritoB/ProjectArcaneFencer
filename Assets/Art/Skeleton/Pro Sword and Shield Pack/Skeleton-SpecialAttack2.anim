@@ -55010,6 +55010,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 200
     messageOptions: 0
+  - time: 0.16666667
+    functionName: PlayAttackSoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.3
     functionName: PlayFootStepSoundEvent
     data: 
@@ -55023,13 +55030,6 @@ AnimationClip:
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 200
-    messageOptions: 0
-  - time: 0.46666667
-    functionName: PlayAttackSoundEvent
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
     messageOptions: 0
   - time: 0.6666667
     functionName: PlayFootStepSoundEvent
