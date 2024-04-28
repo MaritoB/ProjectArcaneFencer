@@ -70,7 +70,7 @@
 			<value>-16</value>
 		</property>
 		<property name="pitch">
-			<value>-10</value>
+			<value>-5</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{215d7051-aae4-45bf-a1d5-2d0bf67ea3af}</destination>

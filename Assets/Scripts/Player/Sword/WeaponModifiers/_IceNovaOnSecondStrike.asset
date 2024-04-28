@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifierName: IceNovaOnSecondStrike
   modifierDescription: 'your Second Strike have 60% chance to cast Ice Nova. Ice
-    Nova Damage : 14, Radius : 1,4'
+    Nova Damage : 16, Radius : 1,6'
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   IceNovaEffectPrefab: {fileID: 1337242488471618507, guid: 1b82ceeef9d4c9c4da17f58ec66f6c75,
@@ -30,8 +30,8 @@ MonoBehaviour:
   RadiusMultiplier: 0.2
   DamageBase: 10
   DamageMultiplier: 2
-  TriggerChanceBase: 50
-  TriggerChanceMultiplier: 5
+  TriggerChanceBase: 30
+  TriggerChanceMultiplier: 10
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 64

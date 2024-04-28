@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [CreateAssetMenu(fileName = "Dash", menuName = "Player Logic/Movement Logic/Dash ")]
 public class PlayerDash  : PlayerMovementBase
@@ -22,6 +23,7 @@ public class PlayerDash  : PlayerMovementBase
     private void StartDash()
     {
         if(player== null) { return; }
+        player.OnDashInvoke();
         player.animator.SetTrigger("Dash");
         player.DashPS.Emit(1);
         CurrentDashTime = player.playerData.DashTime;

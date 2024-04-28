@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 610516052460803251}
   - component: {fileID: 9138700141831160437}
   m_Layer: 0
-  m_Name: TripleProjectileSpawner
+  m_Name: FireBallProjectileSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de31479297aff5d46bf7b5f0b196f3c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHitEffect: {fileID: 11400000, guid: 5c2d844f499dd6a4e8790e8c19f9b9ba, type: 2}
+  OnHitEffect: {fileID: 11400000, guid: 2ad46971c316ba44dae2587f39bb2790, type: 2}
   AfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5, type: 2}
-  ProjectilePrefab: {fileID: 9171072717131984124, guid: d736138480110b04c9c99c13b6bc4d06,
+  ProjectilePrefab: {fileID: 9171072717131984124, guid: d859142fb31be47448ffc06ec5d4c629,
     type: 3}
   ShootPosition: {fileID: 0}
   CastRate: 0

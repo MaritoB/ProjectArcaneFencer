@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ba45a7da8ebaa458037e606d0ac181, type: 3}
   m_Name: OnHitEffect-AoEDamage
   m_EditorClassIdentifier: 
-  radius: 1
+  radius: 0.5
   damage: 15
   EnemyLayer:
     serializedVersion: 2

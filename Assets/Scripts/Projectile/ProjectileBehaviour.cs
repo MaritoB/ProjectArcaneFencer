@@ -55,6 +55,7 @@ public class ProjectileBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //transform.position = transform.position + Vector3.right* Mathf.Sin(_currentLifeTime);
         _currentLifeTime -= Time.deltaTime;
         if (_currentLifeTime < 0)
         {

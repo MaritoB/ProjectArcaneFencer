@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 453da29ffc39746448f95eef3330aab8, type: 3}
-  m_Name: _LifeStealOnFirstHit
+  m_Script: {fileID: 11500000, guid: c6a7a71eb547deb47b9954eae755d70a, type: 3}
+  m_Name: _DashFreedomModifier
   m_EditorClassIdentifier: 
-  modifierName: Life Steal On First Hit
-  modifierDescription: Your First Strike Restore 5  Health on Hit
+  modifierName: Dash Freedom
+  modifierDescription: Chanelling Dash, use -3Stamina and Reduce Dash Duration -0,05
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  LifeStealBase: 1
-  LifeStealMultiplier: 2
+  ModifiedDashTimeBase: 0.4
+  DashTimeLevelMultiplier: -0.05
+  DashCostLevelMultiplier: -3
+  ModifiedDashStaminaCostbase: 20

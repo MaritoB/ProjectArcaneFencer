@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS, BloodOnHit;
     public delegate void OnParryDelegate();
     public event OnParryDelegate OnParry;
+    public delegate void OnDashDelegate();
+    public event OnDashDelegate OnDash;
+    public delegate void OnBlockPerformedDelegate(Enemy enemy);
+    public event OnBlockPerformedDelegate OnBlockPerformed;
     [SerializeField]
     LayerMask ProjectilesLayer;
     [SerializeField]
@@ -63,9 +67,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     public  ProjectileSkillSOBase SingleProjectileSkill, TripleProjectileSkill;
     [field: SerializeField] public float CurrentHealth { get; set; }
-
-    public delegate void OnBlockPerformedDelegate(Enemy enemy);
-    public event OnBlockPerformedDelegate OnBlockPerformed;
     [SerializeField] public  SwordBase sword;
     [SerializeField] Transform MagicSphereShield;
     [SerializeField] Transform SwordTransform;
@@ -234,17 +235,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerStep, transform.position);
     }
-    private void RecoverStamina(int aAmount)
-    {
-        if (aAmount < 0) return;
-        CurrentStamina += aAmount;
-        if (CurrentStamina > playerData.MaxStamina)
-        {
-            CurrentStamina = playerData.MaxStamina;
-        }
-        UpdateStaminaUI();
-    }
-    private void RecoverLife(int aAmount)
+    public void RecoverLife(int aAmount)
     {
         if (aAmount < 0) return;
         CurrentHealth += aAmount;
@@ -257,6 +248,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void DashForward(int aDashForce)
     {
         mRigidbody.AddForce(transform.forward * aDashForce, ForceMode.Impulse);
+    }
+    public void OnDashInvoke()
+    {
+        OnDash?.Invoke();
     }
     public void SimpleMeleeAttack()
     {
@@ -423,7 +418,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                     if(enemy != null)
                     {
                         OnBlockPerformed?.Invoke(enemy);
-
                     }
                 }
                 AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
@@ -476,9 +470,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else
         {
-            CurrentStamina -= playerData.DashStaminaCost;
+            if(playerData.DashStaminaCost > 0)
+            {
+                CurrentStamina -= playerData.DashStaminaCost;
+                UpdateStaminaUI();
+            }
             AudioManager.instance.PlayOneShot(playerSoundData.PlayerDash, transform.position);
-            UpdateStaminaUI();
             return true;
         }
 
@@ -508,17 +505,4 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-    internal void Heal(int aAmount)
-    {
-        if (aAmount <0)
-        {
-            return;
-        }
-        CurrentHealth += aAmount;
-        if (CurrentHealth > playerData.MaxHealth) 
-        {
-            CurrentHealth = playerData.MaxHealth;
-        }
-        inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
-    }
 }

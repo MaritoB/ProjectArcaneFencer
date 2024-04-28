@@ -10,16 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5db065ca5283d2c47a489408316a5549, type: 3}
-  m_Name: _Dash Freedom
+  m_Name: _FasterDashModifier
   m_EditorClassIdentifier: 
-  modifierName: 'Dash Freedom '
-  modifierDescription: Dash Corto y barato
+  modifierName: Fast Dash
+  modifierDescription: ' Increase 100 your Dash Speed '
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  ModifiedDashSpeedBase: 400
-  DashSpeedLevelMultiplier: 25
-  ModifiedDashTimeBase: 0.2
-  DashTimeLevelMultiplier: -0.02
-  DashCostLevelMultiplier: -0.5
-  ModifiedDashStaminaCostbase: 5
-  isChannellingDash: 1
+  ModifiedDashSpeedBase: 300
+  DashSpeedLevelMultiplier: 100

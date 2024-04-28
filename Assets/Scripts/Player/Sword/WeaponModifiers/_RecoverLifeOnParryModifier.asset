@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _RecoverLifeOnParryModifier
   m_EditorClassIdentifier: 
   modifierName: Recover Life On Parry
-  modifierDescription: Recover 6 Life  Parrying projectiles
+  modifierDescription: Recover 3 HP Parrying projectiles
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  RecoverLifeOnParryBase: 2
-  RecoverLifeOnParryMultiplier: 2
+  RecoverLifeOnParryBase: 3
+  RecoverLifeOnParryMultiplier: 3

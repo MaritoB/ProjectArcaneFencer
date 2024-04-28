@@ -21,9 +21,7 @@ public class RecoverLifeOnParryModifier : WeaponModifierSO
     }
     public void RecoverLifeOnParry()
     {
-        Debug.Log("Heal on Parry");
-        player.Heal(LifeRecovery);
-        player.UpdateStaminaUI();
+        player.RecoverLife(LifeRecovery);
         
     }
 }

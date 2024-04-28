@@ -26,6 +26,6 @@ public class LifeStealOnFirstHit : WeaponModifierSO
     public void LifeSteal(Enemy enemy)
     {
         if(Player == null) { return; }
-        Player.Heal(CurrentLifeSteal);
+        Player.RecoverLife(CurrentLifeSteal);
     }
 }

@@ -67,6 +67,9 @@
 		<property name="volume">
 			<value>-30</value>
 		</property>
+		<property name="pitch">
+			<value>-3</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{5ef950be-3883-40b4-8ca8-3364e02d9b4d}</destination>
 		</relationship>
