@@ -47,7 +47,7 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription();
-        modifierDescription = "your Second Strike have " + currentTriggerChance + "% chance to cast Ice Nova. " +
+        modifierDescription = (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast Ice Nova on Second Attack. " +
             "Ice Nova Damage : " + currentDamage + ", Radius : " + currentRadius;
 
     }

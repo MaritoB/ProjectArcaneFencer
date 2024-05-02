@@ -30,8 +30,8 @@ MonoBehaviour:
   RadiusMultiplier: 0.2
   DamageBase: 10
   DamageMultiplier: 2
-  TriggerChanceBase: 30
-  TriggerChanceMultiplier: 10
+  TriggerChanceBase: 50
+  TriggerChanceMultiplier: 5
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 64

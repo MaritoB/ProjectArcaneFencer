@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public LayerMask wallLayer;
     private Transform _playerTransform = null;
 
-    
+    [SerializeField] protected FloatingTextController damageIndicator;
     [SerializeField] protected int currentLevel = 0;
     [SerializeField] protected float currentAttackRange;
     [SerializeField] protected float currentAttackRate;
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public bool IsUnstopable;
     public bool IsStunned = false;
     public StateMachine StateMachine { get; set; }
-
+    public PSMover SoulsPS;
     public EnemyIdleState EnemyIdleState { get; set; }
     public EnemyChaseState EnemyChaseState { get; set; }
     public EnemyChaseState EnemyChaseRunForSecondsState { get; set; }
@@ -54,7 +54,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void InformDeathToOwner()
     {
         Debug.Log("EnemyDeath");
-        if(owner != null)
+        if (SoulsPS != null)
+        {
+            SoulsPS.SetDestination(_playerTransform.transform);
+        }
+        if (owner != null)
         {
             owner.InformEnemyDeath();
         }
@@ -71,16 +75,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
             EnemyStunBaseInstance = EnemyKnockbackInstance;
             StateMachine.ChangeState(EnemyStunState);
         }
-        else
-        {
-            Death();
-        }
     
     }
     public void ResetStats()
     {
         CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
-        //mRigidbody.
+        damageIndicator.gameObject.SetActive(true);
+        SoulsPS.Reset();
         mRigidbody.velocity = Vector3.zero;
         mRigidbody.useGravity = true;
         GetComponent<CapsuleCollider>().enabled = true;
@@ -105,12 +106,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void SetStateToIdle()
     {
-        if (!IsAlive)
+        if (CurrentHealth<=0)
         {
-            StateMachine.ChangeState(EnemyDieState);
             return;
         }
-        if (IsAlive || StateMachine == null || EnemyIdleState == null) { return; }
+        if (CurrentHealth > 0 || StateMachine == null || EnemyIdleState == null) { return; }
         CanMove = true;
         StateMachine.ChangeState(EnemyIdleState);
     }
@@ -119,7 +119,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         if (CurrentHealth <=0)
         {
-            Death();
             return;
         }
         if (StateMachine == null || EnemyChaseState == null) { return; }
@@ -128,8 +127,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void Death()
     {
+        if (!IsAlive)
+        {
+            return;
+        }
         IsAlive = false;
-        //InformDeathToOwner();
+        damageIndicator.gameObject.SetActive(false);
+        damageIndicator.EmptyText();
         //SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
         if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
@@ -158,7 +162,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void HitStun()
     {
-        if(IsUnstopable) return;
+        if (IsUnstopable || CurrentHealth<=0) return;
         if (StateMachine != null && !IsStunned )
         {
             EnemyStunBaseInstance = EnemyHitStunInstance;
@@ -169,6 +173,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public virtual void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if (!IsAlive || aDamageAmount<0) return;
+        if(damageIndicator !=null)
+        {
+            damageIndicator.PopUp(aDamageAmount);
+        }
         CurrentHealth -= aDamageAmount;
         AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
         if (CurrentHealth > 0)

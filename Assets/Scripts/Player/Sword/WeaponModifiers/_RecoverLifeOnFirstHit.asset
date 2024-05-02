@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: _RecoverLifeOnFirstHit
   m_EditorClassIdentifier: 
   modifierName: Life Steal On First Hit
-  modifierDescription: Your First Strike Recover 2 HP per enemy hit.
+  modifierDescription: Your First Attack Recover 4 HP per enemy hit.
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   LifeStealBase: 2

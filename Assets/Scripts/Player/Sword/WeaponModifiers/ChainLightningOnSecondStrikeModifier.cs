@@ -31,8 +31,7 @@ public class ChainLightningOnSecondStrikeModifier : WeaponModifierSO
     {
         base.UpdateDescription();
 
-        CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
-        modifierDescription = modifierDescription = "your Second Strike have " + CurrentTriggerChance + "% chance to cast Chain Lightning on Hit";
+        modifierDescription = "Your Second Attack has a " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel+1)) + " chance to cast Chain Lightning on Hit";
     }
     public void TryCastChainLightning(Enemy enemy)
     {

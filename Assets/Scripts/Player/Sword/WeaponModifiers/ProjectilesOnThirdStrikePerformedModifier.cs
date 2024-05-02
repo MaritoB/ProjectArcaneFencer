@@ -30,7 +30,7 @@ public class ProjectilesOnThirdStrikePerformedModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "Third Strike have " + CurrentTriggerChance + "% chance to cast 3 Projectiles";
+        modifierDescription = "Third Strike have " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast 3 Projectiles";
     }
     public void TryCastTripleProjectiles()
     {

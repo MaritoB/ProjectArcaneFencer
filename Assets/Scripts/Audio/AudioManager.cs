@@ -1,14 +1,17 @@
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
-    EventReference MusicBase;
+    EventReference MusicCombatBase;
+    [SerializeField]
+    EventReference MusicBoss;
     public static AudioManager instance { get; private set; }
     private void Start()
     {
-        RuntimeManager.PlayOneShot(MusicBase);
+        RuntimeManager.PlayOneShot(MusicCombatBase);
         
     }
     private void Awake()
@@ -21,6 +24,13 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
     {
         RuntimeManager.PlayOneShot(sound, worldPos);
+    }
+    public void PlayBossMusic()
+    {
+     //   RuntimeManager.PlayOneShot(MusicCombatBase);
+     
+        
+        RuntimeManager.PlayOneShot(MusicBoss);
     }
 
 }

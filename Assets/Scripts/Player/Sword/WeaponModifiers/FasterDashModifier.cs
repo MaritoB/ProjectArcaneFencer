@@ -13,6 +13,6 @@ public class FasterDashModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription();
-        modifierDescription = " Increase "+ DashSpeedLevelMultiplier+" your Dash Speed ";
+        modifierDescription = "Increase your Dash Speed by " + DashSpeedLevelMultiplier;
     }
 }

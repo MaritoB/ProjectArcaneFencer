@@ -15,7 +15,7 @@ public class RecoverStaminaOnParryModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel) + " Stamina  Parrying projectiles";
+        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * (modifierLevel+1)) + " Stamina  Parrying projectiles";
     }
     public void RecoverStaminaOnParry()
     {

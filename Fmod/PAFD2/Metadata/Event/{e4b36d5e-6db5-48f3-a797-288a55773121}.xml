@@ -59,7 +59,17 @@
 			<destination>{af66c722-c714-45a1-a584-3daf2f2658c0}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{ced727a8-103a-478e-bccc-a9acebd8fd3c}" />
+	<object class="EventAutomatableProperties" id="{ced727a8-103a-478e-bccc-a9acebd8fd3c}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
+		<property name="voiceStealing">
+			<value>2</value>
+		</property>
+		<property name="triggerCooldown">
+			<value>0.100000001</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{d9fa7b76-cbb6-43c8-a8d3-9bf7abd05dd3}" />
 	<object class="Timeline" id="{0adee6c7-421b-4143-aab4-6276375757a5}">
 		<property name="isProxyEnabled">
@@ -73,7 +83,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{f0097ed0-ccae-4d83-8baa-1904df76f45a}">
 		<property name="volume">
-			<value>-30</value>
+			<value>-3</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{a1db559e-f7f0-4c8a-a05e-2762abe1656e}</destination>

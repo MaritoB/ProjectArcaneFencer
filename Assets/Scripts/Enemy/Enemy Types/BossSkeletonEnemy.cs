@@ -41,6 +41,10 @@ public class BossSkeletonEnemy : Enemy
             return;
 
         }
+        if (damageIndicator != null)
+        {
+            damageIndicator.PopUp(aDamageAmount);
+        }
         CurrentHealth -= aDamageAmount;
         if (CurrentHealth > 0)
         {

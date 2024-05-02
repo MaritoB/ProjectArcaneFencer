@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: _ChainLightningOnSecondStrikeModifier
   m_EditorClassIdentifier: 
   modifierName: Chain Lightning On Second Strike
-  modifierDescription: Tu Segundo golpe tiene %60 de castear Chain Lightning
+  modifierDescription: ' Your Second Attack has 70% chance to cast Chain Lightning
+    on Hit'
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   ChainLightningSpawnerPrefab: {fileID: 8047015031702837626, guid: 7343810dc26537949aee75cac18cb4c6,

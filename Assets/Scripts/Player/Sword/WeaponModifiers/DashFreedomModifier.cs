@@ -16,6 +16,6 @@ public class DashFreedomModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription(); 
-        modifierDescription = "Chanelling Dash, use "+ DashCostLevelMultiplier + "Stamina and Reduce Dash Duration "+ DashTimeLevelMultiplier;
+        modifierDescription = "Hold Dash to keep dashing. Decrease Dash Stamina cost by "+ DashCostLevelMultiplier + " & Dash Duration by " + DashTimeLevelMultiplier;
     }
 }

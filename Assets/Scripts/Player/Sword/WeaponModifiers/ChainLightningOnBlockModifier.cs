@@ -27,7 +27,7 @@ public class ChainLightningOnBlockModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription =+ CurrentTriggerChance + "% chance to cast ChainLightning on Block";
+        modifierDescription =TriggerChanceBase + TriggerChanceMultiplier * ( modifierLevel +1 ) + "% chance to cast ChainLightning on Block";
     }
     public void CastProjectile(Enemy aEnemy)
     {

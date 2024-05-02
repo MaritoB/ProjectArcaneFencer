@@ -16,7 +16,7 @@ public class KnockBackModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        modifierDescription = "Third strike Knockback enemys with " + currentKnockbackForce + " Force.";
+        modifierDescription = "Your Third Attack Knockback enemys with " + currentKnockbackForce + " Force.";
     }
 
     public void KnockBackEnemy(Enemy enemy)

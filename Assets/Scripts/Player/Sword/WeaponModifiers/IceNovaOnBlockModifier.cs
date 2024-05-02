@@ -1,4 +1,5 @@
 
+using FMOD;
 using UnityEngine;
 [CreateAssetMenu(fileName = "_IceNovaOnBlockModifier", menuName = "WeaponModifiers/IceNovaOnBlockModifier")]
 public class IceNovaOnBlockModifier : WeaponModifierSO
@@ -47,9 +48,9 @@ public class IceNovaOnBlockModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription();
-        modifierDescription =  currentTriggerChance + "% chance to cast Ice Nova Blocking Damage " +
-            "Ice Nova Damage : " + currentDamage + ", Radius : " + currentRadius;
-
+        modifierDescription = (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel+1)) + "% chance to cast Ice Nova when blocking damage \n " +
+            "Ice Nova Damage:  " + currentDamage + " , Radius: " + currentRadius;
+        
     }
     public void TryCastIceNova(Enemy aEnemy)
     {

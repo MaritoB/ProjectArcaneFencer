@@ -9813,7 +9813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c747230cb506b4bb5f4921e15941cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseProjectilSpeed: 8
+  _baseProjectilSpeed: 7
   _lifeTime: 3
   OnHitParticleSystem: {fileID: 7748057460856521842}
   ProjectileParticleSystem: {fileID: 5109405604444525378}

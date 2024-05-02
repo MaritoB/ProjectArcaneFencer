@@ -13,6 +13,6 @@ public class AddMovementSpeed : WeaponModifierSO
     {
         base.UpdateDescription();
 
-        modifierDescription = "Run Faster (" +( AddedMovementSpeedBase + AddedMovementMultiplier * modifierLevel )+").";
+        modifierDescription = "Incrase Run speed by " +( AddedMovementMultiplier )+".";
     }
 }

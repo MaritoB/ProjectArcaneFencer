@@ -30,7 +30,7 @@ public class ProjectileOnFirstPerformedModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "First Attack have " + CurrentTriggerChance + "% chance to cast  this Projectile Skill";
+        modifierDescription = "Your First Attack has " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast  this Projectile Skill";
     }
     public void CastProjectile()
     {

@@ -12,6 +12,6 @@ public class ReduceStaminaOnBlock : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription();
-        modifierDescription = "Stamina Drain Percentaje OnBlock is " + (ReduceStaminaOnBlockBase + ReduceStaminaOnBlockMultiplier * modifierLevel) + " .";
+        modifierDescription = "Stamina Drain Percentaje OnBlock is " + (ReduceStaminaOnBlockBase + ReduceStaminaOnBlockMultiplier * (modifierLevel + 1)) + " .";
     }
 }

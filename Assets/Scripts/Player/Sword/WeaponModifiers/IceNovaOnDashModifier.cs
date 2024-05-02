@@ -47,9 +47,8 @@ public class IceNovaOnDashModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
         base.UpdateDescription();
-        modifierDescription = "your Dash have " + currentTriggerChance + "% chance to cast Ice Nova. " +
-            "Ice Nova Damage : " + currentDamage + ", Radius : " + currentRadius;
-
+        modifierDescription = (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel+1)) + "% chance to cast Ice Nova when Dashing \n " +
+            "Ice Nova Damage:  " + currentDamage + " , Radius: " + currentRadius;
     }
     public void TryCastIceNova()
     {

@@ -35,6 +35,10 @@ public class MeleeWithShieldEnemy : Enemy
             return;
 
         }
+        if (damageIndicator != null)
+        {
+            damageIndicator.PopUp(aDamageAmount);
+        }
         CurrentHealth -= aDamageAmount;
         if (CurrentHealth > 0)
         {
@@ -49,10 +53,7 @@ public class MeleeWithShieldEnemy : Enemy
         else
         {
             Death();
-            if (owner != null)
-            {
-                owner.InformEnemyDeath();
-            }
+
         }
     }
 }

@@ -18,7 +18,7 @@ public class RecoverStaminaOnThirdStrike : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel) + " Stamina  on Third strike";
+        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier *(modifierLevel+1)) + " Stamina  on Third strike";
     }
     public void RecoverStaminaOnParry(Enemy enemy)
     {

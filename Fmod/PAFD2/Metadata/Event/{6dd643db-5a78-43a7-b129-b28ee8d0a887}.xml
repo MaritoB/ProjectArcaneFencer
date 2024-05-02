@@ -56,7 +56,17 @@
 			<destination>{af66c722-c714-45a1-a584-3daf2f2658c0}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{c78939ee-ec58-4484-a188-53c50277b98b}" />
+	<object class="EventAutomatableProperties" id="{c78939ee-ec58-4484-a188-53c50277b98b}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
+		<property name="voiceStealing">
+			<value>2</value>
+		</property>
+		<property name="triggerCooldown">
+			<value>0.100000001</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{f1419e09-b84e-45a2-a2c0-954a2e953eee}" />
 	<object class="Timeline" id="{fe6dcf4e-89b8-4ca8-be07-39e83c66c5d0}">
 		<relationship name="modules">
@@ -65,7 +75,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{30799f74-a10a-437b-b8c7-bddf8a084459}">
 		<property name="volume">
-			<value>-30</value>
+			<value>-3</value>
 		</property>
 		<property name="pitch">
 			<value>-3</value>

@@ -13,7 +13,7 @@ public class StaminaRecoveryRateModifier : WeaponModifierSO
     public override void UpdateDescription()
     {
 
-        modifierDescription = "StaminaBase Recovery Rate is " + (StaminaBase + StaminaMultiplier * modifierLevel) + ".";
+        modifierDescription = "Increase Stamina Recovery Rate by " + StaminaMultiplier +". ( "+ (StaminaBase + StaminaMultiplier * (modifierLevel + 1)) + " )";
     }
 
 }

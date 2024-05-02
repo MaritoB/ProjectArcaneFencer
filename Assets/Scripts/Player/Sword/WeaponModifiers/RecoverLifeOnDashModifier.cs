@@ -16,8 +16,7 @@ public class RecoverLifeOnDashModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        LifeRecovery = RecoverLifeBase + RecoverLifeMultiplier * modifierLevel;
-        modifierDescription = "Recover " + LifeRecovery + " HP on Dash";
+        modifierDescription = "Recover " + (RecoverLifeBase + RecoverLifeMultiplier * (modifierLevel+1)) + " HP on Dash";
     }
     public void RecoverLifeOnParry()
     {

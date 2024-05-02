@@ -57,6 +57,9 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{641bb120-31a0-4ab5-8ca5-8fc7fd3cca7b}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
 		<property name="priority">
 			<value>3</value>
 		</property>

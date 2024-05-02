@@ -13,6 +13,6 @@ public class AddDamageModifier : WeaponModifierSO
     {
         base.UpdateDescription();
 
-        modifierDescription = "Add " + (AddedDamageBase + AddedDamageMultiplier * modifierLevel) + " Damage";
+        modifierDescription = "Add " + (AddedDamageBase + AddedDamageMultiplier *( modifierLevel + 1 )) + " Damage";
     }
 }
