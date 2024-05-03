@@ -30,9 +30,8 @@ public class PSMover : MonoBehaviour
             return;
         }
         transform.position = Vector3.Lerp(transform.position,TargetTransform.position,LerpSpeed * Time.fixedDeltaTime);
-        if((transform.position - TargetTransform.position).magnitude < 0.5f)
+        if((transform.position - TargetTransform.position).magnitude < 1f)
         {
-            Debug.Log("SoulColected");
             SoulsPS.Stop();
             transform.position = OriginPosition;
             TargetTransform = null;

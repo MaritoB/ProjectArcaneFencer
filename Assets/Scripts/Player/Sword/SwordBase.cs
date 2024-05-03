@@ -7,13 +7,13 @@ public class SwordBase : MonoBehaviour
     public delegate void OnMeleeHitDelegate(Enemy enemy);
     public delegate void OnMeleePerformedDelegate();
     public event OnMeleeHitDelegate OnFirstMeleeHit, OnSecondMeleeHit, OnThirdMeleeHit;
-    public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed;
+    public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed, OnCritialHit;
     public List<WeaponModifierSO> AllWeaponModifierList;
     PlayerController playerController;
     
     [SerializeField]int baseDamage;
     //[SerializeField] float attackSpeed;
-
+    [SerializeField] int CriticalChance;
     [SerializeField] int attackStaminaCost;
 
     [SerializeField] int currentDamage;
@@ -28,10 +28,19 @@ public class SwordBase : MonoBehaviour
         }
         currentDamage = aDamage;
     }
+    public void SetCriticalChance(int aCriticalChance)
+    {
+        if (aCriticalChance < 0)
+        {
+            return;
+        }
+        CriticalChance = aCriticalChance;
+    }
 
     void ResetBaseValues()
     {
         currentDamage = baseDamage;
+        CriticalChance = 0;
     }
     public void AplyNewWeaponModifier(WeaponModifierSO aMod)
     {
@@ -49,7 +58,12 @@ public class SwordBase : MonoBehaviour
     }
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
-        enemy.TakeDamage((int)(currentDamage * aWeaponDamagePercentage), playerController.gameObject);
+        int AttackDamage = (int)(currentDamage * aWeaponDamagePercentage);
+        if (Random.Range(1, 100) < CriticalChance)
+        {
+            AttackDamage *= 2;
+        }
+        enemy.TakeDamage(AttackDamage, playerController.gameObject);
     }
     public void CustomAttack(Enemy enemy, int Damage)
     {

@@ -75,6 +75,9 @@
 		<property name="volume">
 			<value>-5</value>
 		</property>
+		<property name="pitch">
+			<value>-2</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{2c1ad5a8-a4c9-42ce-aa5a-b84564e20f27}</destination>
 		</relationship>
@@ -87,10 +90,10 @@
 	</object>
 	<object class="SingleSound" id="{7af67dcf-ccd1-441e-a177-85576ac947c9}">
 		<property name="length">
-			<value>37</value>
+			<value>35.5</value>
 		</property>
 		<property name="timelockedOffset">
-			<value>31</value>
+			<value>31.5</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{d82011f2-e677-4671-b4eb-b015f0eca715}</destination>
@@ -124,7 +127,7 @@
 	</object>
 	<object class="TransitionMarker" id="{702fb536-5e4e-40fa-9525-276e4461a276}">
 		<property name="position">
-			<value>37</value>
+			<value>35</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{3bf83efa-fb92-41c8-b91b-89ae22811ef1}</destination>
@@ -181,7 +184,7 @@
 	</object>
 	<object class="AutomationPoint" id="{53e1ee70-7641-4e9e-8767-ca34f1838c5c}">
 		<property name="position">
-			<value>36</value>
+			<value>32.5</value>
 		</property>
 		<property name="value">
 			<value>1</value>
@@ -192,7 +195,7 @@
 	</object>
 	<object class="AutomationPoint" id="{94e8153a-e075-4f5d-98b1-48eb7545465c}">
 		<property name="position">
-			<value>37</value>
+			<value>35.5</value>
 		</property>
 		<property name="value">
 			<value>0</value>

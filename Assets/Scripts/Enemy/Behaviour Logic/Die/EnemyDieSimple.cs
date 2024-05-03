@@ -12,7 +12,7 @@ public class EnemyDieSimple : EnemyDieSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        enemy.animator.SetTrigger("Die");
+        enemy.animator.SetBool("IsAlive",false);
         enemy.mRigidbody.velocity = Vector3.zero;
         enemy.mRigidbody.useGravity = false;
         enemy.GetComponent<CapsuleCollider>().enabled = false;

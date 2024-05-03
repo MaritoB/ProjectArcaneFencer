@@ -431,6 +431,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         CurrentHealth -= aDamageAmount;
         if(BloodOnHit != null)
         {
+            inGameUI.TakeDamageUIAnimation();
             BloodOnHit.Emit(aDamageAmount/3);
             AudioManager.instance.PlayOneShot(playerSoundData.PlayerOnHit, transform.position);
 

@@ -85,6 +85,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         mRigidbody.velocity = Vector3.zero;
         mRigidbody.useGravity = true;
         GetComponent<CapsuleCollider>().enabled = true;
+        animator.SetBool("IsAlive", true) ;
         animator.SetTrigger("Revive");
         IsAttacking = false;
         IsAlive = true;
@@ -106,11 +107,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void SetStateToIdle()
     {
-        if (CurrentHealth<=0)
-        {
-            return;
-        }
-        if (CurrentHealth > 0 || StateMachine == null || EnemyIdleState == null) { return; }
+   
+        if (CurrentHealth <=0 || StateMachine == null || EnemyIdleState == null) { return; }
         CanMove = true;
         StateMachine.ChangeState(EnemyIdleState);
     }
@@ -162,8 +160,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     }
     public void HitStun()
     {
-        if (IsUnstopable || CurrentHealth<=0) return;
-        if (StateMachine != null && !IsStunned )
+        if (IsUnstopable) return;
+        if (StateMachine != null && !IsStunned && CurrentHealth>0 )
         {
             EnemyStunBaseInstance = EnemyHitStunInstance;
             StateMachine.ChangeState(EnemyStunState);

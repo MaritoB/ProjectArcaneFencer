@@ -35,6 +35,15 @@ public class PlayerInGameUI : MonoBehaviour
     public void SelectModifier(WeaponModifierSO aModifier)
     {
     }
+    public void TakeDamageUIAnimation()
+    {
+        if (animator== null)
+        {
+            return;
+
+        }
+        animator.SetTrigger("OnTakeDamage");
+    }
 
     public void SetupSkillUI()
     {
