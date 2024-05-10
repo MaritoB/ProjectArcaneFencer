@@ -42,6 +42,8 @@ public class BossSkeletonAttacks : EnemyAttackSOBase
         if (!enemy.IsWithinStrikingDistance)
         {
             enemy.StateMachine.ChangeState(enemy.EnemyChaseState);
+            enemy.animator.SetBool("StrafeForward", false);
+            enemy.animator.SetBool("StrafeBackward", false);
             return;
         }
         //strafe
@@ -52,12 +54,12 @@ public class BossSkeletonAttacks : EnemyAttackSOBase
             {
                 strafeDirection = transform.right *-1;
 
-                enemy.animator.SetTrigger("StrafeForward");
+                enemy.animator.SetBool("StrafeForward", true);
             }
             else
             {
                 strafeDirection = transform.right;
-                enemy.animator.SetTrigger("StrafeBackward");
+                enemy.animator.SetBool("StrafeBackward", true);
             }
         }
         enemy.MoveEnemy(strafeDirection * StrafeSpeed);
@@ -69,6 +71,8 @@ public class BossSkeletonAttacks : EnemyAttackSOBase
                 _currentAttackTime = enemy.GetAttackRate();
                 enemy.animator.SetInteger("AttackNumber", Random.Range(0, MaxAttacksTypes));
                 enemy.animator.SetTrigger("Attack");
+                enemy.animator.SetBool("StrafeForward", false);
+                enemy.animator.SetBool("StrafeBackward", false);
                 strafeDirection = Vector3.zero;
             }
         }

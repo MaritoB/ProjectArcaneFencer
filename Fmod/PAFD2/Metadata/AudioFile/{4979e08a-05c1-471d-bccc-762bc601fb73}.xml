@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{4979e08a-05c1-471d-bccc-762bc601fb73}">
+		<property name="assetPath">
+			<value>Music/arcane fencer combat.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>34</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f9f4e14a-4e4b-4f40-a5a4-f26cdf67b796}</destination>
+		</relationship>
+	</object>
+</objects>

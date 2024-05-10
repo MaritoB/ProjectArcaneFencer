@@ -59,6 +59,10 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
             {
                 InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
             }
+            if(((CurrentLevel-1)% 5 )== 0){
+
+                AudioManager.instance.FinishBossMusic();
+            }
             if ((CurrentLevel % 5) == 0)
             {
                 BossHorde.enemies.Add(EnemyType.BOSSSKELETON);

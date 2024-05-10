@@ -6,8 +6,8 @@ public class SwordBase : MonoBehaviour
 
     public delegate void OnMeleeHitDelegate(Enemy enemy);
     public delegate void OnMeleePerformedDelegate();
-    public event OnMeleeHitDelegate OnFirstMeleeHit, OnSecondMeleeHit, OnThirdMeleeHit;
-    public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed, OnCritialHit;
+    public event OnMeleeHitDelegate OnFirstMeleeHit, OnSecondMeleeHit, OnThirdMeleeHit, OnCritialHit;
+    public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed;
     public List<WeaponModifierSO> AllWeaponModifierList;
     PlayerController playerController;
     
@@ -61,6 +61,7 @@ public class SwordBase : MonoBehaviour
         int AttackDamage = (int)(currentDamage * aWeaponDamagePercentage);
         if (Random.Range(1, 100) < CriticalChance)
         {
+            OnCritialHit?.Invoke(enemy);
             AttackDamage *= 2;
         }
         enemy.TakeDamage(AttackDamage, playerController.gameObject);

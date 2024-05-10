@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1772d797c808e345b4998e9abd5c8cd, type: 3}
   m_Name: Chase-BlockingMiniSkeleton
   m_EditorClassIdentifier: 
-  _MovementSpeed: 3
+  _MovementSpeed: 3.5

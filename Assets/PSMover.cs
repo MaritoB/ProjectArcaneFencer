@@ -7,14 +7,14 @@ using UnityEngine;
 public class PSMover : MonoBehaviour
 {
     Transform TargetTransform;
-    Vector3 OriginPosition;
+    Transform OriginPosition;
     ParticleSystem SoulsPS;
     [SerializeField] float LerpSpeed;
     // Start is called before the first frame update
     void Start()
     {
         SoulsPS = GetComponent<ParticleSystem>();
-        OriginPosition = transform.position;
+        OriginPosition = GetComponentInParent<Transform>();
     }
     public void SetDestination(Transform aTarget)
     {
@@ -33,14 +33,14 @@ public class PSMover : MonoBehaviour
         if((transform.position - TargetTransform.position).magnitude < 1f)
         {
             SoulsPS.Stop();
-            transform.position = OriginPosition;
+            transform.position = OriginPosition.position;
             TargetTransform = null;
         }
     }
 
     internal void Reset()
     {
-        transform.position = OriginPosition;
+        transform.position = OriginPosition.position;
         SoulsPS.Play();
     }
 }

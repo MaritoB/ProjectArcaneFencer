@@ -8,6 +8,7 @@ public class RangeEnemy : Enemy
     private ProjectileSpawner projectileSpawner;
     public override void Attack()
     {
+        if (!IsAttacking || CurrentHealth < 1) return;
         base.Attack();
         IsAttacking = false;
         if (projectileSpawner != null)

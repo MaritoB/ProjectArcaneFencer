@@ -4,19 +4,31 @@ using UnityEngine.Timeline;
 
 public class AudioManager : MonoBehaviour
 {
+    private FMOD.Studio.EventInstance MusicCombatInstance;
+    private FMOD.Studio.EventInstance MusicBossInstance;
+
     [SerializeField]
     EventReference MusicCombatBase;
     [SerializeField]
     EventReference MusicBoss;
+    [SerializeField]
+    [Range(0, 1)]
+    private float BossVolumen;
     public static AudioManager instance { get; private set; }
     private void Start()
     {
-        RuntimeManager.PlayOneShot(MusicCombatBase);
-        
+        MusicCombatInstance = RuntimeManager.CreateInstance(MusicCombatBase);
+        MusicBossInstance = RuntimeManager.CreateInstance(MusicBoss);
+        MusicCombatInstance.start();
+
+
+        //RuntimeManager.PlayOneShot(MusicCombatBase);
+
+
     }
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
         }
         instance = this;
@@ -27,10 +39,19 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayBossMusic()
     {
-     //   RuntimeManager.PlayOneShot(MusicCombatBase);
-     
-        
-        RuntimeManager.PlayOneShot(MusicBoss);
+        MusicBossInstance.setVolume(100);
+        MusicCombatInstance.setVolume(0);
+        MusicBossInstance.start();
+
     }
+    public void FinishBossMusic()
+    {
+        MusicBossInstance.setVolume(0);
+        MusicBossInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        MusicCombatInstance.setVolume(100);
+        MusicBossInstance.start();
+
+    }
+    
 
 }
