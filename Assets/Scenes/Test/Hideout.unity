@@ -988,6 +988,130 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257864909}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &286265087
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: musicVolumen
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicBoss.Path
+      value: event:/Music/Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicBoss.Guid.Data1
+      value: 617612549
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicBoss.Guid.Data2
+      value: 1331717150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicBoss.Guid.Data3
+      value: -323470662
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicBoss.Guid.Data4
+      value: -1492718675
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicCombatBase.Path
+      value: event:/Music/Combat
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicCombatBase.Guid.Data1
+      value: 358964581
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicCombatBase.Guid.Data2
+      value: 1301258918
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicCombatBase.Guid.Data3
+      value: 1701757341
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014100, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: MusicCombatBase.Guid.Data4
+      value: 458983843
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014102, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -58.740486
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3645509
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -21.96366
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502303145123014103, guid: 7c1c618eb8417404b99dc1b26d21c55c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c1c618eb8417404b99dc1b26d21c55c, type: 3}
 --- !u!1001 &286494427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1120,7 +1244,7 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -2505,18 +2629,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a15a1424c05f8044cabb438037739e4e, type: 3}
---- !u!114 &740426331 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2925488915474577586, guid: a15a1424c05f8044cabb438037739e4e,
-    type: 3}
-  m_PrefabInstance: {fileID: 740426330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2347b2e80c1e8044cbd60b0cec5b3173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &811940441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4556,11 +4668,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5859447497833641910, guid: 8703dca54aa1bf94fa5cf02a4b92d32b,
-        type: 3}
-      propertyPath: inGameUI
-      value: 
-      objectReference: {fileID: 740426331}
     - target: {fileID: 5859447497833641911, guid: 8703dca54aa1bf94fa5cf02a4b92d32b,
         type: 3}
       propertyPath: m_RootOrder

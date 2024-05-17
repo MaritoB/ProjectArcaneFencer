@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void LevelUP()
     {
         CurrentLevel++;
+        inGameUI.SetRemainingPoints(5);
         inGameUI.SetupSkillUI();
     }
     public void HideSword()
@@ -453,6 +454,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         sword.ResetAllModifiers();
         animator.SetTrigger("Death");
+        AudioManager.instance.TurnOffMusic();
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerDeath, transform.position);
         inGameUI.FadeInResetGame();
         this.enabled = false;

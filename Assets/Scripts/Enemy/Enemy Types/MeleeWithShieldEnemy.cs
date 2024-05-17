@@ -29,6 +29,7 @@ public class MeleeWithShieldEnemy : Enemy
         if (IsBlocking)
         {
             //Play Enemy On Block
+            damageIndicator.PopUp(0);
             animator.SetTrigger("Block");
             IsBlocking = false;
             AudioManager.instance.PlayOneShot(enemySoundData.EnemyBlock, transform.position);

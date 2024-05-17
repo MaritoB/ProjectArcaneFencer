@@ -26000,7 +26000,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: b6f09982efee8e64fb18394937e3f76f, type: 2}
   playerSoundData: {fileID: 11400000, guid: 0150c7ea6c2247e428bb301a06f1d1fd, type: 2}
   CurrentLevel: 0
-  mRigidbody: {fileID: 0}
+  mRigidbody: {fileID: 5859447497833641908}
   mCamera: {fileID: 0}
   RotationSpeed: 15
   projectileSpawner: {fileID: 5859447497833641906}
@@ -26035,7 +26035,7 @@ MonoBehaviour:
   <CurrentHealth>k__BackingField: 0
   sword: {fileID: 5859447497833641905}
   MagicSphereShield: {fileID: 5859447497751764146}
-  SwordTransform: {fileID: 6258394936868622826}
+  SwordTransform: {fileID: 6258394935927793251}
   SwordPS: {fileID: 5859447496873780117}
   AttackTransform: {fileID: 5859447496373400002}
 --- !u!54 &5859447497833641908

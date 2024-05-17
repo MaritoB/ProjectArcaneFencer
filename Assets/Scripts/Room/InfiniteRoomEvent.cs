@@ -54,13 +54,13 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
         --enemysRemaining;
         if (enemysRemaining <= 0)
         {
-            playerController.LevelUP();
             if ((CurrentLevel % 2) == 0)
             {
                 InfiniteHorde.enemies.Add(EnemySpawner.Instance.GetRandomEnemy());
             }
-            if(((CurrentLevel-1)% 5 )== 0){
+            if((CurrentLevel>5)&&((CurrentLevel-1)% 5 )== 0){
 
+                playerController.LevelUP();
                 AudioManager.instance.FinishBossMusic();
             }
             if ((CurrentLevel % 5) == 0)

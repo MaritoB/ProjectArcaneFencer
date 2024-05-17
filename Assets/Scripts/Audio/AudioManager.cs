@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     private FMOD.Studio.EventInstance MusicCombatInstance;
     private FMOD.Studio.EventInstance MusicBossInstance;
-
+    public float musicVolumen;
     [SerializeField]
     EventReference MusicCombatBase;
     [SerializeField]
@@ -19,12 +19,8 @@ public class AudioManager : MonoBehaviour
     {
         MusicCombatInstance = RuntimeManager.CreateInstance(MusicCombatBase);
         MusicBossInstance = RuntimeManager.CreateInstance(MusicBoss);
+        MusicCombatInstance.setVolume(musicVolumen);
         MusicCombatInstance.start();
-
-
-        //RuntimeManager.PlayOneShot(MusicCombatBase);
-
-
     }
     private void Awake()
     {
@@ -39,17 +35,26 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayBossMusic()
     {
-        MusicBossInstance.setVolume(100);
-        MusicCombatInstance.setVolume(0);
+        MusicCombatInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        //MusicCombatInstance.setVolume(0);
+        MusicBossInstance.setVolume(musicVolumen);
         MusicBossInstance.start();
+
+    }
+    public void TurnOffMusic()
+    {
+        MusicCombatInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        MusicBossInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        MusicCombatInstance.setVolume(0);
+        MusicBossInstance.setVolume(0);
 
     }
     public void FinishBossMusic()
     {
-        MusicBossInstance.setVolume(0);
-        MusicBossInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        MusicCombatInstance.setVolume(100);
-        MusicBossInstance.start();
+       // MusicBossInstance.setVolume(0);
+        MusicBossInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        MusicCombatInstance.setVolume(musicVolumen);
+        MusicCombatInstance.start();
 
     }
     
