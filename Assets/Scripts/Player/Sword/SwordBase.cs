@@ -42,13 +42,14 @@ public class SwordBase : MonoBehaviour
         currentDamage = baseDamage;
         CriticalChance = 0;
     }
-    public void AplyNewWeaponModifier(WeaponModifierSO aMod)
+    public void ApplyNewWeaponModifier(WeaponModifierSO aMod)
     {
         int modIndex = AllWeaponModifierList.FindIndex((x => x.modifierName == aMod.modifierName));
         if (modIndex !=  -1)
         {
             AllWeaponModifierList[modIndex].modifierLevel++;
-            ApplyAllModifiers();
+           // ApplyAllModifiers();
+            AllWeaponModifierList[modIndex].ApplyModifier(playerController);
 
         }
         else
@@ -58,17 +59,19 @@ public class SwordBase : MonoBehaviour
     }
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
+        
         int AttackDamage = (int)(currentDamage * aWeaponDamagePercentage);
+        bool isCritical = false;
+        
         if (Random.Range(1, 100) < CriticalChance)
         {
+            isCritical = true;
             OnCritialHit?.Invoke(enemy);
             AttackDamage *= 2;
         }
-        enemy.TakeDamage(AttackDamage, playerController.gameObject);
-    }
-    public void CustomAttack(Enemy enemy, int Damage)
-    {
-        enemy.TakeDamage(Damage, playerController.gameObject);
+       
+        enemy.TakeDamage(new AttackInfo(AttackDamage, false, isCritical, playerController.gameObject));
+        //enemy.TakeDamage(AttackDamage, playerController.gameObject);
     }
     public void FirstStrikeModifiers(Enemy enemy)
     {
@@ -122,8 +125,7 @@ public class SwordBase : MonoBehaviour
          */
         currentDamage = baseDamage;
         playerController = GetComponent<PlayerController>();
-
-        //ApplyAllModifiers();
+        ApplyAllModifiers();
     }
     public void ResetAllModifiers()
     {
@@ -131,6 +133,7 @@ public class SwordBase : MonoBehaviour
         for (int i = 0; i < AllWeaponModifierList.Count; ++i)
         {
             AllWeaponModifierList[i].modifierLevel = 0;
+
         }
     }
     internal float GetAttackStaminaCost()

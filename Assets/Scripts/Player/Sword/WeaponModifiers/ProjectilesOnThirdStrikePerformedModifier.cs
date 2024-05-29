@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 [CreateAssetMenu(fileName = "_ProjectilesOnThirdStrikePerformedModifier", menuName = "WeaponModifiers/ProjectilesOnThirdStrikePerformedModifier")]
 public class ProjectilesOnThirdStrikePerformedModifier : WeaponModifierSO

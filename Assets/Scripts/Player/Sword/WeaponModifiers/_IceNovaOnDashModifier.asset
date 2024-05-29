@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: _IceNovaOnDashModifier
   m_EditorClassIdentifier: 
   modifierName: Ice Nova on Dash
-  modifierDescription: "40% chance to cast Ice Nova when Dashing \n Ice Nova Damage: 
-    12 , Radius: 1,2"
+  modifierDescription: '+1 to Ice Nova & 40% chance to cast it on Dash. '
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   IceNovaEffectPrefab: {fileID: 1337242488471618507, guid: 1b82ceeef9d4c9c4da17f58ec66f6c75,

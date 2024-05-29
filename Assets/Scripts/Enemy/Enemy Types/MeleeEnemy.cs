@@ -18,7 +18,8 @@ public class MeleeEnemy : Enemy
 
         foreach (Collider player in HitPlayers)
         {
-            player.GetComponent<IDamageable>().TakeDamage(currentAttackDamage, this.gameObject);
+            player.GetComponent<IDamageable>().
+                TakeDamage(new AttackInfo(currentAttackDamage, false, false, this.gameObject));
         }
     }
 

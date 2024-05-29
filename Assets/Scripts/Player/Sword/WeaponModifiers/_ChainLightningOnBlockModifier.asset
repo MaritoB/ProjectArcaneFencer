@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: _ChainLightningOnBlockModifier
   m_EditorClassIdentifier: 
   modifierName: Chain Lightning on Block
-  modifierDescription: 40% chance to cast ChainLightning on Block
-  modifierLevel: 0
+  modifierDescription: +1 to Chain Lightning & 60% chance to cast it when blocking
+    melee damage.
+  modifierLevel: 2
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  ProjectileSpawnerPrefab: {fileID: 8047015031702837626, guid: 7343810dc26537949aee75cac18cb4c6,
-    type: 3}
   TriggerChanceBase: 30
   TriggerChanceMultiplier: 10

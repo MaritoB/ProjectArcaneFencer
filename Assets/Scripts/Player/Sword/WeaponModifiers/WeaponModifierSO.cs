@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WeaponModifierSO : ScriptableObject
 {
@@ -15,5 +14,4 @@ public class WeaponModifierSO : ScriptableObject
     {
 
     }
-    // Aquí podrías agregar más atributos según tus necesidades
 }

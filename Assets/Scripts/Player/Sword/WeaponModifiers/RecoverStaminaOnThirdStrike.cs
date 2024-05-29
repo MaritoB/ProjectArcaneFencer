@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "_RecoverStaminaOnThirdStrike", menuName = "WeaponModifiers/RecoverStaminaOnThirdStrike")]
@@ -18,7 +16,7 @@ public class RecoverStaminaOnThirdStrike : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier *(modifierLevel+1)) + " Stamina  on Third strike";
+        modifierDescription = "Recover " + (RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier *(modifierLevel+1)) + " Stamina per enemy hitted with your Third Attack";
     }
     public void RecoverStaminaOnParry(Enemy enemy)
     {

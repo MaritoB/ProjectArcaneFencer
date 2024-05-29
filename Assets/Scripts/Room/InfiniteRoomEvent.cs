@@ -5,27 +5,21 @@ using UnityEngine;
 public class InfiniteRoomEvent : MonoBehaviour, IOwner
 {
     public Transform spawnArea;
+    public Transform BossSpawnArea;
     //public List<List<EnemyType>> Hordes = new List<List<EnemyType>>();
     public Horde InfiniteHorde, BossHorde;
     public int enemysRemaining;
     public int CurrentLevel = 0;
     public PlayerController playerController;
-
+    public Transform BossCamera;
+    public Transform FocusPoint;
     // Start is called before the first frame update
     void Start()
     {
         InfiniteHorde.enemies.Clear();
         InfiniteHorde.enemies.Add(EnemyType.MELEESKELETON);
         SpawnHorde(InfiniteHorde);
-        /*
-        Hordes.Clear();
-        List<EnemyType> newHorde = new List<EnemyType> { EnemyType.MELEESKELETON, EnemyType.RANGEDSKELETON };
-        Hordes.Add(newHorde);
-        newHorde = new List<EnemyType> { EnemyType.MELEESKELETON, EnemyType.MELEESKELETON, EnemyType.RANGEDSKELETON, EnemyType.RANGEDSKELETON };
-        Hordes.Add(newHorde);
-        newHorde = new List<EnemyType> { EnemyType.MELEESKELETON, EnemyType.MELEESKELETON, EnemyType.RANGEDSKELETON, EnemyType.RANGEDSKELETON, EnemyType.MELEESKELETON, EnemyType.RANGEDSKELETON };
-        Hordes.Add(newHorde);
-         */
+ 
     }
 
     // Update is called once per frame
@@ -39,6 +33,13 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
         enemy.SetLevel(CurrentLevel);
         enemy.SetOwner(this);
     }
+    public void SpawnBoss(EnemyType enemyType)
+    {
+        Enemy enemy = EnemySpawner.Instance.SpawnEnemyFromPool(enemyType, BossSpawnArea);
+        enemy.SetLevel(CurrentLevel);        
+        enemy.SetOwner(this);
+        enemy.TriggerRiseAnimation();
+    }
     public void SpawnHorde(Horde horde)
     {
         CurrentLevel++;
@@ -46,6 +47,17 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
         {
             SpawnEnemy(enemy);
         }
+        enemysRemaining = horde.enemies.Count;
+    }
+    public void SpawnBossHorde(Horde horde)
+    {
+        CurrentLevel++;
+        AudioManager.instance.PlayBossMusic();
+        foreach (EnemyType enemy in horde.enemies)
+        {
+            SpawnBoss(enemy);
+        }
+        BossCamera.gameObject.SetActive(true);
         enemysRemaining = horde.enemies.Count;
     }
 
@@ -61,13 +73,13 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
             if((CurrentLevel>5)&&((CurrentLevel-1)% 5 )== 0){
 
                 playerController.LevelUP();
+                BossCamera.gameObject.SetActive(false);
                 AudioManager.instance.FinishBossMusic();
             }
             if ((CurrentLevel % 5) == 0)
             {
                 BossHorde.enemies.Add(EnemyType.BOSSSKELETON);
-                AudioManager.instance.PlayBossMusic();
-                SpawnHorde(BossHorde);
+                SpawnBossHorde(BossHorde);
                 return;
             }
             SpawnHorde(InfiniteHorde);

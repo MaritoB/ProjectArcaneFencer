@@ -23,10 +23,24 @@ public class BossSkeletonEnemy : Enemy
 
         foreach (Collider player in HitPlayers)
         {
-            player.GetComponent<IDamageable>().TakeDamage(currentAttackDamage, this.gameObject);
+            player.GetComponent<IDamageable>().
+                TakeDamage(new AttackInfo(currentAttackDamage, false, false, this.gameObject));
         }
-    }
 
+    }
+    public override void TakeDamage(AttackInfo aAttackInfo)
+    {
+        if (IsBlocking)
+        {
+            animator.SetTrigger("Block");
+            IsBlocking = false;
+            PopupTextPool.Instance.ShowPopup(transform.position, "Blocked!", false, false);
+            AudioManager.instance.PlayOneShot(enemySoundData.EnemyBlock, transform.position);
+            return;
+        }
+        base.TakeDamage(aAttackInfo);
+    }
+    /*
     public override void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if (!IsAlive || aDamageAmount < 0) return;
@@ -54,6 +68,7 @@ public class BossSkeletonEnemy : Enemy
 
         }
     }
+     */
 
     internal void PlayWarcrySound()
     {

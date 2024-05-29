@@ -9,8 +9,8 @@ public class ChainTarget
 [CreateAssetMenu(fileName = "AfterHitEffect-Chain", menuName = "Projectile /After Hit Effects/Chain")]
 public class ChainAfterHitEffect : AfterHitEffectSOBase
 {
-    public int ChainNumber;
-    public float ChainRadius;
+    [SerializeField]int ChainNumber;
+    [SerializeField]float ChainRadius;
     int currentChainNumber;
     ChainTarget nearestTarget;
     public Dictionary<Collider, ChainTarget> targetsDictionary = new Dictionary<Collider, ChainTarget>();
@@ -27,12 +27,19 @@ public class ChainAfterHitEffect : AfterHitEffectSOBase
         GetNearestTarget(projectile.transform.position);
         if (nearestTarget != null)
         {
-            projectile.ChangeDirection(nearestTarget.targetCollider.transform.position);
+            Vector3 NewDirection = nearestTarget.targetCollider.transform.position;
+            NewDirection.y = projectile.transform.position.y;
+            projectile.ChangeDirection(NewDirection);
         }
         else
         {
             projectile.DisableProjectile();
         }
+    }
+    public void LevelUpEffect(int chainNumber, float chainRadius)
+    {
+        ChainNumber  = chainNumber;
+        ChainRadius = chainRadius;
     }
 
     void FillTargetsDictionary(ProjectileBehaviour projectile)

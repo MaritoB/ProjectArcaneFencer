@@ -9,9 +9,9 @@ public class EnemyKillerPlatform : MonoBehaviour
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if(enemy != null)
         {
-            enemy.TakeDamage(100000, null);
-            enemy.TakeDamage(100000, null);
-            enemy.TakeDamage(100000, null);
+            enemy.TakeDamage(new AttackInfo(100000, false, true, this.gameObject));
+            enemy.TakeDamage(new AttackInfo(100000, false, true, this.gameObject));
+            enemy.TakeDamage(new AttackInfo(100000, false, true, this.gameObject));
         }
     }
 }

@@ -20,6 +20,14 @@ public class ProjectileSpawner : MonoBehaviour
 
 
 
+    public void SetNewProjectilePool(OnHitEffectSOBase onHitEffectSOBase, AfterHitEffectSOBase afterHitEffectSOBase, float ProjectileSpeed)
+    {
+        OnHitEffect = onHitEffectSOBase;
+        AfterHitEffect = afterHitEffectSOBase;
+        ProjectilePool.Clear();
+        ProjectilePool = new ObjectPool<ProjectileBehaviour>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject, false, 5, 10);
+
+    }
 
     private void Update()
     {

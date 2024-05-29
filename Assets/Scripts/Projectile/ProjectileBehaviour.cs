@@ -7,8 +7,8 @@ public class ProjectileBehaviour : MonoBehaviour
     IProjectileOnHitEffect OnHitEffect;
     IProjectileAfterHitEffect AfterHitEffect;
     // Start is called before the first frame update
-    [SerializeField] float _baseProjectilSpeed = 10f;
-    [SerializeField] float _lifeTime = 3f;
+    [SerializeField] float _baseProjectilSpeed;
+    [SerializeField] float _lifeTime;
     [SerializeField]
     ParticleSystem OnHitParticleSystem;
     [SerializeField]

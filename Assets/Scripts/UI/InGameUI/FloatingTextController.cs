@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class FloatingTextController : MonoBehaviour
 {
-   TextMeshPro mText;
+    TextMeshPro mText;
     Animator animator;
+   // public static FloatingTextController Instance;
 
     internal void PopUp(int aDamageAmount)
     {

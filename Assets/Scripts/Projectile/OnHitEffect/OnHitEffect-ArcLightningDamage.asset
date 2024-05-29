@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: OnHitEffect-ArcLightningDamage
   m_EditorClassIdentifier: 
   damage: 10
+  criticalChance: 10
+  isMagic: 1

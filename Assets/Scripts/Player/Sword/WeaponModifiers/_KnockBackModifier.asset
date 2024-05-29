@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337ac731c1113d443904e65d1ab81e96, type: 3}
   m_Name: _KnockBackModifier
   m_EditorClassIdentifier: 
-  modifierName: KnockBack
-  modifierDescription: Your Third Attack Knockback enemys with 400 Force.
+  modifierName: Knockback on Third attack
+  modifierDescription: Your Third Attack Knockback enemys with 300 Force.
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   KnockBackForceBase: 300

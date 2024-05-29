@@ -146,7 +146,7 @@ public class PlayerInGameUI : MonoBehaviour
 
     internal void AplyNewWeaponModifier(WeaponModifierSO aMod)
     {
-        playerController.sword.AplyNewWeaponModifier(aMod);
+        playerController.sword.ApplyNewWeaponModifier(aMod);
         RemainingPoints--;
         if(RemainingPoints > 0) 
         {

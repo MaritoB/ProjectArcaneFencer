@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable, IEnemyAttacker
@@ -80,7 +81,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public void ResetStats()
     {
         CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
-        damageIndicator.gameObject.SetActive(true);
+        owner = null;
         SoulsPS.Reset();
         mRigidbody.velocity = Vector3.zero;
         mRigidbody.useGravity = true;
@@ -103,8 +104,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         if (!IsAlive) { return; }
         mRigidbody.velocity = Vector3.zero;
         animator.SetFloat("Velocity", 0f);
+        CanMove = false;
     }
-
+    
     public void SetStateToIdle()
     {
    
@@ -130,8 +132,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
             return;
         }
         IsAlive = false;
-        damageIndicator.gameObject.SetActive(false);
-        damageIndicator.EmptyText();
+        //damageIndicator.gameObject.SetActive(false);
+        //damageIndicator.EmptyText();
         //SceneManagerSingleton.Instance.AddSouls(_enemyData.soulsAmount);
         if (StateMachine == null || EnemyDieState == null) { return; }
         StateMachine.ChangeState(EnemyDieState);
@@ -168,14 +170,36 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         }
 
     }
-    public virtual void TakeDamage(int aDamageAmount, GameObject aSource)
+    public virtual void TakeDamage(AttackInfo aAttackInfo)
+    {
+        if (!IsAlive || aAttackInfo == null) return;
+
+        PopupTextPool.Instance.ShowPopup(aAttackInfo, transform.position);
+        CurrentHealth -= aAttackInfo.damage;
+        AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
+        if (CurrentHealth > 0)
+        {
+            if (!IsUnstopable)
+            {
+                if (aAttackInfo.isCritical)
+                {
+                    HitStun();
+                    IsAttacking = false;
+                }
+            }
+        }
+        else
+        {
+            Death();
+        }
+    }
+   /*
+    * public virtual void TakeDamage(int aDamageAmount, GameObject aSource)
     {
         if (!IsAlive || aDamageAmount<0) return;
-        if(damageIndicator !=null)
-        {
-            damageIndicator.PopUp(aDamageAmount);
-        }
+           
         CurrentHealth -= aDamageAmount;
+
         AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
         if (CurrentHealth > 0)
         {
@@ -190,6 +214,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
             Death();
         }
     }
+        */
     public void AimPlayerPosition()
     {
         if (_playerTransform == null || !IsAlive) { return; }
@@ -272,7 +297,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         IsWithinAggroDistance = isAggroed;
     }
-
+    
     public void SetStrikingDistanceBool(bool isStrikingDistance)
     {
         IsWithinStrikingDistance = isStrikingDistance;
@@ -305,6 +330,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     {
         return _attackDirection = (_playerTransform.position - transform.position).normalized;
     }
+
+    internal void TriggerRiseAnimation()
+    {
+        animator.SetTrigger("Revive");
+    }
+
+
 
     public enum AnimationTriggerType
     {

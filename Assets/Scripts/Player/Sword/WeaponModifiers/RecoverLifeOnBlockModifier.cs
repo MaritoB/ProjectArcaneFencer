@@ -16,7 +16,7 @@ public class RecoverLifeOnBlockModifier : WeaponModifierSO
     }
     public override void UpdateDescription()
     {
-        modifierDescription = "Recover " + (RecoverLifeOnBlockBase + RecoverLifeOnBlockMultiplier * (modifierLevel+1)) + " HP Blocking Damage";
+        modifierDescription = "Recover " + (RecoverLifeOnBlockBase + RecoverLifeOnBlockMultiplier * (modifierLevel+1)) + " HP Blocking Melee Damage";
     }
     public void RecoverLifeOnBlock(Enemy aEnemy)
     {

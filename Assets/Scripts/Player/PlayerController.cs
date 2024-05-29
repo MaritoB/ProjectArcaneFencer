@@ -1,4 +1,5 @@
 
+using SkeletonEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public PlayerBlockSOBase mPlayerBlockInstance { get; set; }
     #endregion
     public ProjectileSkillSOBase mProjectileSkillInstance;
+    public SkillManager mSkillManager;
 
 
     [SerializeField]
@@ -404,6 +406,49 @@ public class PlayerController : MonoBehaviour, IDamageable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, RotationSpeed);
 
     }
+    public void TakeDamage(AttackInfo aAttackInfo)
+    {
+        if (aAttackInfo == null) return;
+
+        if (isBlocking)
+        {
+            if (UseStamina(aAttackInfo.damage * playerData.StaminaDrainPercentajeOnBlock))
+            {
+                if (aAttackInfo.Source != null)
+                {
+                    Enemy enemy = aAttackInfo.Source.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        OnBlockPerformed?.Invoke(enemy);
+                    }
+                }
+                AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
+                return;
+            }
+            else
+            {
+                TurnOffShield();
+            }
+        }
+        CurrentHealth -= aAttackInfo.damage;
+        if (BloodOnHit != null)
+        {
+            inGameUI.TakeDamageUIAnimation();
+            BloodOnHit.Emit(aAttackInfo.damage / 3);
+            AudioManager.instance.PlayOneShot(playerSoundData.PlayerOnHit, transform.position);
+
+
+        }
+        if (CurrentHealth <= 0 && isAlive)
+        {
+            isAlive = false;
+            Death();
+        }
+        if (inGameUI != null)
+        {
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
+        }
+    }
 
     public void TakeDamage(int aDamageAmount, GameObject aSource)
     {
@@ -453,6 +498,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void Death()
     {
         sword.ResetAllModifiers();
+        mSkillManager.ResetSkillLevels();
         animator.SetTrigger("Death");
         AudioManager.instance.TurnOffMusic();
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerDeath, transform.position);
@@ -507,5 +553,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
     }
+
 
 }

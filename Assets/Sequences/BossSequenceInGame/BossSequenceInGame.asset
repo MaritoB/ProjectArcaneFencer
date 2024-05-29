@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 713e0022c0ffe974bb14d5e0611b0797, type: 3}
-  m_Name: BossSequence
+  m_Name: BossSequenceInGame
   m_EditorClassIdentifier: 
   m_RootIndex: 0
   m_Manager:
@@ -30,7 +30,7 @@ MonoBehaviour:
     - rid: 9040684318119165953
       type: {class: TimelineSequence, ns: UnityEngine.Sequences, asm: Unity.Sequences}
       data:
-        m_Name: BossSequence
+        m_Name: BossSequenceInGame
         m_Fps: 60
         m_Start: 0
         m_Duration: 2

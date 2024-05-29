@@ -19,13 +19,26 @@ public class MeleeWithShieldEnemy : Enemy
 
         foreach (Collider player in HitPlayers)
         {
-            player.GetComponent<IDamageable>().TakeDamage(currentAttackDamage, this.gameObject);
+            player.GetComponent<IDamageable>().
+                TakeDamage(new AttackInfo(currentAttackDamage, false, false, this.gameObject));
         }
     }
-
+    public override void TakeDamage(AttackInfo aAttackInfo)
+    {
+        if (IsBlocking)
+        {
+            //Play Enemy On Block
+            animator.SetTrigger("Block");
+            IsBlocking = false;
+            PopupTextPool.Instance.ShowPopup(transform.position, "Blocked!", false, false);
+            AudioManager.instance.PlayOneShot(enemySoundData.EnemyBlock, transform.position);
+            return;
+        }
+        base.TakeDamage(aAttackInfo); 
+    }
+    /*
     public override void TakeDamage(int aDamageAmount, GameObject aSource)
     {
-        if (!IsAlive || aDamageAmount < 0) return;
         if (IsBlocking)
         {
             //Play Enemy On Block
@@ -36,10 +49,9 @@ public class MeleeWithShieldEnemy : Enemy
             return;
 
         }
-        if (damageIndicator != null)
-        {
-            damageIndicator.PopUp(aDamageAmount);
-        }
+        if (!IsAlive || aDamageAmount < 0) return;
+
+ 
         CurrentHealth -= aDamageAmount;
         if (CurrentHealth > 0)
         {
@@ -57,5 +69,6 @@ public class MeleeWithShieldEnemy : Enemy
 
         }
     }
+     */
 }
 

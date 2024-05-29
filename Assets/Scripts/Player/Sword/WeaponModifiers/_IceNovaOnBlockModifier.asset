@@ -13,25 +13,9 @@ MonoBehaviour:
   m_Name: _IceNovaOnBlockModifier
   m_EditorClassIdentifier: 
   modifierName: Ice Nova on Block
-  modifierDescription: '40% chance to cast Ice Nova Blocking Damage Ice Nova Damage
-    : 14, Radius : 1,4'
+  modifierDescription: '+1 to Ice Nova & 30% chance to cast it when blocking melee
+    Damage. '
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  IceNovaEffectPrefab: {fileID: 1337242488471618507, guid: 1b82ceeef9d4c9c4da17f58ec66f6c75,
-    type: 3}
-  IceNovaSfx:
-    Guid:
-      Data1: -1612410038
-      Data2: 1264543412
-      Data3: 911137720
-      Data4: 1157697027
-    Path: event:/Player/IceNova
-  RadiusBase: 1
-  RadiusMultiplier: 0.2
-  DamageBase: 10
-  DamageMultiplier: 2
   TriggerChanceBase: 20
   TriggerChanceMultiplier: 10
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 64

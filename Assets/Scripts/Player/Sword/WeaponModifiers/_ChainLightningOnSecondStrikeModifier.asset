@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff1df6a8607e7e49b1f1cdca515c7bb, type: 3}
   m_Name: _ChainLightningOnSecondStrikeModifier
   m_EditorClassIdentifier: 
-  modifierName: Chain Lightning On Second Strike
-  modifierDescription: ' Your Second Attack has 70% chance to cast Chain Lightning
-    on Hit'
+  modifierName: Chain Lightning on Second Strike
+  modifierDescription: +1 to Chain Lightning & 60% chance to cast it hitting enemies
+    with your Second Attack.
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  ChainLightningSpawnerPrefab: {fileID: 8047015031702837626, guid: 7343810dc26537949aee75cac18cb4c6,
-    type: 3}
   TriggerChanceBase: 50
   TriggerChanceMultiplier: 10

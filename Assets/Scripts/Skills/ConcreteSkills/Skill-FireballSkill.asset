@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9ee1e54a9a4ce408727ef788ada639, type: 3}
+  m_Name: Skill-FireballSkill
+  m_EditorClassIdentifier: 
+  skillLevel: 0
+  mPlayer: {fileID: 0}
+  mAoEDamageOnHit: {fileID: 11400000, guid: da771af9ae7f4514db30793bfaee0be6, type: 2}
+  mDisableAfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5,
+    type: 2}
+  FireballProjectileSpawnerPrefab: {fileID: 8047015031702837626, guid: b83f9d26c0d89e144a2b7a47ba4ea7e1,
+    type: 3}
+  FireballSfx:
+    Guid:
+      Data1: -1424687256
+      Data2: 1204987129
+      Data3: -1426061122
+      Data4: 446753247
+    Path: event:/Enemy/EnemyAttack 2
+  RadiusBase: 0.5
+  RadiusMultiplier: 0.25
+  DamageBase: 15
+  DamageMultiplier: 5
+  ProjectileSpeedBase: 10
+  ProjectileSpeedMultiplier: 1

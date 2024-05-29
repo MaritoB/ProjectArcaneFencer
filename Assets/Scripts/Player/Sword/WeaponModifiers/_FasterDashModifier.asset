@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db065ca5283d2c47a489408316a5549, type: 3}
   m_Name: _FasterDashModifier
   m_EditorClassIdentifier: 
-  modifierName: Fast Dash
-  modifierDescription: ' Increase 100 your Dash Speed '
+  modifierName: ' Faster Dash'
+  modifierDescription: Increase your Dash Speed by 100
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   ModifiedDashSpeedBase: 300

@@ -22,4 +22,4 @@ MonoBehaviour:
   StaminaRecoveryRate: 10
   ParryRadius: 1
   MeleeAttackRadius: 1
-  StaminaDrainPercentajeOnBlock: 0.6
+  StaminaDrainPercentajeOnBlock: 0.4

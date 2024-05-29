@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _ReduceStaminaOnBlock
   m_EditorClassIdentifier: 
   modifierName: Shield Use less Stamina
-  modifierDescription: Stamina Drain Percentaje OnBlock is 0,4 .
+  modifierDescription: Use less Stamina to Block damage (0.35% )
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
-  ReduceStaminaOnBlockBase: 0.5
+  ReduceStaminaOnBlockBase: 0.4
   ReduceStaminaOnBlockMultiplier: -0.05

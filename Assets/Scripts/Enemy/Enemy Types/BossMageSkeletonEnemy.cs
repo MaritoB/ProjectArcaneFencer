@@ -23,38 +23,8 @@ public class BossMageSkeletonEnemy : Enemy
         {
             projectileSpawner.ShootProjectileForwardFromPool();
         }
-        /*
-        DustPs.transform.position = attackPosition.position;
-        DustPs.Emit(30);
-        IsAttacking = false;
-        attackPosition.localScale = Vector3.one * currentAttackRange;
-        Collider[] HitPlayers = Physics.OverlapSphere(attackPosition.position, currentAttackRange, playerLayer);
-
-        foreach (Collider player in HitPlayers)
-        {
-            player.GetComponent<IDamageable>().TakeDamage(currentAttackDamage, this.gameObject);
-        }
-         */
-    }
-
-    public override void TakeDamage(int aDamageAmount, GameObject aSource)
-    {
-        if (!IsAlive || aDamageAmount < 0) return;
-        if (damageIndicator != null)
-        {
-            damageIndicator.PopUp(aDamageAmount);
-        }
-        CurrentHealth -= aDamageAmount;
-        if (CurrentHealth > 0)
-        {
-            AudioManager.instance.PlayOneShot(enemySoundData.EnemyOnHit, transform.position);
-        }
-        else
-        {
-            Death();
-
-        }
-    }
+ 
+    } 
 
     internal void PlayWarcrySound()
     {

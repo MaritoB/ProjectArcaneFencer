@@ -25958,6 +25958,7 @@ GameObject:
   - component: {fileID: 5859447497833641905}
   - component: {fileID: 3316799472876204977}
   - component: {fileID: 6222090698257120225}
+  - component: {fileID: 5012699339507790587}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -26028,6 +26029,7 @@ MonoBehaviour:
   PlayerAttackParry: {fileID: 11400000, guid: 894d96cd8522f7948a4e550c5d91deec, type: 2}
   PlayerBlock: {fileID: 11400000, guid: f3c449626d4288149a7904ce103966ce, type: 2}
   mProjectileSkillInstance: {fileID: 0}
+  mSkillManager: {fileID: 5012699339507790587}
   SingleProjectileSkill: {fileID: 11400000, guid: 535c6fb57a893284b99c0b331b311dfd,
     type: 2}
   TripleProjectileSkill: {fileID: 11400000, guid: c386a76c0b00eac4fb9a58a50d806180,
@@ -26111,7 +26113,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 41294f32f8b687f409317c39222ae11f, type: 2}
   - {fileID: 11400000, guid: 3d932bfa52079ef45b3ffa13c5d422e8, type: 2}
   - {fileID: 11400000, guid: 7ec3caa2c8435dc429efd0abaa2e4f24, type: 2}
-  - {fileID: 11400000, guid: 90f32db5f00c7b94e84d654a9b2d912d, type: 2}
   - {fileID: 11400000, guid: 01ad3bbf229085e47974e12bb2bbabdf, type: 2}
   - {fileID: 11400000, guid: 147f24279bc8cfb4a913507c325cf21d, type: 2}
   - {fileID: 11400000, guid: 4924f211cb4947c4f82a16ba134a495e, type: 2}
@@ -26173,6 +26174,22 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   originalColor: {r: 1, g: 1, b: 1, a: 1}
   duration: 0.5
+--- !u!114 &5012699339507790587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859447497833641912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3eba302e8ab1c468cd574f4eb8318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mIceNovaSkill: {fileID: 11400000, guid: 389e41dec001a094ea99653e4fc869c3, type: 2}
+  mChainLightningSkill: {fileID: 11400000, guid: bf06a2b7b94a4e6409d8cbe521130f10,
+    type: 2}
+  mFireballSkill: {fileID: 11400000, guid: cd57e2ef3c0ba554a81f344e09615634, type: 2}
 --- !u!1 &5859447498101350202
 GameObject:
   m_ObjectHideFlags: 0

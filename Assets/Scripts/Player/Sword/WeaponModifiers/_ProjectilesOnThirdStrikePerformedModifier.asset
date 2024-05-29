@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb64cfd475552f41a979757ade7e2cb, type: 3}
   m_Name: _ProjectilesOnThirdStrikePerformedModifier
   m_EditorClassIdentifier: Assembly-CSharp::ProjectilesOnThirdStrikePerformedModifier
-  modifierName: 'Projectiles On Third Strike '
+  modifierName: 'Triple Lightning Spear on Third Attack '
   modifierDescription: Third Attack have 60% chance to cast 3 Projectiles
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}

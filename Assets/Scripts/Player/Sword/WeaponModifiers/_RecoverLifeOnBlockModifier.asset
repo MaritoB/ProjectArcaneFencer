@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df0697e02f42bc40be97d70544dad35, type: 3}
   m_Name: _RecoverLifeOnBlockModifier
   m_EditorClassIdentifier: 
-  modifierName: Recover Life Blocking Damage
-  modifierDescription: Recover 10 HP Blocking Damage
+  modifierName: 'Recover Life Blocking '
+  modifierDescription: Recover 10 HP Blocking Melee Damage
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   RecoverLifeOnBlockBase: 5
