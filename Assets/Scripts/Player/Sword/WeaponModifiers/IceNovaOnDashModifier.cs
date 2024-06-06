@@ -13,7 +13,7 @@ public class IceNovaOnDashModifier : WeaponModifierSO
         aPlayer.OnDash -= TryCastIceNova;
         aPlayer.OnDash += TryCastIceNova;
 
-        Player.mSkillManager.LevelUpFireball(modifierLevel);
+        Player.mSkillManager.LevelUpIceNova(modifierLevel);
         currentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
         UpdateDescription();
     }

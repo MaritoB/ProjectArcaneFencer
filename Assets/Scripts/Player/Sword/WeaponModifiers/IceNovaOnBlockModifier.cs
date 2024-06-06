@@ -14,7 +14,7 @@ public class IceNovaOnBlockModifier : WeaponModifierSO
         aPlayer.OnBlockPerformed -= TryCastIceNova;
         aPlayer.OnBlockPerformed += TryCastIceNova;
 
-        Player.mSkillManager.LevelUpFireball(modifierLevel);
+        Player.mSkillManager.LevelUpIceNova(modifierLevel);
         currentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
         UpdateDescription();
     }

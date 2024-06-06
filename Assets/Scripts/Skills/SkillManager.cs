@@ -32,8 +32,10 @@ public class SkillManager : MonoBehaviour
         mChainLightningSkill.ResetSkillLevel();
         mFireballSkill.ResetSkillLevel();
     }
-
-
+    internal void LevelUpIceNova(int aLevel)
+    {
+        mIceNovaSkill.LevelUpSkill(aLevel);
+    }
     internal void LevelUpChainLightning(int aLevel)
     {
         mChainLightningSkill.LevelUpSkill(aLevel);

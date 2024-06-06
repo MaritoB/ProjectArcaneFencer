@@ -10,7 +10,7 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         Player = aPlayer;
-        Player.mSkillManager.LevelUpFireball(modifierLevel);
+        Player.mSkillManager.LevelUpIceNova(modifierLevel);
         aPlayer.sword.OnSecondMeleePerformed -= TryCastIceNova;
         aPlayer.sword.OnSecondMeleePerformed += TryCastIceNova;
         currentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
