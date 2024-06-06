@@ -13,11 +13,12 @@ public class PlayerInGameUI : MonoBehaviour
     [SerializeField]
     RectTransform MaxHealth, CurrentHealth, MaxStamina, CurrentStamina;
     [SerializeField]
-    TextMeshProUGUI LevelNumberText, RemainingPointsText;
+    TextMeshProUGUI LevelNumberText, RemainingPointsText, HealthText;
     private Vector2 MaxHealthSize, MaxStaminaSize;
     private Vector2 CurrentHealthSize, CurrentStaminaSize;
     PlayerController playerController;
     [SerializeField] RectTransform aWeaponModPanel;
+    [SerializeField] Transform mPlayerDeathCamera;
     public void SetRemainingPoints(int aNumber)
     {
         RemainingPoints = aNumber;
@@ -39,7 +40,13 @@ public class PlayerInGameUI : MonoBehaviour
         this.playerController = playerController;
         //SetupSkillUI();
     }
+    public void PlayerDeath()
+    {
+        Time.timeScale = 0.5f;
+        mPlayerDeathCamera.gameObject.SetActive(true);
+        FadeInResetGame();
 
+    }
     public void TakeDamageUIAnimation()
     {
         if (animator== null)
@@ -116,6 +123,7 @@ public class PlayerInGameUI : MonoBehaviour
             float HealthPercentage = aCurrentHealth / aMaxHealth;
             CurrentHealthSize.x = HealthPercentage * MaxHealthSize.x;
             CurrentHealth.sizeDelta = CurrentHealthSize;
+            HealthText.text = aCurrentHealth +"/"+ aMaxHealth;
         }
     }
     public void UpdateCurrentStaminaUI(float aCurrentStamina, float aMaxStamina)

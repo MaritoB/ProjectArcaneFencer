@@ -502,7 +502,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         animator.SetTrigger("Death");
         AudioManager.instance.TurnOffMusic();
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerDeath, transform.position);
-        inGameUI.FadeInResetGame();
+        inGameUI.PlayerDeath();
         this.enabled = false;
     }
 
