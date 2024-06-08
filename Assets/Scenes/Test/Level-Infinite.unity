@@ -15605,7 +15605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1905762547}
   m_Layer: 0
-  m_Name: ' FocusPoint'
+  m_Name: FocusPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
