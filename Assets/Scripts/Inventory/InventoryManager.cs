@@ -11,9 +11,9 @@ public class InventoryManager : MonoBehaviour
     // [SerializeField] PlayerOutfitManager outfitManager;
     [SerializeField] GameObject ItemControllerPrefab;
     [SerializeField] GameObject InventoryCanvas;
-    [SerializeField] GameObject InventoryCamera;
-    [SerializeField] TextMeshProUGUI GoldAmountText;
-    [SerializeField] int goldAmount;
+    //[SerializeField] GameObject InventoryCamera;
+    //[SerializeField] TextMeshProUGUI GoldAmountText;
+    //[SerializeField] int goldAmount;
     InventoryManager customerInventory;
 
     private void Start()
@@ -56,7 +56,7 @@ public class InventoryManager : MonoBehaviour
         {
             return;
         }
-        goldAmount += aItem.goldPrice;
+       // goldAmount += aItem.goldPrice;
         UpdateGold();
         Remove(aItem);
         customerInventory.Add(aItem);
@@ -67,6 +67,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void TryToBuy(ItemData aItem)
     {
+        /*
         if (aItem == null)
         {
             return;
@@ -86,6 +87,7 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Need More Gold to Buy");
         }
+         */
     }
     public void Add(ItemData aItem)
     {
@@ -193,22 +195,27 @@ public class InventoryManager : MonoBehaviour
     }
     public void UpdateGold()
     {
-        GoldAmountText.text = "$ " + goldAmount.ToString();
+        //GoldAmountText.text = "$ " + goldAmount.ToString();
     }
     public void ToggleInventoryOnToBuy()
     {
         ListItemControllers();
         SetOnClickBuy();
         InventoryCanvas.SetActive(true);
-        InventoryCamera.SetActive(true);
+        //InventoryCamera.SetActive(true);
     }
     public void ToggleInventoryOnToEquip()
     {
+        if (InventoryCanvas.activeInHierarchy)
+        {
+            ToggleInventoryOff();
+            return;
+        }
         UpdateGold();
         ListItemControllers();
         SetOnClickEquip();
         InventoryCanvas.SetActive(true);
-        InventoryCamera.SetActive(true);
+       // InventoryCamera.SetActive(true);
     }
     public void ToggleInventoryOnToSell()
     {
@@ -216,11 +223,11 @@ public class InventoryManager : MonoBehaviour
         ListItemControllers();
         SetOnClickSell();
         InventoryCanvas.SetActive(true);
-        InventoryCamera.SetActive(true);
+       // InventoryCamera.SetActive(true);
     }
     public void ToggleInventoryOff()
     {
         InventoryCanvas.SetActive(false);
-        InventoryCamera.SetActive(false);
+       // InventoryCamera.SetActive(false);
     }
 }

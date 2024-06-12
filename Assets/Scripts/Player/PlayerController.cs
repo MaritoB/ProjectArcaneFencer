@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     //public PlayerInputManager InputManager;
-    public  PlayerInput playerInput;
+    public PlayerInput playerInput;
     public PlayerData playerData;
     public PlayerSoundData playerSoundData;
     public int CurrentLevel = 0;
@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     #endregion
     public ProjectileSkillSOBase mProjectileSkillInstance;
     public SkillManager mSkillManager;
+    public InventoryManager inventory;
 
 
     [SerializeField]
@@ -100,6 +101,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         inGameUI.SetPlayer(this);
         CurrentHealth = playerData.MaxHealth;
         CurrentStamina = playerData.MaxStamina;
+        inventory = GetComponentInChildren<InventoryManager>();
         mRigidbody = GetComponent<Rigidbody>();
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();

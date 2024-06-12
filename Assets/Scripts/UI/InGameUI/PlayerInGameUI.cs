@@ -30,7 +30,11 @@ public class PlayerInGameUI : MonoBehaviour
         MaxStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
         CurrentHealthSize = new Vector2(MaxHealth.rect.width, MaxHealth.rect.height);
         CurrentStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
-        SetupSkillUI();
+        if (RemainingPoints > 0)
+        {
+            SetupSkillUI();
+
+        }
 
 
     }

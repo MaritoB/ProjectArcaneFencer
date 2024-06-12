@@ -27,6 +27,8 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Dash.started += DashEvent;
         player.playerInputActions.Player.Attack.started += AttackEvent;
         player.playerInputActions.Player.Block.performed += BlockEvent;
+        player.playerInputActions.Player.Inventory.performed += InventoryEvent;
+
     }
     public void InputCleanUp()
     {
@@ -34,13 +36,18 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Dash.started -= DashEvent;
         player.playerInputActions.Player.Attack.started -= AttackEvent;
         player.playerInputActions.Player.Block.performed -= BlockEvent;
+        player.playerInputActions.Player.Inventory.performed -= InventoryEvent;
     }
     private void BlockEvent(InputAction.CallbackContext context)
     {
-        if(!player.isBlocking)
+        if (!player.isBlocking)
         {
             player.PlayerStateMachine.ChangeState(player.mPlayerBlockState);
         }
+    }
+    private void InventoryEvent(InputAction.CallbackContext context)
+    {
+        player.inventory.ToggleInventoryOnToEquip();
     }
 
     private void AttackEvent(InputAction.CallbackContext context)
