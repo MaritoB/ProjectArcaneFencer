@@ -9,13 +9,9 @@ public class ItemController : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemQuantityText;
     [SerializeField] Image itemIcon;
     [SerializeField] Button button;
-
-    ItemData itemData = null;
-    int stackSize = 0;
-    public void SetNewItemData(ItemData aItemData, int aStackSize)
-    {
-        itemData = aItemData;
-        stackSize = aStackSize;
+    [SerializeField] ItemData itemData = null; 
+    public void SetNewItemData(ItemData aItemData) { 
+        itemData = Instantiate(aItemData); 
         UpdateItemControllerUI();
 
     }
@@ -25,9 +21,19 @@ public class ItemController : MonoBehaviour
     }
     public void UpdateItemControllerUI()
     {
+        if (itemData.quantity == 0)
+        {
+            ResetItemController();
+            gameObject.SetActive(false);
+            return;
+        }
         unitPriceText.text = itemData.goldPrice.ToString();
-        itemQuantityText.text = stackSize.ToString();
+        itemQuantityText.text = itemData.quantity.ToString();
         itemIcon.sprite = itemData.icon;
+        if (itemData.ColorMultiplier != Color.clear)
+        {
+            itemIcon.color = itemData.ColorMultiplier;
+        }
     }
 
     public void ResetItemController()
@@ -35,22 +41,8 @@ public class ItemController : MonoBehaviour
         itemData = null;
         button.onClick.RemoveAllListeners();
         unitPriceText.text = "#";
-        itemQuantityText.text = "#";
-        stackSize = 0;
-    }
-
-    public int GetStackSize()
-    {
-        return stackSize;
-    }
-    public void addToStack()
-    {
-        stackSize++;
-    }
-    public void RemoveFromStack()
-    {
-        stackSize--;
-    }
+        itemQuantityText.text = "#"; 
+    } 
     public ItemData GetItemData()
     {
         return itemData;

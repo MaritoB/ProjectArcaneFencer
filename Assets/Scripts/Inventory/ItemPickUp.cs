@@ -3,9 +3,17 @@
 
 public class ItemPickUp : MonoBehaviour
 {
-    [SerializeField] ItemData mItem;
+    [SerializeField] System.Collections.Generic.List<ItemData> mItems;
     SpriteRenderer sprite;
     [SerializeField] LayerMask playerLayerMask;
+    public void AddItemData(ItemData aItemData)
+    {
+        mItems.Add(aItemData);
+    }
+    public void ClearItemsData()
+    {
+        mItems.Clear();
+    }
     private void Start()
     {
         /*
@@ -15,7 +23,15 @@ public class ItemPickUp : MonoBehaviour
     }
     void PickUp(InventoryManager inventory)
     {
-        inventory.Add(mItem);
+        foreach (var item in mItems)
+        {
+            inventory.Add(item);
+            if(item.id == "Gold")
+            {
+                PopupTextPool.Instance.ShowPopUpGoldPickUp(transform.position +Vector3.down, item.quantity.ToString());
+
+            }
+        }
         gameObject.SetActive(false);
     }
     private void OnTriggerEnter(Collider other)

@@ -72,6 +72,11 @@ public class PopupTextPool : MonoBehaviour
         newPopup.Setup(message, Color.white, fontSize,position, cameraRotation);
 
     }
+    public void ShowPopUpGoldPickUp(Vector3 position, string message )
+    {
+        PopupText newPopup = GetFloatingText();
+        newPopup.Setup("Gold +"+message, Color.yellow, fontSize/2, position, cameraRotation);
+    }
 
     internal void ShowPopup(AttackInfo aAttackInfo, Vector3 aPosition)
     {

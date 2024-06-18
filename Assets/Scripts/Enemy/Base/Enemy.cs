@@ -131,6 +131,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         {
             return;
         }
+        DropManager.Instance.DropRandomItem(currentLevel, transform.position);
         IsAlive = false;
         //damageIndicator.gameObject.SetActive(false);
         //damageIndicator.EmptyText();

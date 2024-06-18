@@ -58,7 +58,7 @@ public class InventoryManager : MonoBehaviour
         }
        // goldAmount += aItem.goldPrice;
         UpdateGold();
-        Remove(aItem);
+       // Remove(aItem);
         customerInventory.Add(aItem);
         ListItemControllers();
         SetOnClickSell();
@@ -100,10 +100,10 @@ public class InventoryManager : MonoBehaviour
     }
     private void AddItemToItemController(ItemData aItem)
     {
-        ItemController itemController = ItemControllerPool.Find(x => x.GetItemData() == aItem);
-        if (itemController != null)
+        ItemController itemController = ItemControllerPool.Find(x => (x.GetItemData() != null && x.GetItemData().id == aItem.id));
+        if (itemController != null && itemController.GetItemData().isStackeable)
         {
-            itemController.addToStack();
+            itemController.GetItemData().quantity += aItem.quantity;
             itemController.gameObject.SetActive(true);
             itemController.UpdateItemControllerUI();
         }
@@ -111,10 +111,10 @@ public class InventoryManager : MonoBehaviour
         {
             itemController = GetPooledItemController();
             itemController.gameObject.SetActive(true);
-            itemController.SetNewItemData(aItem, 1);
+            itemController.SetNewItemData(aItem);
         }
     }
-    public void Remove(ItemData aItem)
+    public void Remove(ItemData aItem, int aQuantityToRemove)
     {
         if (InventoryItemsList == null || aItem == null)
         {
@@ -124,12 +124,12 @@ public class InventoryManager : MonoBehaviour
         ItemController itemController = ItemControllerPool.Find(x => x.GetItemData() == aItem);
         if (itemController != null)
         {
-            itemController.RemoveFromStack();
-            if (itemController.GetStackSize() <= 0)
-            {
-                itemController.ResetItemController();
-                itemController.gameObject.SetActive(false);
+            ItemData data = itemController.GetItemData();
+            if (data.quantity >= aQuantityToRemove) {
+                data.quantity -= aQuantityToRemove;
+                itemController.UpdateItemControllerUI();
             }
+
         }
     }
     public void ListItemControllers()
