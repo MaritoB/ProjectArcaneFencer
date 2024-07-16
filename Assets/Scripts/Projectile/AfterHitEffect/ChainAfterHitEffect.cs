@@ -47,6 +47,7 @@ public class ChainAfterHitEffect : AfterHitEffectSOBase
         Collider[] hitColliders = Physics.OverlapSphere(projectile.transform.position, ChainRadius, projectile.TargetLayerMask);
         foreach (var hitCollider in hitColliders)
         {
+            if ((hitCollider.transform.position - projectile.transform.position).magnitude<0.5f) continue;
             if (!targetsDictionary.ContainsKey(hitCollider))
             {
                 Enemy enemy = hitCollider.GetComponent<Enemy>();

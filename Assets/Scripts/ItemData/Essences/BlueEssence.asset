@@ -19,4 +19,4 @@ MonoBehaviour:
   goldPrice: 100
   quantity: 1
   isStackeable: 1
-  ColorMultiplier: {r: 0.37169808, g: 0.5304591, b: 1, a: 1}
+  ColorMultiplier: {r: 0.51587754, g: 0.58973837, b: 0.8113208, a: 1}
