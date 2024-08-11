@@ -6,7 +6,7 @@ public class FasterDashModifier : WeaponModifierSO
     public float ModifiedDashSpeedBase, DashSpeedLevelMultiplier;
     public override void ApplyModifier(PlayerController aPlayer)
     {
-        aPlayer.playerData.DashSpeed = ModifiedDashSpeedBase  +  DashSpeedLevelMultiplier * modifierLevel;
+        aPlayer.playerStats.dashSpeed.AddModifier(DashSpeedLevelMultiplier * modifierLevel);  
        
         //UpdateDescription();
     }

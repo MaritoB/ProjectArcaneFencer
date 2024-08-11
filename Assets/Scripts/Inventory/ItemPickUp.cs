@@ -25,7 +25,7 @@ public class ItemPickUp : MonoBehaviour
     {
         foreach (var item in mItems)
         {
-            inventory.Add(item);
+            inventory.AddItem(item);
             if(item.id == "Gold")
             {
                 PopupTextPool.Instance.ShowPopUpGoldPickUp(transform.position +Vector3.down, item.quantity.ToString());

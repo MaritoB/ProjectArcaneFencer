@@ -76,8 +76,9 @@ public class DropManager : MonoBehaviour
             newItemToDrop.gameObject.SetActive(true);
         }
         int randomNumberDrop = Random.Range(0, AllItemDataList.Count);
-
-        newItemToDrop.AddItemData(AllItemDataList[randomNumberDrop]);
+        ItemData newDropItem = Instantiate(AllItemDataList[randomNumberDrop]);
+        
+        newItemToDrop.AddItemData(newDropItem);
 
 
     }

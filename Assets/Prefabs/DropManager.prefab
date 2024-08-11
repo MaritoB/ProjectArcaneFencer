@@ -47,3 +47,7 @@ MonoBehaviour:
   ItemDropPrefab: {fileID: 2673895590774904393, guid: 6764559ec793477459d348769794dd86,
     type: 3}
   GoldItemData: {fileID: 11400000, guid: f3e41f26fa626b84a926afb5ad1f83f3, type: 2}
+  AllItemDataList:
+  - {fileID: 11400000, guid: 9e23cbfcd6edb074a8b1794c8a480f36, type: 2}
+  - {fileID: 11400000, guid: 59801fc2e9719dc4fa6bef9fc6aa3d2c, type: 2}
+  - {fileID: 11400000, guid: 0f538359ccb43594694167877920743a, type: 2}

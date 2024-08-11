@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: BlueEssence
   m_EditorClassIdentifier: 
   id: BlueEssence
-  itemType: 2
   displayName: Blue Essence
   icon: {fileID: 21300000, guid: ea406e3425229de45a26f98787dab8f0, type: 3}
   goldPrice: 100
   quantity: 1
-  isStackeable: 1
-  ColorMultiplier: {r: 0.51587754, g: 0.58973837, b: 0.8113208, a: 1}
+  isStackable: 1
+  colorMultiplier: {r: 0, g: 0.005592346, b: 1, a: 1}

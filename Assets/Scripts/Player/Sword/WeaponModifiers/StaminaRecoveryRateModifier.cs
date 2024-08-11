@@ -4,9 +4,8 @@ public class StaminaRecoveryRateModifier : WeaponModifierSO
 {
     public int StaminaBase, StaminaMultiplier;
     public override void ApplyModifier(PlayerController aPlayer)
-    {
-        int newStamina = StaminaBase + StaminaMultiplier * modifierLevel;
-        aPlayer.playerData.StaminaRecoveryRate = newStamina;
+    { 
+        aPlayer.playerStats.staminaRecoveryRate.AddModifier(StaminaMultiplier * modifierLevel);
 
         UpdateDescription();
     }

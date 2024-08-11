@@ -26,19 +26,19 @@ public class PlayerDash  : PlayerMovementBase
         player.OnDashInvoke();
         player.animator.SetTrigger("Dash");
         player.DashPS.Emit(1);
-        CurrentDashTime = player.playerData.DashTime;
+        CurrentDashTime = player.playerStats.dashTime.GetValue();
         Vector2 aInputVector = player.playerInputActions.Player.Movement.ReadValue<Vector2>();
         Vector3 Direction;
         if (aInputVector == Vector2.zero)
         {
             Direction = player.transform.forward.normalized;
-            DashVelocity = Direction * player.playerData.DashSpeed;
+            DashVelocity = Direction * player.playerStats.dashSpeed.GetValue(); 
         }
         else
         {
             Vector3 MovementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
             MovementVector = Quaternion.Euler(0, player.mCamera.eulerAngles.y, 0) * MovementVector;
-            DashVelocity = MovementVector * player.playerData.DashSpeed;
+            DashVelocity = MovementVector * player.playerStats.dashSpeed.GetValue(); 
             Direction = Quaternion.Euler(0f, player.mCamera.transform.eulerAngles.y, 0f) * MovementVector;
             var rotation = Quaternion.LookRotation(Direction);
             player.transform.rotation = Quaternion.RotateTowards(player.transform.rotation, rotation, 100);

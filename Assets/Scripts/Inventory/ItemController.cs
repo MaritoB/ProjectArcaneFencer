@@ -8,12 +8,23 @@ public class ItemController : MonoBehaviour
     [SerializeField] TextMeshProUGUI unitPriceText;
     [SerializeField] TextMeshProUGUI itemQuantityText;
     [SerializeField] Image itemIcon;
+    [SerializeField] Image BackgroundImage;
     [SerializeField] Button button;
-    [SerializeField] ItemData itemData = null; 
+    [SerializeField] ItemData itemData = null;
+    [SerializeField] Color NormalColor;
+    [SerializeField] Color HighlitedColor; 
+    
     public void SetNewItemData(ItemData aItemData) { 
-        itemData = Instantiate(aItemData); 
-        UpdateItemControllerUI();
-
+        itemData = aItemData;
+        UpdateItemControllerUI(); 
+    }
+    public void SelectItemController()
+    {
+        BackgroundImage.color = HighlitedColor;
+    }
+    public void DeselectItemController()
+    {
+        BackgroundImage.color = NormalColor;
     }
     public Button GetButton()
     {
@@ -30,18 +41,20 @@ public class ItemController : MonoBehaviour
         unitPriceText.text = itemData.goldPrice.ToString();
         itemQuantityText.text = itemData.quantity.ToString();
         itemIcon.sprite = itemData.icon;
-        if (itemData.ColorMultiplier != Color.clear)
+        if (itemData.colorMultiplier != Color.clear)
         {
-            itemIcon.color = itemData.ColorMultiplier;
+            itemIcon.color = itemData.colorMultiplier;
         }
     }
 
     public void ResetItemController()
     {
         itemData = null;
+        /*
         button.onClick.RemoveAllListeners();
         unitPriceText.text = "#";
         itemQuantityText.text = "#"; 
+         */
     } 
     public ItemData GetItemData()
     {

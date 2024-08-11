@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   id: Gold
-  itemType: 3
   displayName: Gold
   icon: {fileID: 21300000, guid: 93b5b28db06f8d2439c780ec3aeb28d2, type: 3}
   goldPrice: 1
-  quantity: 1
-  isStackeable: 1
+  quantity: 0
+  isStackable: 1
+  colorMultiplier: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

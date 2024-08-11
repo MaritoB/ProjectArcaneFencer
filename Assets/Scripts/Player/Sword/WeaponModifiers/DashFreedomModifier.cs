@@ -7,8 +7,10 @@ public class DashFreedomModifier : WeaponModifierSO
     public int ModifiedDashStaminaCostbase;
     public override void ApplyModifier(PlayerController aPlayer)
     {
-        aPlayer.playerData.DashTime = ModifiedDashTimeBase + DashTimeLevelMultiplier * modifierLevel;
-        aPlayer.playerData.DashStaminaCost  = ModifiedDashStaminaCostbase +(int) DashCostLevelMultiplier*modifierLevel;
+        aPlayer.playerStats.dashTime.AddModifier(DashTimeLevelMultiplier * modifierLevel);
+        aPlayer.playerStats.dashStaminaCost.AddModifier(DashCostLevelMultiplier * modifierLevel);
+        //aPlayer.playerData.DashTime = ModifiedDashTimeBase + DashTimeLevelMultiplier * modifierLevel;
+        //aPlayer.playerData.DashStaminaCost  = ModifiedDashStaminaCostbase +(int) DashCostLevelMultiplier*modifierLevel;
         aPlayer.DashChanellingPerk = true;
        
         //UpdateDescription();

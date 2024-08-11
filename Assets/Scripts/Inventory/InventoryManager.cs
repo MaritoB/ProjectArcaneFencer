@@ -1,233 +1,245 @@
-
-    using TMPro;
-    using UnityEngine;
-    using System.Collections.Generic;
+using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
-    List<ItemController> ItemControllerPool;
-    List<ItemData> InventoryItemsList;
-    [SerializeField] Transform ItemContent;
-    // [SerializeField] PlayerOutfitManager outfitManager;
-    [SerializeField] GameObject ItemControllerPrefab;
-    [SerializeField] GameObject InventoryCanvas;
-    //[SerializeField] GameObject InventoryCamera;
-    //[SerializeField] TextMeshProUGUI GoldAmountText;
-    //[SerializeField] int goldAmount;
-    InventoryManager customerInventory;
+    private const int MaxItems = 30; // Límite máximo de ítems
+    private const int InventoryWidth = 6; // Ancho de la cuadrícula del inventario
+    private const int InventoryHeight = 5; // Altura de la cuadrícula del inventario
+    [SerializeField] private int currentItemControllerCount = 0;
+
+    private int currentSelectionIndex = 0;
+    private List<ItemController> itemControllerPool = new List<ItemController>();
+    private List<ItemData> inventoryItems = new List<ItemData>();
+
+    [SerializeField] private Transform itemContent;
+    [SerializeField] private GameObject itemControllerPrefab;
+    [SerializeField] private GameObject inventoryCanvas;
+
 
     private void Start()
     {
-        ItemControllerPool = new List<ItemController>();
-        InventoryItemsList = new List<ItemData>();
+        InitializeItemControllerPool(MaxItems);
+        inventoryItems.Clear();
+        currentItemControllerCount = 0; 
+    }
+ 
 
-        GameObject tmpItem;
-        for (int i = 0; i < 3; i++)
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    private void InitializeItemControllerPool(int poolSize)
+    {
+        for (int i = 0; i < poolSize; i++)
         {
-            tmpItem = Instantiate(ItemControllerPrefab, ItemContent);
+            GameObject tmpItem = Instantiate(itemControllerPrefab, itemContent);
             tmpItem.SetActive(false);
-            ItemControllerPool.Add(tmpItem.GetComponent<ItemController>());
+            itemControllerPool.Add(tmpItem.GetComponent<ItemController>());
         }
     }
 
-    public ItemController AddItemControllerToPool()
+    public void AddItem(ItemData newItem)
     {
-        GameObject tmpItem;
-        tmpItem = Instantiate(ItemControllerPrefab, ItemContent);
-        ItemController tempItemControllertmpItem = tmpItem.GetComponent<ItemController>();
-        tempItemControllertmpItem.ResetItemController();
-        ItemControllerPool.Add(tempItemControllertmpItem);
-        return tempItemControllertmpItem;
-    }
-    public ItemController GetPooledItemController()
-    {
-        for (int i = 0; i < ItemControllerPool.Count; i++)
+        if (newItem == null)
         {
-            if (!ItemControllerPool[i].gameObject.activeSelf)
+            return;
+        }
+
+        if (newItem.isStackable)
+        {
+            ItemData existingItem = inventoryItems.Find(item => item.id == newItem.id);
+            if (existingItem != null)
             {
-                return ItemControllerPool[i];
+                existingItem.quantity += newItem.quantity;
+                UpdateItemControllerUI(existingItem);
+                return;
             }
         }
-        return AddItemControllerToPool(); ;
-    }
-    public void SellItem(ItemData aItem)
-    {
-        if (aItem == null)
-        {
-            return;
-        }
-       // goldAmount += aItem.goldPrice;
-        UpdateGold();
-       // Remove(aItem);
-        customerInventory.Add(aItem);
-        ListItemControllers();
-        SetOnClickSell();
-        customerInventory.ListItemControllers();
-        customerInventory.SetOnClickBuy();
-    }
-    public void TryToBuy(ItemData aItem)
-    {
-        /*
-        if (aItem == null)
-        {
-            return;
-        }
-        if (aItem.goldPrice <= customerInventory.goldAmount)
-        {
-            customerInventory.goldAmount -= aItem.goldPrice;
-            customerInventory.UpdateGold();
-            Remove(aItem);
-            customerInventory.Add(aItem);
-            ListItemControllers();
-            SetOnClickBuy();
-            customerInventory.ListItemControllers();
-            customerInventory.SetOnClickSell();
-        }
-        else
-        {
-            Debug.Log("Need More Gold to Buy");
-        }
-         */
-    }
-    public void Add(ItemData aItem)
-    {
-        if (InventoryItemsList == null || aItem == null)
-        {
-            return;
-        }
-        InventoryItemsList.Add(aItem);
-        AddItemToItemController(aItem);
-    }
-    private void AddItemToItemController(ItemData aItem)
-    {
-        ItemController itemController = ItemControllerPool.Find(x => (x.GetItemData() != null && x.GetItemData().id == aItem.id));
-        if (itemController != null && itemController.GetItemData().isStackeable)
-        {
-            itemController.GetItemData().quantity += aItem.quantity;
-            itemController.gameObject.SetActive(true);
-            itemController.UpdateItemControllerUI();
-        }
-        else
-        {
-            itemController = GetPooledItemController();
-            itemController.gameObject.SetActive(true);
-            itemController.SetNewItemData(aItem);
-        }
-    }
-    public void Remove(ItemData aItem, int aQuantityToRemove)
-    {
-        if (InventoryItemsList == null || aItem == null)
-        {
-            return;
-        }
-        InventoryItemsList.Remove(aItem);
-        ItemController itemController = ItemControllerPool.Find(x => x.GetItemData() == aItem);
-        if (itemController != null)
-        {
-            ItemData data = itemController.GetItemData();
-            if (data.quantity >= aQuantityToRemove) {
-                data.quantity -= aQuantityToRemove;
-                itemController.UpdateItemControllerUI();
-            }
 
+        // Si el inventario está lleno, no se puede agregar el ítem
+        if (inventoryItems.Count >= MaxItems)
+        {
+            Debug.Log("Inventario lleno");
+            return;
+        }
+
+        // Agregar el nuevo ítem al inventario
+        inventoryItems.Add(newItem);
+        AssignItemToController(newItem);
+    }
+
+    public void RemoveItem(ItemData itemToRemove, int quantityToRemove)
+    {
+        ItemData existingItem = inventoryItems.Find(item => item.id == itemToRemove.id);
+        if (existingItem != null && existingItem.quantity >= quantityToRemove)
+        {
+            existingItem.quantity -= quantityToRemove;
+            if (existingItem.quantity <= 0)
+            {
+                inventoryItems.Remove(existingItem);
+                DeactivateItemController(existingItem);
+            }
+            else
+            {
+                UpdateItemControllerUI(existingItem);
+            }
         }
     }
+
+    public void ToggleInventory()
+    {
+        if (inventoryCanvas.activeInHierarchy)
+        {
+            DeselectItem();
+            inventoryCanvas.SetActive(false);
+        }
+        else
+        {
+            ListItemControllers();
+            HighlightSelectedItem();    
+            inventoryCanvas.SetActive(true); 
+        }
+
+    }
+
+    private void AssignItemToController(ItemData itemData)
+    {
+        ItemController controller = itemControllerPool.Find(c => !c.gameObject.activeSelf);
+        if (controller != null)
+        {
+            controller.gameObject.SetActive(true);
+            controller.SetNewItemData(itemData);
+            currentItemControllerCount++;
+        }
+    }
+
+    private void DeactivateItemController(ItemData itemData)
+    {
+        ItemController controller = itemControllerPool.Find(c => c.GetItemData() == itemData);
+        if (controller != null)
+        {
+            controller.ResetItemController();
+            controller.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateItemControllerUI(ItemData itemData)
+    {
+        ItemController controller = itemControllerPool.Find(c => c.GetItemData() == itemData);
+        if (controller != null)
+        {
+            controller.UpdateItemControllerUI();
+        }
+    }
+
     public void ListItemControllers()
     {
-        foreach (Transform itemCont in ItemContent)
+        foreach (ItemController controller in itemControllerPool)
         {
-            itemCont.GetComponent<ItemController>().ResetItemController();
-            itemCont.gameObject.SetActive(false);
+            controller.ResetItemController();
+            controller.gameObject.SetActive(false);
+            currentItemControllerCount = 0;
         }
-        foreach (var item in InventoryItemsList)
+
+        foreach (ItemData item in inventoryItems)
         {
-            AddItemToItemController(item);
+            AssignItemToController(item);
         }
     }
-    public void SetOnClickEquip()
-    {
 
-        foreach (var itemController in ItemControllerPool)
+    private void MoveSelection(int direction)
+    {
+        DeselectItem();
+
+        currentSelectionIndex += direction;
+
+        // Mantener la selección dentro de los límites de la cuadrícula
+        if (currentSelectionIndex < 0)
         {
-            ItemData itemData = itemController.GetItemData();
-            if (itemController.gameObject.activeSelf && itemData != null)
+            currentSelectionIndex = currentItemControllerCount - 1;
+        }
+        else if (currentSelectionIndex >= currentItemControllerCount)
+        {
+            currentSelectionIndex = 0;
+        }
+        /*
+        else if (currentSelectionIndex % InventoryWidth == 0 && direction == -1)
+        {
+            currentSelectionIndex += InventoryWidth - 1;
+        }
+        else if ((currentSelectionIndex + 1) % InventoryWidth == 0 && direction == 1)
+        {
+            currentSelectionIndex -= InventoryWidth - 1;
+        }
+         */
+
+        HighlightSelectedItem();
+    }
+
+    private void HighlightSelectedItem()
+    {
+        if (currentSelectionIndex < inventoryItems.Count)
+        {
+            var selectedItem = itemControllerPool[currentSelectionIndex];
+            selectedItem.SelectItemController();
+        }
+    }
+
+    private void DeselectItem()
+    {
+        if (currentSelectionIndex < inventoryItems.Count)
+        {
+            var selectedItem = itemControllerPool[currentSelectionIndex];
+            selectedItem.DeselectItemController();
+        }
+    }
+    private void HandleInput()
+    {
+        if (currentItemControllerCount == 0) return;
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            MoveSelection(-InventoryWidth); // Mueve hacia arriba
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            MoveSelection(InventoryWidth); // Mueve hacia abajo
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            MoveSelection(-1); // Mueve hacia la izquierda
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            MoveSelection(1); // Mueve hacia la derecha
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            EquipSelectedItem(); // Equipar el ítem seleccionado
+        }
+    }
+    private void EquipSelectedItem()
+    {
+        if (currentSelectionIndex < inventoryItems.Count)
+        {
+            ItemData selectedItem = inventoryItems[currentSelectionIndex];
+            if (selectedItem != null)
             {
-                itemController.GetButton().onClick.RemoveAllListeners();
-                //itemController.GetButton().onClick.AddListener(delegate { outfitManager.EquipItem(itemData); });
-            }
-
-        }
-    }
-    public void SetOnClickBuy()
-    {
-
-        foreach (var itemController in ItemControllerPool)
-        {
-            ItemData itemData = itemController.GetItemData();
-            if (itemController.gameObject.activeSelf && itemData != null)
-            {
-                itemController.GetButton().onClick.RemoveAllListeners();
-                itemController.GetButton().onClick.AddListener(delegate { TryToBuy(itemData); });
-            }
-        }
-    }
-    public void SetOnClickSell()
-    {
-
-        foreach (var itemController in ItemControllerPool)
-        {
-            ItemData itemData = itemController.GetItemData();
-            if (itemController.gameObject.activeSelf && itemData != null)
-            {
-                itemController.GetButton().onClick.RemoveAllListeners();
-                itemController.GetButton().onClick.AddListener(delegate { SellItem(itemData); });
+                EquipItem(selectedItem);
             }
         }
     }
 
-    public void SetCustomer(InventoryManager aCustomer)
+    public void EquipItem(ItemData item)
     {
-        customerInventory = aCustomer;
-    }
-    public void EquipItem(ItemData aItem)
-    {
-        // outfitManager.EquipItem(aItem);
-    }
-    public void UpdateGold()
-    {
-        //GoldAmountText.text = "$ " + goldAmount.ToString();
-    }
-    public void ToggleInventoryOnToBuy()
-    {
-        ListItemControllers();
-        SetOnClickBuy();
-        InventoryCanvas.SetActive(true);
-        //InventoryCamera.SetActive(true);
-    }
-    public void ToggleInventoryOnToEquip()
-    {
-        if (InventoryCanvas.activeInHierarchy)
+        if (item != null)
         {
-            ToggleInventoryOff();
-            return;
+            Debug.Log($"Equipando ítem: {item.name}");
+            // Lógica para equipar el ítem aquí (por ejemplo, asignar el ítem al personaje)
         }
-        UpdateGold();
-        ListItemControllers();
-        SetOnClickEquip();
-        InventoryCanvas.SetActive(true);
-       // InventoryCamera.SetActive(true);
     }
-    public void ToggleInventoryOnToSell()
-    {
-        UpdateGold();
-        ListItemControllers();
-        SetOnClickSell();
-        InventoryCanvas.SetActive(true);
-       // InventoryCamera.SetActive(true);
-    }
-    public void ToggleInventoryOff()
-    {
-        InventoryCanvas.SetActive(false);
-       // InventoryCamera.SetActive(false);
-    }
-}
+
+} 
+ 

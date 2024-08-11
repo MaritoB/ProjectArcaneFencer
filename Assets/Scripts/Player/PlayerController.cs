@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     //public PlayerInputManager InputManager;
     public PlayerInput playerInput;
-    public PlayerData playerData;
+    //public PlayerData playerData;
+    public CharacterStats playerStats;
     public PlayerSoundData playerSoundData;
     public int CurrentLevel = 0;
     public PlayerInputActions playerInputActions;
@@ -91,16 +92,21 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void Awake()
     {
+        /*
         if(playerData == null)
         {
             Debug.Log("Null PlayerData");
             return;
         }
         playerData = Instantiate(playerData);
-        mCamera = Camera.main.gameObject.transform;
-        inGameUI.SetPlayer(this);
         CurrentHealth = playerData.MaxHealth;
         CurrentStamina = playerData.MaxStamina;
+         */
+        CurrentHealth = playerStats.maxHealth.GetValue();
+        CurrentStamina = playerStats.maxStamina.GetValue();
+
+        mCamera = Camera.main.gameObject.transform;
+        inGameUI.SetPlayer(this);
         inventory = GetComponentInChildren<InventoryManager>();
         mRigidbody = GetComponent<Rigidbody>();
         playerInputActions = new PlayerInputActions();
@@ -144,17 +150,17 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
         }
         CurrentStamina += aAmount;
-        if(CurrentStamina> playerData.MaxStamina)
+        if(CurrentStamina> playerStats.maxStamina.GetValue())
         {
-            CurrentStamina = playerData.MaxStamina;
+            CurrentStamina = playerStats.maxStamina.GetValue();
         }
         UpdateStaminaUI();
     }
     private void Update()
     {
-        if(CurrentStamina < playerData.MaxStamina)
+        if(CurrentStamina < playerStats.maxStamina.GetValue())
         {
-            RecoverStamina(Time.deltaTime * playerData.StaminaRecoveryRate);
+            RecoverStamina(Time.deltaTime * playerStats.staminaRecoveryRate.GetValue());
         }
         if (PlayerStateMachine == null) return;
         PlayerStateMachine.CurrentState.FrameUpdate();
@@ -174,11 +180,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void UpdateStaminaUI()
     {
         Vector3 newScalePS = SwordPS.transform.transform.localScale;
-        newScalePS.y = 0.1f + (CurrentStamina / playerData.MaxStamina);
+        newScalePS.y = 0.1f + (CurrentStamina / playerStats.maxStamina.GetValue());
         SwordPS.transform.transform.localScale = newScalePS;
         if (inGameUI != null)
         {
-            inGameUI.UpdateCurrentStaminaUI(CurrentStamina, playerData.MaxStamina);
+            inGameUI.UpdateCurrentStaminaUI(CurrentStamina, playerStats.maxStamina.GetValue());
         }
     }
     public void TurnOnShield()
@@ -204,7 +210,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void ParryProjectile()
     {
         if (mProjectileSkillInstance == null) return;
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.ParryRadius, ProjectilesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.parryRadius.GetValue(), ProjectilesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             // Shoot Forward
@@ -244,11 +250,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (aAmount < 0) return;
         CurrentHealth += aAmount;
-        if (CurrentHealth > playerData.MaxHealth)
+        if (CurrentHealth > playerStats.maxHealth.GetValue())
         {
-            CurrentHealth = playerData.MaxHealth;
+            CurrentHealth = playerStats.maxHealth.GetValue();
         }
-        inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
+        inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerStats.maxHealth.GetValue());
     }
     public void DashForward(int aDashForce)
     {
@@ -265,7 +271,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
         }
 
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -286,7 +292,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             return;
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -308,7 +314,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
+        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
         foreach (Collider collider in EnemyColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -336,7 +342,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -361,7 +367,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
 
         }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerData.MeleeAttackRadius, EnemiesLayer);
+        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -414,7 +420,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (isBlocking)
         {
-            if (UseStamina(aAttackInfo.damage * playerData.StaminaDrainPercentajeOnBlock))
+            if (UseStamina(aAttackInfo.damage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
             {
                 if (aAttackInfo.Source != null)
                 {
@@ -448,7 +454,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         if (inGameUI != null)
         {
-            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerStats.maxHealth.GetValue());
         }
     }
 
@@ -458,7 +464,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (isBlocking)
         {
-            if (UseStamina(aDamageAmount * playerData.StaminaDrainPercentajeOnBlock))
+            if (UseStamina(aDamageAmount * playerStats.staminaDrainPercentageOnBlock.GetValue()))
             {
                 if (aSource != null)
                 {
@@ -492,7 +498,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         if(inGameUI != null)
         {
-            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerData.MaxHealth);
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerStats.maxHealth.GetValue());
         }
 
     }
@@ -514,16 +520,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             return false;
         }
-        if (playerData.DashStaminaCost > CurrentStamina)
+        float dashStaminaCost = playerStats.dashStaminaCost.GetValue();
+        if (dashStaminaCost > CurrentStamina)
         {
             return false;
 
         }
         else
         {
-            if(playerData.DashStaminaCost > 0)
+            if(dashStaminaCost > 0)
             {
-                CurrentStamina -= playerData.DashStaminaCost;
+                CurrentStamina -= dashStaminaCost;
                 UpdateStaminaUI();
             }
             AudioManager.instance.PlayOneShot(playerSoundData.PlayerDash, transform.position);

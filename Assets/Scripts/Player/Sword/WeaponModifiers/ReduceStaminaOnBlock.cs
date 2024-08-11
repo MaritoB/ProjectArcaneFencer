@@ -5,8 +5,8 @@ public class ReduceStaminaOnBlock : WeaponModifierSO
     public float ReduceStaminaOnBlockBase, ReduceStaminaOnBlockMultiplier;
     public override void ApplyModifier(PlayerController aPlayer)
     {
-        float newValue = ReduceStaminaOnBlockBase + ReduceStaminaOnBlockMultiplier * modifierLevel;
-        aPlayer.playerData.StaminaDrainPercentajeOnBlock = newValue;
+       // float newValue = ReduceStaminaOnBlockBase + ReduceStaminaOnBlockMultiplier * modifierLevel;
+        aPlayer.playerStats.staminaDrainPercentageOnBlock.AddModifier(ReduceStaminaOnBlockMultiplier * modifierLevel);
 
     }
     public override void UpdateDescription()

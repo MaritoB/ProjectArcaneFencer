@@ -9,7 +9,7 @@ public class PlayerSimpleRun : PlayerMovementBase
         Vector3 MovementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
         MovementVector = Quaternion.Euler(0, player.mCamera.eulerAngles.y, 0) * MovementVector;
         player.RotateTowardMovementVector();
-        Vector3 newVelocity = MovementVector * player.playerData.MovementSpeed * Time.deltaTime;
+        Vector3 newVelocity = MovementVector * player.playerStats.movementSpeed.GetValue() * Time.deltaTime;
         newVelocity.y = player.mRigidbody.velocity.y;
         player.mRigidbody.velocity = newVelocity;
         player.animator.SetFloat("Velocity", player.mRigidbody.velocity.magnitude);
@@ -47,7 +47,7 @@ public class PlayerSimpleRun : PlayerMovementBase
     }
     private void InventoryEvent(InputAction.CallbackContext context)
     {
-        player.inventory.ToggleInventoryOnToEquip();
+        player.inventory.ToggleInventory();
     }
 
     private void AttackEvent(InputAction.CallbackContext context)
