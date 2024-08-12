@@ -28,6 +28,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        if (!inventoryCanvas.activeInHierarchy) return;
         HandleInput();
     }
 
