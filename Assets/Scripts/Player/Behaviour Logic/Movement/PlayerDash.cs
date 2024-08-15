@@ -24,7 +24,8 @@ public class PlayerDash  : PlayerMovementBase
     {
         if(player== null) { return; }
         player.OnDashInvoke();
-        player.animator.SetTrigger("Dash");
+       // player.animator.SetTrigger("Dash");
+        player.animator.SetBool("isDashing", true);
         player.DashPS.Emit(1);
         CurrentDashTime = player.playerStats.dashTime.GetValue();
         Vector2 aInputVector = player.playerInputActions.Player.Movement.ReadValue<Vector2>();
@@ -97,6 +98,8 @@ public class PlayerDash  : PlayerMovementBase
                     return;
                 }
             }
+
+            player.animator.SetBool("isDashing", false);
             player.PlayerStateMachine.ChangeState(player.mPlayerRunState);
             return;
         }
