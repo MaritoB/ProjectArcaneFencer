@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using UnityEngine;
 public class Stat
 {
     private float baseValue;
@@ -16,12 +16,15 @@ public class Stat
     public void AddModifier(float value)
     {
         modifiers.Add(value);
+
+        Debug.Log("Updated Modifier: "+ value);
         isDirty = true; 
     }
 
     public void RemoveModifier(float value)
     {
         modifiers.Remove(value);
+        Debug.Log("Updated Modifier: " + value);
         isDirty = true; 
     }
 

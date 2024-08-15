@@ -16,7 +16,6 @@ public class CharacterStats : MonoBehaviour
     public Stat staminaDrainPercentageOnBlock = new Stat(0.5f);
 
     private Dictionary<StatType, Stat> statMap;
-    private Dictionary<EquipSlot, EquipableItemData> equippedItems;
 
     private void Awake()
     {
@@ -34,40 +33,21 @@ public class CharacterStats : MonoBehaviour
             { StatType.MeleeAttackRadius, meleeAttackRadius },
             { StatType.StaminaDrainPercentageOnBlock, staminaDrainPercentageOnBlock }
         };
-
-        equippedItems = new Dictionary<EquipSlot, EquipableItemData>();
     }
 
-    public void EquipItem(EquipableItemData item)
+    public void ApplyModifier(StatModifier modifier)
     {
-        if (equippedItems.TryGetValue(item.equipSlot, out EquipableItemData currentlyEquippedItem))
+        if (statMap.TryGetValue(modifier.statType, out Stat stat))
         {
-            UnequipItem(currentlyEquippedItem);
-        }
-
-        equippedItems[item.equipSlot] = item;
-
-        foreach (var modifier in item.statModifiers)
-        {
-            if (statMap.TryGetValue(modifier.statType, out Stat stat))
-            {
-                modifier.Apply(stat);
-            }
+            modifier.Apply(stat);
         }
     }
 
-    public void UnequipItem(EquipableItemData item)
+    public void RemoveModifier(StatModifier modifier)
     {
-        if (equippedItems.ContainsKey(item.equipSlot) && equippedItems[item.equipSlot] == item)
+        if (statMap.TryGetValue(modifier.statType, out Stat stat))
         {
-            foreach (var modifier in item.statModifiers)
-            {
-                if (statMap.TryGetValue(modifier.statType, out Stat stat))
-                {
-                    modifier.Remove(stat);
-                }
-            }
-            equippedItems.Remove(item.equipSlot);
+            modifier.Remove(stat);
         }
     }
 }

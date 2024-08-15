@@ -16,10 +16,12 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Transform itemContent;
     [SerializeField] private GameObject itemControllerPrefab;
     [SerializeField] private GameObject inventoryCanvas;
+    [SerializeField] private EquipmentManager equipmentManager;
 
 
     private void Start()
     {
+        equipmentManager = GetComponent<EquipmentManager>();
         InitializeItemControllerPool(MaxItems);
         inventoryItems.Clear();
         currentItemControllerCount = 0; 
@@ -44,11 +46,12 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemData newItem)
     {
+
         if (newItem == null)
         {
             return;
         }
-
+        newItem = Instantiate(newItem);
         if (newItem.isStackable)
         {
             ItemData existingItem = inventoryItems.Find(item => item.id == newItem.id);
@@ -68,6 +71,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         // Agregar el nuevo ítem al inventario
+        if (newItem is EquipableItemData equipableItem)
+        {
+            equipmentManager.InstatiateItem(equipableItem);
+        }
         inventoryItems.Add(newItem);
         AssignItemToController(newItem);
     }
@@ -228,19 +235,27 @@ public class InventoryManager : MonoBehaviour
             ItemData selectedItem = inventoryItems[currentSelectionIndex];
             if (selectedItem != null)
             {
-                EquipItem(selectedItem);
+                if (selectedItem is EquipableItemData equipableItem)
+                { 
+
+                    if (equipmentManager != null)
+                    {
+                        equipmentManager.EquipItem(equipableItem);
+                    }
+                    else
+                    {
+                        Debug.LogError("No se encontró un EquipmentManager en el GameObject.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("El ítem seleccionado no es equipable.");
+                }
             }
         }
     }
 
-    public void EquipItem(ItemData item)
-    {
-        if (item != null)
-        {
-            Debug.Log($"Equipando ítem: {item.name}");
-            // Lógica para equipar el ítem aquí (por ejemplo, asignar el ítem al personaje)
-        }
-    }
 
+ 
 } 
  

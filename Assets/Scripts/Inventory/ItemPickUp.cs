@@ -15,8 +15,9 @@ public class ItemPickUp : MonoBehaviour
         mItems.Clear();
     }
     private void Start()
-    {
+    { 
         /*
+         * 
         sprite = GetComponent<SpriteRenderer>();
         sprite.sprite = mItem.icon;
       */
