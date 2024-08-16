@@ -17,6 +17,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject itemControllerPrefab;
     [SerializeField] private GameObject inventoryCanvas;
     [SerializeField] private EquipmentManager equipmentManager;
+    [SerializeField] private SelectedItemUI selectedItemUI;
+
 
 
     private void Start()
@@ -147,7 +149,7 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (ItemController controller in itemControllerPool)
         {
-            controller.ResetItemController();
+           // controller.ResetItemController();
             controller.gameObject.SetActive(false);
             currentItemControllerCount = 0;
         }
@@ -193,6 +195,10 @@ public class InventoryManager : MonoBehaviour
         {
             var selectedItem = itemControllerPool[currentSelectionIndex];
             selectedItem.SelectItemController();
+            if(selectedItemUI!= null && selectedItem.GetItemData() is EquipableItemData equipable)
+            {
+                selectedItemUI.DisplayNewItem(equipable);
+            }
         }
     }
 

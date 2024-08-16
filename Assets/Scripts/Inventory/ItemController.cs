@@ -12,10 +12,37 @@ public class ItemController : MonoBehaviour
     [SerializeField] Button button;
     [SerializeField] ItemData itemData = null;
     [SerializeField] Color NormalColor;
-    [SerializeField] Color HighlitedColor; 
-    
+    [SerializeField] Color HighlitedColor;
+    [SerializeField] RectTransform itemParent;
+    public GameObject UIitem3D = null;
+
+
     public void SetNewItemData(ItemData aItemData) { 
         itemData = aItemData;
+        if (itemData is EquipableItemData equipable)
+        {
+            itemIcon.gameObject.SetActive(false);
+            itemQuantityText.gameObject.SetActive(false);
+            if(UIitem3D == null)
+            {
+                UIitem3D = Instantiate(equipable.EquipableItemPrefab, itemParent);
+                foreach (Transform child in itemParent.transform)
+                {
+                    child.gameObject.layer = 5;
+                }
+                foreach (Transform child in UIitem3D.transform)
+                {
+                    child.gameObject.layer = 5;
+                }
+            }
+            UIitem3D.SetActive(true);
+        }
+        else
+        {
+            itemIcon.gameObject.SetActive(true);
+            itemQuantityText.gameObject.SetActive(true);
+
+        }
         UpdateItemControllerUI(); 
     }
     public void SelectItemController()
@@ -49,6 +76,7 @@ public class ItemController : MonoBehaviour
 
     public void ResetItemController()
     {
+        Destroy(UIitem3D);
         itemData = null;
         /*
         button.onClick.RemoveAllListeners();

@@ -39,7 +39,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (statMap.TryGetValue(modifier.statType, out Stat stat))
         {
-            modifier.Apply(stat);
+            modifier.Apply(stat); 
         }
     }
 
