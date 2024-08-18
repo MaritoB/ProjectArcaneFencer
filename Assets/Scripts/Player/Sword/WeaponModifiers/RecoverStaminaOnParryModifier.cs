@@ -9,8 +9,8 @@ public class RecoverStaminaOnParryModifier : WeaponModifierSO
     {
         StaminaRecovery = RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel;
         player = aPlayer;
-        aPlayer.OnParry -= RecoverStaminaOnParry;
-        aPlayer.OnParry += RecoverStaminaOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnParry -= RecoverStaminaOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnParry += RecoverStaminaOnParry;
         UpdateDescription();
     }
     public override void UpdateDescription()

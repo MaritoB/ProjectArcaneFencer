@@ -11,8 +11,8 @@ public class IceNovaOnSecondStrike : WeaponModifierSO
     {
         Player = aPlayer;
         Player.mSkillManager.LevelUpIceNova(modifierLevel);
-        aPlayer.sword.OnSecondMeleePerformed -= TryCastIceNova;
-        aPlayer.sword.OnSecondMeleePerformed += TryCastIceNova;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleePerformed -= TryCastIceNova;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleePerformed += TryCastIceNova;
         currentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
         UpdateDescription();
     }

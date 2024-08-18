@@ -8,8 +8,8 @@ public class KnockBackModifier : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        aPlayer.sword.OnThirdMeleeHit -= KnockBackEnemy;
-        aPlayer.sword.OnThirdMeleeHit += KnockBackEnemy;
+        aPlayer.inventory.equipmentManager.weapon.OnThirdMeleeHit -= KnockBackEnemy;
+        aPlayer.inventory.equipmentManager.weapon.OnThirdMeleeHit += KnockBackEnemy;
         playerTransform = aPlayer.transform;
         UpdateDescription();
     }

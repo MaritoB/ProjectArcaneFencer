@@ -11,8 +11,8 @@ public class ChainLightningOnSecondStrikeModifier : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         mPlayer = aPlayer;
-        aPlayer.sword.OnSecondMeleeHit -= TryCastChainLightning;
-        aPlayer.sword.OnSecondMeleeHit += TryCastChainLightning;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleeHit -= TryCastChainLightning;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleeHit += TryCastChainLightning;
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
         mPlayer.mSkillManager.LevelUpChainLightning(modifierLevel);
         UpdateDescription();

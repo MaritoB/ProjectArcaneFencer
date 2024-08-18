@@ -20,8 +20,8 @@ public class ProjectileOnFirstPerformedModifier : WeaponModifierSO
         if (projectileSpawner != null)
         {
             projectileSpawner.ShootPosition = aPlayer.AttackTransform;
-            aPlayer.sword.OnFirstMeleePerformed -= CastProjectile;
-            aPlayer.sword.OnFirstMeleePerformed += CastProjectile;
+            aPlayer.inventory.equipmentManager.weapon.OnFirstMeleePerformed -= CastProjectile;
+            aPlayer.inventory.equipmentManager.weapon.OnFirstMeleePerformed += CastProjectile;
         }
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
        

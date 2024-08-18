@@ -10,8 +10,8 @@ public class RecoverStaminaOnThirdStrike : WeaponModifierSO
     {
         StaminaRecovery = RecoverStaminaOnParryBase + RecoverStaminaOnParryMultiplier * modifierLevel;
         player = aPlayer;
-        aPlayer.sword.OnThirdMeleeHit -= RecoverStaminaOnParry;
-        aPlayer.sword.OnThirdMeleeHit += RecoverStaminaOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnThirdMeleeHit -= RecoverStaminaOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnThirdMeleeHit += RecoverStaminaOnParry;
         UpdateDescription();
     }
     public override void UpdateDescription()

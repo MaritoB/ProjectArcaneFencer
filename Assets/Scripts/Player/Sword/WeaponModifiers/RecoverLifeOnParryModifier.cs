@@ -9,8 +9,8 @@ public class RecoverLifeOnParryModifier : WeaponModifierSO
     {
         LifeRecovery = RecoverLifeOnParryBase + RecoverLifeOnParryMultiplier * modifierLevel;
         player = aPlayer;
-        aPlayer.OnParry -= RecoverLifeOnParry;
-        aPlayer.OnParry += RecoverLifeOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnParry -= RecoverLifeOnParry;
+        aPlayer.inventory.equipmentManager.weapon.OnParry += RecoverLifeOnParry;
 
         UpdateDescription();
     }

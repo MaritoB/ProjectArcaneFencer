@@ -6,14 +6,15 @@ public class EquipmentManager : MonoBehaviour
     private Dictionary<EquipmentSocket, EquipableItemData> equippedItems = new Dictionary<EquipmentSocket, EquipableItemData>();
     [SerializeField] public Dictionary<EquipmentSocket, Transform> itemSockets = new Dictionary<EquipmentSocket, Transform>();
 
-    [SerializeField]private CharacterStats playerStats;
+    [SerializeField]private PlayerController playerController;
 
     [SerializeField]
     private List<ItemSocketMapping> itemSocketMappings;
+    public WeaponBase weapon;
 
     private void Start()
     {
-        playerStats = GetComponentInParent<CharacterStats>();
+        playerController = GetComponentInParent<PlayerController>();
         foreach (var mapping in itemSocketMappings)
         {
             itemSockets[mapping.itemType] = mapping.socket;
@@ -42,10 +43,17 @@ public class EquipmentManager : MonoBehaviour
         }
 
         equippedItems[item.equipSlot] = item;
-
+        if (item.equipSlot == EquipmentSocket.Weapon)
+        {
+            weapon = item.EquipableItemPrefab.GetComponent<WeaponBase>();
+            if (weapon != null)
+            {
+                weapon.SetPlayerController(playerController);
+            } 
+        }
         foreach (var modifier in item.statModifiers)
         {
-            playerStats.ApplyModifier(modifier);
+            playerController.playerStats.ApplyModifier(modifier);
         }
 
         if (item.EquipableItemPrefab != null && itemSockets.TryGetValue(item.equipSlot, out Transform socket))
@@ -62,7 +70,7 @@ public class EquipmentManager : MonoBehaviour
         {
             foreach (var modifier in item.statModifiers)
             {
-                playerStats.RemoveModifier(modifier);
+                playerController.playerStats.RemoveModifier(modifier);
             }
 
             item.EquipableItemPrefab.SetActive(false);

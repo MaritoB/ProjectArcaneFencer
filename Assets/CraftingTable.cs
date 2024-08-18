@@ -31,7 +31,7 @@ public class CraftingTable : MonoBehaviour
             return;
         }
         m_SwordOnTable.gameObject.SetActive(true);
-        player.HideSword();
+        //player.HideSword();
         InteractWithCraftingTable();
 
     }

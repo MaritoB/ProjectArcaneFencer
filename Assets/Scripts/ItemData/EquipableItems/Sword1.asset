@@ -22,5 +22,5 @@ MonoBehaviour:
   equipSlot: 5
   statModifiers:
   - {fileID: 11400000, guid: 8bf9b19bcac849845a8d1f9faf99662c, type: 2}
-  EquipableItemPrefab: {fileID: 7606464178304258527, guid: 5ef79752a3159bc46811ae2fa4cb7eb7,
+  EquipableItemPrefab: {fileID: 6919114440548682194, guid: 8cea24417298a81439d0282702b632ad,
     type: 3}

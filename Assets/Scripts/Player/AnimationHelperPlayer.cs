@@ -12,15 +12,7 @@ public class AnimationHelperPlayer : MonoBehaviour
         {
             controller.ShootProjectile();
         }
-    }
-    public void SimpleMeleeAttackEvent()
-    {
-        if (controller != null)
-        {
-            controller.SimpleMeleeAttack();
-        }
-    }
-
+    } 
     public void ChangeToRunStateEvent()
     {
         if (controller != null)
@@ -28,13 +20,7 @@ public class AnimationHelperPlayer : MonoBehaviour
             controller.ChangeStateToRun();
         }
     }
-    public void CustomMeleeAttackEvent(float aWeaponDamagePercentage)
-    {
-        if (controller != null)
-        {
-            controller.CustomMeleeAttack(aWeaponDamagePercentage);
-        }
-    }
+ 
     public void FirstMeleeAttackEvent(float aWeaponDamagePercentage)
     {
         if (controller != null)

@@ -6,7 +6,7 @@ public class AddCritChanceModifier : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         int newCriticalChance = CriticalChanceBase + AddeCriticalChanceMultiplier * modifierLevel;
-        aPlayer.sword.SetCriticalChance(newCriticalChance);
+        aPlayer.inventory.equipmentManager.weapon.SetCriticalChance(newCriticalChance);
 
     }
     public override void UpdateDescription()

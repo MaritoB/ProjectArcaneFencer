@@ -22,17 +22,12 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     PlayerInGameUI inGameUI;
     [SerializeField]
-    public ParticleSystem ParryParticleSystem, MeleeHitPS, DashPS, BloodOnHit;
-    public delegate void OnParryDelegate();
-    public event OnParryDelegate OnParry;
+    public ParticleSystem DashPS, BloodOnHit;
     public delegate void OnDashDelegate();
     public event OnDashDelegate OnDash;
     public delegate void OnBlockPerformedDelegate(Enemy enemy);
     public event OnBlockPerformedDelegate OnBlockPerformed;
-    [SerializeField]
-    LayerMask ProjectilesLayer;
-    [SerializeField]
-    LayerMask EnemiesLayer;
+    public LayerMask EnemyProjectilesLayer, EnemiesLayer;
     [SerializeField]
     float CurrentStamina;
     bool isAlive = true;
@@ -69,9 +64,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
     [SerializeField]
-    public  ProjectileSkillSOBase SingleProjectileSkill, TripleProjectileSkill;
-    [field: SerializeField] public float CurrentHealth { get; set; }
-    [SerializeField] public  SwordBase sword;
+    public ProjectileSkillSOBase SingleProjectileSkill, TripleProjectileSkill;
+    [field: SerializeField] public float CurrentHealth { get; set; } 
     [SerializeField] Transform MagicSphereShield;
     [SerializeField] Transform SwordTransform;
     [SerializeField] Transform SwordPS;
@@ -79,8 +73,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void LevelUP()
     {
         CurrentLevel++;
-        inGameUI.SetRemainingPoints(5);
-        inGameUI.SetupSkillUI();
+        //inGameUI.SetRemainingPoints(5);
+        //inGameUI.SetupSkillUI();
     }
     public void HideSword()
     {
@@ -207,29 +201,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         mProjectileSkillInstance.UseSkill(projectileSpawner, aDirection);
     }
-    public void ParryProjectile()
-    {
-        if (mProjectileSkillInstance == null) return;
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.parryRadius.GetValue(), ProjectilesLayer);
-        foreach (Collider collider in ProjectileColliders)
-        {
-            // Shoot Forward
-            // ProjectileSkillInstance.UseSkill(projectileSpawner);
-
-            // Reflect projectile
-            mProjectileSkillInstance.UseSkill(projectileSpawner, (collider.GetComponent<Rigidbody>().velocity * -1).normalized);
-            if (ParryParticleSystem != null)
-            {
-                ParryParticleSystem.Emit(30);
-            }
-            // Recover Stamina on Parry
-            OnParry?.Invoke();
-
-            AudioManager.instance.PlayOneShot(playerSoundData.PlayerParry, transform.position);
-            //RecoverStamina(playerData.RecoverStaminaOnParry);
-            collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
-        }
-    }
+    
     public void PlayAttack1Sounds()
     {
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerAttack1, transform.position);
@@ -245,6 +217,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void PlayFootStepSounds()
     {
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerStep, transform.position);
+    }
+    public void PlayParryStepSounds()
+    {
+        AudioManager.instance.PlayOneShot(playerSoundData.PlayerParry, transform.position);
     }
     public void RecoverLife(int aAmount)
     {
@@ -263,126 +239,26 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void OnDashInvoke()
     {
         OnDash?.Invoke();
-    }
-    public void SimpleMeleeAttack()
-    {
-        if(sword == null)
-        {
-            return;
-        }
-
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
-        foreach (Collider collider in ProjectileColliders)
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                MeleeHitPS.Emit(15);
-                //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy,1);
-            }
-        }
-        CanAttack = true;
-        isAttacking = false;
-        ParryProjectile();
-    }
-    public void CustomMeleeAttack(float  aWeaponDamagePercentage)
-    {
-        if (sword == null)
-        {
-            return;
-        }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
-        foreach (Collider collider in ProjectileColliders)
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy, aWeaponDamagePercentage);
-            }
-        }
-        CanAttack = true;
-        isAttacking = false;
-        ParryProjectile();
-    }
+    } 
+    
     public void FirstMeleeAttack(float aWeaponDamagePercentage)
-    {
-        if (sword == null)
-        {
-            return;
-
-        }
-        Collider[] EnemyColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
-        foreach (Collider collider in EnemyColliders)
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy, aWeaponDamagePercentage);
-                sword.FirstStrikeModifiers(enemy);
-            }
-        }
-        sword.FirstStrikePerformedModifiers();
+    { 
+        inventory.equipmentManager.weapon.FirstMeleeAttack(aWeaponDamagePercentage);
         CanAttack = true;
-        isAttacking = false;
-        ParryProjectile();
+        isAttacking = false; 
     }
-    public void ParryModifier()
-    {
-        OnParry?.Invoke();
-    }
+
     public void SecondMeleeAttack(float aWeaponDamagePercentage)
     {
-        if (sword == null)
-        {
-            return;
-
-        }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
-        foreach (Collider collider in ProjectileColliders)
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy, aWeaponDamagePercentage);
-                sword.SecondStrikeModifiers(enemy);
-            }
-        }
-
-        sword.SecondStrikePerformedModifiers();
+        inventory.equipmentManager.weapon.SecondMeleeAttack(aWeaponDamagePercentage);
         CanAttack = true;
-        isAttacking = false;
-        ParryProjectile();
+        isAttacking = false; 
     }
     public void ThirdMeleeAttack(float aWeaponDamagePercentage)
     {
-        if (sword == null)
-        {
-            return;
-
-        }
-        Collider[] ProjectileColliders = Physics.OverlapSphere(projectileSpawner.ShootPosition.position, playerStats.meleeAttackRadius.GetValue(), EnemiesLayer);
-        foreach (Collider collider in ProjectileColliders)
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                //enemy.TakeDamage(sword.GetCurrentDamage());
-                sword.Attack(enemy, aWeaponDamagePercentage);
-                sword.ThirdStrikeModifiers(enemy);
-            }
-        }
-        sword.ThirdStrikePerformedModifiers();
+        inventory.equipmentManager.weapon.ThirdMeleeAttack(aWeaponDamagePercentage);
         CanAttack = true;
-        isAttacking = false;
-        ParryProjectile();
+        isAttacking = false; 
     }
 
     public void ShootProjectile()
@@ -505,7 +381,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Death()
     {
-        sword.ResetAllModifiers();
+        inventory.equipmentManager.weapon.ResetAllModifiers();
         mSkillManager.ResetSkillLevels();
         animator.SetTrigger("Death");
         AudioManager.instance.TurnOffMusic();
@@ -544,18 +420,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             return false;
         }
-        if(sword == null)
+        if(inventory.equipmentManager.weapon == null)
         {
+            Debug.Log("null Weapon");
             return false;
         }
 
-        if (sword.GetAttackStaminaCost() > CurrentStamina)
+        if (inventory.equipmentManager.weapon.GetAttackStaminaCost() > CurrentStamina)
         {
             return false;
         }
         else
         {
-            CurrentStamina -= sword.GetAttackStaminaCost();
+            CurrentStamina -= inventory.equipmentManager.weapon.GetAttackStaminaCost();
             UpdateStaminaUI();
             CanAttack = false;
             return true;

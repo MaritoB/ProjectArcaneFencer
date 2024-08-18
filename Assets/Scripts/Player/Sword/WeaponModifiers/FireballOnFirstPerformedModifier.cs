@@ -10,8 +10,8 @@ public class FireballOnFirstPerformedModifier : WeaponModifierSO
     {
         Player = aPlayer;
         Player.mSkillManager.LevelUpFireball(modifierLevel);
-        aPlayer.sword.OnSecondMeleePerformed -= TryCastFireBall;
-        aPlayer.sword.OnSecondMeleePerformed += TryCastFireBall;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleePerformed -= TryCastFireBall;
+        aPlayer.inventory.equipmentManager.weapon.OnSecondMeleePerformed += TryCastFireBall;
         currentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
         UpdateDescription();
     }

@@ -32,11 +32,9 @@ public class PlayerInGameUI : MonoBehaviour
         CurrentStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
         if (RemainingPoints > 0)
         {
-            SetupSkillUI();
+            //SetupSkillUI();
 
-        }
-
-
+        } 
     }
     public void SetPlayer(PlayerController playerController)
     {
@@ -72,19 +70,19 @@ public class PlayerInGameUI : MonoBehaviour
         LevelNumberText.text = "Level : " + playerController.CurrentLevel;
         RemainingPointsText.text = " Points : " + RemainingPoints;
         WeaponModifierSO mod1, mod2, mod3;
-        mod1 = playerController.sword.GetRandomModifier();
+        mod1 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         while (mod1 == null)
         {
-            mod1 = playerController.sword.GetRandomModifier();
+            mod1 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         }
-        mod2 = playerController.sword.GetRandomModifier();
+        mod2 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         while (mod1 == mod2 || mod2 == null) {
-            mod2 = playerController.sword.GetRandomModifier();
+            mod2 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         }
-        mod3 = playerController.sword.GetRandomModifier();
+        mod3 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         while (mod1 == mod3|| mod2==mod3 || mod3 == null)
         {
-            mod3 = playerController.sword.GetRandomModifier();
+            mod3 = playerController.inventory.equipmentManager.weapon.GetRandomModifier();
         }
         itemModifierUI1.UpdateItemModifierUI(mod1, this);
         itemModifierUI2.UpdateItemModifierUI(mod2, this);
@@ -158,11 +156,11 @@ public class PlayerInGameUI : MonoBehaviour
 
     internal void AplyNewWeaponModifier(WeaponModifierSO aMod)
     {
-        playerController.sword.ApplyNewWeaponModifier(aMod);
+        playerController.inventory.equipmentManager.weapon.ApplyNewWeaponModifier(aMod);
         RemainingPoints--;
         if(RemainingPoints > 0) 
         {
-            SetupSkillUI();
+            //SetupSkillUI();
         }
         else{
             CloseModifiersPanel();

@@ -26,14 +26,7 @@ public class ItemController : MonoBehaviour
             if(UIitem3D == null)
             {
                 UIitem3D = Instantiate(equipable.EquipableItemPrefab, itemParent);
-                foreach (Transform child in itemParent.transform)
-                {
-                    child.gameObject.layer = 5;
-                }
-                foreach (Transform child in UIitem3D.transform)
-                {
-                    child.gameObject.layer = 5;
-                }
+                SetLayerForAllChildren(UIitem3D.transform,5);
             }
             UIitem3D.SetActive(true);
         }
@@ -44,6 +37,15 @@ public class ItemController : MonoBehaviour
 
         }
         UpdateItemControllerUI(); 
+    }
+    private void SetLayerForAllChildren(Transform parentTransform, int layer)
+    {
+        parentTransform.gameObject.layer = layer;
+        foreach (Transform child in parentTransform)
+        {
+            child.gameObject.layer = layer;
+            SetLayerForAllChildren(child, layer);
+        }
     }
     public void SelectItemController()
     {

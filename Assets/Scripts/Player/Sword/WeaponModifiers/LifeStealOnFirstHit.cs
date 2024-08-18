@@ -11,8 +11,8 @@ public class LifeStealOnFirstHit : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         Player = aPlayer;
-        Player.sword.OnFirstMeleeHit -= LifeSteal;
-        Player.sword.OnFirstMeleeHit += LifeSteal;
+        Player.inventory.equipmentManager.weapon.OnFirstMeleeHit -= LifeSteal;
+        Player.inventory.equipmentManager.weapon.OnFirstMeleeHit += LifeSteal;
         CurrentLifeSteal = LifeStealBase + LifeStealMultiplier * modifierLevel;
         UpdateDescription();
     }

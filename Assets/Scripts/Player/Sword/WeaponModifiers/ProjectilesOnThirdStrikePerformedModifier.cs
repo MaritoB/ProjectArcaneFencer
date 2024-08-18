@@ -20,8 +20,8 @@ public class ProjectilesOnThirdStrikePerformedModifier : WeaponModifierSO
         if (projectileSpawner != null)
         {
             projectileSpawner.ShootPosition = aPlayer.AttackTransform;
-            aPlayer.sword.OnThirdMeleePerformed -= TryCastTripleProjectiles;
-            aPlayer.sword.OnThirdMeleePerformed += TryCastTripleProjectiles;
+            aPlayer.inventory.equipmentManager.weapon.OnThirdMeleePerformed -= TryCastTripleProjectiles;
+            aPlayer.inventory.equipmentManager.weapon.OnThirdMeleePerformed += TryCastTripleProjectiles;
         }
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
        

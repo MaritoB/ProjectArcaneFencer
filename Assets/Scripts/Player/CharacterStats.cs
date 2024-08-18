@@ -7,12 +7,10 @@ public class CharacterStats : MonoBehaviour
     public Stat maxStamina = new Stat(100f);
     public Stat movementSpeed = new Stat(200f);
     public Stat dashSpeed = new Stat(500f);
-    public Stat dashTime = new Stat(0.2f);
+    public Stat dashTime = new Stat(0.3f);
     public Stat dashStaminaCost = new Stat(10f);
     public Stat recoverStaminaOnParry = new Stat(10f);
-    public Stat staminaRecoveryRate = new Stat(10f);
-    public Stat parryRadius = new Stat(1f);
-    public Stat meleeAttackRadius = new Stat(1f);
+    public Stat staminaRecoveryRate = new Stat(10f); 
     public Stat staminaDrainPercentageOnBlock = new Stat(0.5f);
 
     private Dictionary<StatType, Stat> statMap;
@@ -28,9 +26,7 @@ public class CharacterStats : MonoBehaviour
             { StatType.DashTime, dashTime },
             { StatType.DashStaminaCost, dashStaminaCost },
             { StatType.RecoverStaminaOnParry, recoverStaminaOnParry },
-            { StatType.StaminaRecoveryRate, staminaRecoveryRate },
-            { StatType.ParryRadius, parryRadius },
-            { StatType.MeleeAttackRadius, meleeAttackRadius },
+            { StatType.StaminaRecoveryRate, staminaRecoveryRate }, 
             { StatType.StaminaDrainPercentageOnBlock, staminaDrainPercentageOnBlock }
         };
     }

@@ -6,7 +6,7 @@ public class AddDamageModifier : WeaponModifierSO
     public override void ApplyModifier(PlayerController aPlayer)
     {
         int newDamage = AddedDamageBase + AddedDamageMultiplier * modifierLevel;
-        aPlayer.sword.SetDamage(newDamage);
+        aPlayer.inventory.equipmentManager.weapon.SetDamage(newDamage);
 
     }
     public override void UpdateDescription()

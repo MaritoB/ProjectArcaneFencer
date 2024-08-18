@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Transform itemContent;
     [SerializeField] private GameObject itemControllerPrefab;
     [SerializeField] private GameObject inventoryCanvas;
-    [SerializeField] private EquipmentManager equipmentManager;
+    [SerializeField] public  EquipmentManager equipmentManager;
     [SerializeField] private SelectedItemUI selectedItemUI;
 
 
@@ -76,6 +76,7 @@ public class InventoryManager : MonoBehaviour
         if (newItem is EquipableItemData equipableItem)
         {
             equipmentManager.InstatiateItem(equipableItem);
+            selectedItemUI.AddNewItemToDictionary(equipableItem);
         }
         inventoryItems.Add(newItem);
         AssignItemToController(newItem);
@@ -90,6 +91,10 @@ public class InventoryManager : MonoBehaviour
             if (existingItem.quantity <= 0)
             {
                 inventoryItems.Remove(existingItem);
+                if(existingItem is EquipableItemData equipable)
+                { 
+                    selectedItemUI.RemoveItem(equipable);
+                }
                 DeactivateItemController(existingItem);
             }
             else
