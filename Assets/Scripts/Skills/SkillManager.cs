@@ -18,20 +18,30 @@ public class SkillManager : MonoBehaviour
         mChainLightningSkill.StartSetUp();
         mFireballSkill.StartSetUp();
     }
-    public void UseIceNova()
-    {
-        mIceNovaSkill.UseSkill(transform.position);
-    }
-    public void LevelUpFireball(int aLevel)
-    {
-        mFireballSkill.LevelUpSkill(aLevel);
-    }
+
     public void ResetSkillLevels()
     {
         mIceNovaSkill.ResetSkillLevel();
         mChainLightningSkill.ResetSkillLevel();
         mFireballSkill.ResetSkillLevel();
     }
+    public void UseIceNova(int aSkillLevel)
+    {
+        mIceNovaSkill.UseSkill(transform.position, aSkillLevel);
+    }
+    public void UseFireball(Vector3 aDirection)
+    {
+        mFireballSkill.UseSkill(aDirection);
+    }
+    internal void UseChainLightningSkill(Vector3 direction)
+    {
+        mChainLightningSkill.UseSkill(direction);
+    }
+    public void SetLevelFireball(int aLevel)
+    {
+        mFireballSkill.SetSkillLevel(aLevel);
+    }
+ /*
     internal void LevelUpIceNova(int aLevel)
     {
         mIceNovaSkill.LevelUpSkill(aLevel);
@@ -40,9 +50,7 @@ public class SkillManager : MonoBehaviour
     {
         mChainLightningSkill.LevelUpSkill(aLevel);
     }
+  
 
-    internal void UseChainLightningSkill(Vector3 direction)
-    {
-        mChainLightningSkill.UseSkill(direction);
-    }
+  */
 }

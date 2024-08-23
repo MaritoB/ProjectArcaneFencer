@@ -39,6 +39,11 @@ public class EquipmentManager : MonoBehaviour
 
         if (equippedItems.TryGetValue(item.equipSlot, out EquipableItemData currentlyEquippedItem))
         {
+            if(currentlyEquippedItem == item)
+            { 
+                Debug.LogWarning("El ítem ya esta equipado.");
+                return;
+            }
             UnequipItem(currentlyEquippedItem);
         }
 
@@ -51,10 +56,13 @@ public class EquipmentManager : MonoBehaviour
                 weapon.SetPlayerController(playerController);
             } 
         }
-        foreach (var modifier in item.statModifiers)
+        item.Equip(playerController);
+        /*
+        foreach (var modifier in item.itemModifiers)
         {
-            playerController.playerStats.ApplyModifier(modifier);
+            playerController.playerStats.ApplyModifier(modifier.ItemModifier);
         }
+         */
 
         if (item.EquipableItemPrefab != null && itemSockets.TryGetValue(item.equipSlot, out Transform socket))
         {
@@ -68,14 +76,9 @@ public class EquipmentManager : MonoBehaviour
     {
         if (item != null && equippedItems.ContainsKey(item.equipSlot))
         {
-            foreach (var modifier in item.statModifiers)
-            {
-                playerController.playerStats.RemoveModifier(modifier);
-            }
-
+            item.Unequip(playerController); 
             item.EquipableItemPrefab.SetActive(false);
-            equippedItems.Remove(item.equipSlot); 
-
+            equippedItems.Remove(item.equipSlot);  
             Debug.Log(item.name + " fue desequipado del slot " + item.equipSlot);
         }
     }

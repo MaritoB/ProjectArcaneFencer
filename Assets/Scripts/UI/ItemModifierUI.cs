@@ -8,13 +8,16 @@ public class ItemModifierUI: MonoBehaviour
     TextMeshProUGUI ItemNameText, ItemDescriptionText, ItemLevelText;
     [SerializeField]
     Image ItemImage;
-    WeaponModifierSO modifierSO;
+    ItemModifierSO modifierSO;
     PlayerInGameUI playerInGameUI;
-    public void UpdateItemModifierUI(WeaponModifierSO aModifier, PlayerInGameUI aPlayerInGameUI)
+    public void UpdateItemModifierUI(ItemModifierSO aModifier, PlayerInGameUI aPlayerInGameUI)
     {
         if (aModifier == null) return;
         ItemNameText.text = aModifier.modifierName;
-        aModifier.UpdateDescription();
+        if(aModifier is IItemModifier modifierInterface)
+        {
+            modifierInterface.GetDescription();
+        } 
         ItemDescriptionText.text = aModifier.modifierDescription;
         ItemLevelText.text = aModifier.modifierLevel.ToString();
         ItemImage.sprite = aModifier.modifierSprite;
@@ -25,7 +28,7 @@ public class ItemModifierUI: MonoBehaviour
     public void OnCickApplyModifier( )
     {
         if ( modifierSO == null  || playerInGameUI == null) return;
-        playerInGameUI.AplyNewWeaponModifier(modifierSO);
+       // playerInGameUI.ApplyNewWeaponModifier(modifierSO);
     }
 
 }

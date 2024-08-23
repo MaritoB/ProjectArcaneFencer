@@ -59,6 +59,7 @@ public class PlayerInGameUI : MonoBehaviour
         animator.SetTrigger("OnTakeDamage");
     }
 
+    /*
     public void SetupSkillUI()
     {
         if (!aWeaponModPanel.gameObject.activeSelf)
@@ -89,6 +90,7 @@ public class PlayerInGameUI : MonoBehaviour
         itemModifierUI3.UpdateItemModifierUI(mod3, this);
         aWeaponModPanel.gameObject.SetActive(true);
     }
+     */
     public void FadeInResetLevel()
     {
         if (animator == null)
@@ -143,18 +145,21 @@ public class PlayerInGameUI : MonoBehaviour
     }
     public void ResetLevel()
     {
+        Time.timeScale =1f;
         SceneManagerSingleton.Instance.ResetLevel();
     }
     public void LoadNextLevel()
     {
+        Time.timeScale = 1f;
         SceneManagerSingleton.Instance.TryLoadNextScene();
     }
     public void ResetGame()
     {
+        Time.timeScale = 1f;
         SceneManagerSingleton.Instance.LoadScene(0);
     }
-
-    internal void AplyNewWeaponModifier(WeaponModifierSO aMod)
+    /*
+    internal void ApplyNewWeaponModifier(WeaponModifierSO aMod)
     {
         playerController.inventory.equipmentManager.weapon.ApplyNewWeaponModifier(aMod);
         RemainingPoints--;
@@ -166,6 +171,7 @@ public class PlayerInGameUI : MonoBehaviour
             CloseModifiersPanel();
         }
     }
+     */
     void CloseModifiersPanel()
     {
         aWeaponModPanel.gameObject.SetActive(false);

@@ -19,8 +19,13 @@ MonoBehaviour:
   quantity: 1
   isStackable: 0
   colorMultiplier: {r: 0, g: 0, b: 0, a: 0}
+  itemModifiers:
+  - ItemModifier: {fileID: 11400000, guid: c461534a09eeb6d49bbcf4a6ec369449, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 0f5ca0810cf614347bee8750b0e25b0e, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 8cdd1754cfbfc8e45ab155b8a5a515f2, type: 2}
+    level: 3
   equipSlot: 5
-  statModifiers:
-  - {fileID: 11400000, guid: 8bf9b19bcac849845a8d1f9faf99662c, type: 2}
   EquipableItemPrefab: {fileID: 6919114440548682194, guid: 8cea24417298a81439d0282702b632ad,
     type: 3}

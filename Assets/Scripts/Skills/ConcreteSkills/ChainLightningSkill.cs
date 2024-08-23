@@ -51,7 +51,7 @@ public class ChainLightningSkill : SkillSOBase
         Vector3 Direction =( APosition - mPlayer.position).normalized;
         ChainLightningSpawner.ShootProjectileToDirectionFromPool(Direction, ChainLightningSpawner.ShootPosition.position);
     }
-    public override void LevelUpSkill(int aNewlevel)
+    public override void SetSkillLevel(int aNewlevel)
     {
         if(damageOnHitInstance == null || chainHitEffectInstance == null) { return; }
         skillLevel++; 

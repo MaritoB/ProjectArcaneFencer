@@ -24,10 +24,7 @@ public class SelectedItemUI : MonoBehaviour
             tmpItem.SetActive(false);
         }
         ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
-
     }
-
-
     private void FixedUpdate()
     { 
         ItemModelUIParent.transform.Rotate(Vector3.left, rotationSpeed  * Time.fixedDeltaTime);
@@ -85,18 +82,21 @@ public class SelectedItemUI : MonoBehaviour
     }
 
     public void DisplayNewItem(EquipableItemData aNewItem)
-    { 
-        if(aNewItem  == DisplayedItem || aNewItem == null)
+    {
+        if (aNewItem == DisplayedItem || aNewItem == null)
         {
             return;
         }
         ClearItem();
         DisplayedItem = aNewItem;
         ItemName.text = aNewItem.displayName;
-
-        for (int i = 0; i < aNewItem.statModifiers.Length; i++)
+        for (int i = 0; i < aNewItem.itemModifiers.Count; i++)
         {
-            ModifierTexts[i].text = aNewItem.statModifiers[i].description;
+            if (aNewItem.itemModifiers[i].ItemModifier is IItemModifier modifier)
+            {
+                ModifierTexts[i].text = modifier.GetDescription();
+
+            }
             ModifierTexts[i].gameObject.SetActive(true);
         }
 

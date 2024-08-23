@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
-{ 
+{
     public delegate void OnMeleeHitDelegate(Enemy enemy);
     public delegate void OnMeleePerformedDelegate();
     public event OnMeleeHitDelegate OnFirstMeleeHit, OnSecondMeleeHit, OnThirdMeleeHit, OnCritialHit;
     public event OnMeleePerformedDelegate OnFirstMeleePerformed, OnSecondMeleePerformed, OnThirdMeleePerformed;
     public delegate void OnParryDelegate();
     public event OnParryDelegate OnParry;
-    public List<WeaponModifierSO> AllWeaponModifierList;
+    //public List<WeaponModifierSO> AllWeaponModifierList;
     PlayerController playerController;
     public ParticleSystem ParryParticleSystem, MeleeHitPS; 
     [SerializeField] int baseDamage;
@@ -18,7 +18,10 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] int CriticalChance;
     [SerializeField] int attackStaminaCost;
     [SerializeField] int currentDamage;
-    
+    void Start()
+    { 
+        currentDamage = baseDamage; 
+    }
     public int GetBaseDamage() { return baseDamage; }
     public int GetCurrentDamage() { return currentDamage; }
     public void SetDamage(int aDamage)
@@ -31,7 +34,8 @@ public class WeaponBase : MonoBehaviour
     }
     public void SetPlayerController(PlayerController aPlayer)
     {
-        playerController = aPlayer;
+        if (aPlayer == null) return;
+        playerController = aPlayer; 
     }
     public void SetCriticalChance(int aCriticalChance)
     {
@@ -51,41 +55,16 @@ public class WeaponBase : MonoBehaviour
         Collider[] ProjectileColliders = Physics.OverlapSphere(playerController.AttackTransform.position, attackRadius, playerController.EnemyProjectilesLayer);
         foreach (Collider collider in ProjectileColliders)
         {
-        
-            //mProjectileSkillInstance.UseSkill(projectileSpawner, (collider.GetComponent<Rigidbody>().velocity * -1).normalized);
             if (ParryParticleSystem != null)
             {
                 ParryParticleSystem.Emit(30);
-            }
-            // Recover Stamina on Parry
-            OnParry?.Invoke();
-
-            playerController.PlayParryStepSounds();
-            //RecoverStamina(playerData.RecoverStaminaOnParry);
+            } 
+            OnParry?.Invoke(); 
+            playerController.PlayParryStepSounds(); 
             collider.GetComponent<ProjectileBehaviour>().DisableProjectile();
         }
     }
-
-    void ResetBaseValues()
-    {
-        currentDamage = baseDamage;
-        CriticalChance = 0;
-    }
-    public void ApplyNewWeaponModifier(WeaponModifierSO aMod)
-    {
-        int modIndex = AllWeaponModifierList.FindIndex((x => x.modifierName == aMod.modifierName));
-        if (modIndex !=  -1)
-        {
-            AllWeaponModifierList[modIndex].modifierLevel++;
-           // ApplyAllModifiers();
-            AllWeaponModifierList[modIndex].ApplyModifier(playerController);
-
-        }
-        else
-        {
-            Debug.Log("WeaponModifier index not found");
-        }
-    }
+      
     public void Attack(Enemy enemy, float aWeaponDamagePercentage)
     {
         
@@ -99,8 +78,7 @@ public class WeaponBase : MonoBehaviour
             AttackDamage *= 2;
         }
        
-        enemy.TakeDamage(new AttackInfo(AttackDamage, false, isCritical, playerController.gameObject));
-        //enemy.TakeDamage(AttackDamage, playerController.gameObject);
+        enemy.TakeDamage(new AttackInfo(AttackDamage, false, isCritical, playerController.gameObject)); 
     }
     public void CustomMeleeAttack(float aWeaponDamagePercentage)
     {
@@ -113,8 +91,7 @@ public class WeaponBase : MonoBehaviour
                 if (MeleeHitPS != null)
                 {
                     MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage)); 
-                }
-                //enemy.TakeDamage(sword.GetCurrentDamage());
+                } 
                 Attack(enemy, aWeaponDamagePercentage);
             }
         } 
@@ -131,8 +108,7 @@ public class WeaponBase : MonoBehaviour
                 if (MeleeHitPS != null)
                 {
                     MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                }
-                //enemy.TakeDamage(sword.GetCurrentDamage());
+                } 
                 Attack(enemy, aWeaponDamagePercentage);
                 FirstStrikeModifiers(enemy);
             }
@@ -152,8 +128,7 @@ public class WeaponBase : MonoBehaviour
                 if (MeleeHitPS != null)
                 {
                     MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                }
-                //enemy.TakeDamage(sword.GetCurrentDamage());
+                } 
                 Attack(enemy, aWeaponDamagePercentage);
                 SecondStrikeModifiers(enemy);
             }
@@ -173,8 +148,7 @@ public class WeaponBase : MonoBehaviour
                 if (MeleeHitPS != null)
                 {
                     MeleeHitPS.Emit((int)(15 * aWeaponDamagePercentage));
-                }
-                //enemy.TakeDamage(sword.GetCurrentDamage());
+                } 
                 Attack(enemy, aWeaponDamagePercentage);
                 ThirdStrikeModifiers(enemy);
             }
@@ -206,46 +180,7 @@ public class WeaponBase : MonoBehaviour
     public void ThirdStrikePerformedModifiers()
     {
         OnThirdMeleePerformed?.Invoke();
-    }
-    public void ApplyAllModifiers()
-    {
-        ResetBaseValues();
-        foreach(WeaponModifierSO modifier in AllWeaponModifierList)
-        {
-            if (modifier.modifierLevel < 1) continue;
-            modifier.ApplyModifier(playerController);
-            Debug.Log(modifier.modifierName + $" {modifier.modifierLevel}");
-        }
-    }
-
-    public WeaponModifierSO GetRandomModifier()
-    {
-        if (AllWeaponModifierList.Count == 0) return null;
-        int index = UnityEngine.Random.Range(0, AllWeaponModifierList.Count);
-        return AllWeaponModifierList[index];
-    }
-    void Start()
-    {
-        /*
-        for (int i = 0; i < AllWeaponModifierList.Count; ++i)
-        {
-            AllWeaponModifierList[i] = Instantiate(AllWeaponModifierList[i]);
-
-        }
-         */
-        currentDamage = baseDamage;
-        //playerController = GetComponent<PlayerController>();
-        //ApplyAllModifiers();
-    }
-    public void ResetAllModifiers()
-    {
-        currentDamage = baseDamage;
-        for (int i = 0; i < AllWeaponModifierList.Count; ++i)
-        {
-            AllWeaponModifierList[i].modifierLevel = 0;
-
-        }
-    }
+    } 
     internal float GetAttackStaminaCost()
     {
         return attackStaminaCost;

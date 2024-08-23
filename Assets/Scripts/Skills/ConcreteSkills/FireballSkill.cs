@@ -41,15 +41,15 @@ public class FireballSkill : SkillSOBase
         if (FireballProjectileSpawner != null)
         {
             FireballProjectileSpawner.ShootPosition = mPlayer.GetComponent<PlayerController>().AttackTransform;
-        } 
+        }
         AudioManager.instance.PlayOneShot(FireballSfx, APosition);
-        Vector3 Direction =( APosition - mPlayer.position).normalized;
-        FireballProjectileSpawner.ShootProjectileToDirectionFromPool(Direction, FireballProjectileSpawner.ShootPosition.position);
-    }
-    public override void LevelUpSkill(int aNewlevel)
+        //Vector3 Direction = (APosition - mPlayer.position).normalized;
+        FireballProjectileSpawner.ShootProjectileToDirectionFromPool(APosition, FireballProjectileSpawner.ShootPosition.position);
+    } 
+    public override void SetSkillLevel(int aNewlevel)
     {
         if(mAoEDamageOnHitInstance == null || mDisableAfterHitEffectInstance == null) { return; }
-        skillLevel++; 
+        skillLevel = aNewlevel;
         int  currentDamage = DamageBase + DamageMultiplier * skillLevel;
         float currentProjectileSpeed = ProjectileSpeedBase + ProjectileSpeedMultiplier * skillLevel;
         float currentRadius = RadiusBase + RadiusMultiplier * skillLevel;

@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Death()
     {
-        inventory.equipmentManager.weapon.ResetAllModifiers();
+        //inventory.equipmentManager.weapon.ResetAllModifiers();
         mSkillManager.ResetSkillLevels();
         animator.SetTrigger("Death");
         AudioManager.instance.TurnOffMusic();

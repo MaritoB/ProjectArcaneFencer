@@ -8,7 +8,7 @@ public class SkillSOBase : ScriptableObject, ISkillStrategy
     [SerializeField]
     protected Transform mPlayer;
 
-    public virtual void LevelUpSkill(int aAdditionalLevel)
+    public virtual void SetSkillLevel(int aAdditionalLevel)
     {
     }
     public virtual void StartSetUp() { }
@@ -28,5 +28,9 @@ public class SkillSOBase : ScriptableObject, ISkillStrategy
 
     public virtual void UseSkill(Vector3 APosition)
     {
+    }
+
+    public virtual void UseSkill(Vector3 APosition, int SkillLevel)
+    { 
     }
 }

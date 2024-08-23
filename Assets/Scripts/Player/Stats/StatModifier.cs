@@ -5,7 +5,11 @@ public class StatModifier : ScriptableObject
 {
     public StatType statType;
     public float value;
-    public string description;
+
+    public string GetDescription()
+    {
+        return "Increase " + value + " to " + StatTypeExtensions.GetStatName(statType) + ".";
+    }
 
     public void Apply(Stat stat)
     {

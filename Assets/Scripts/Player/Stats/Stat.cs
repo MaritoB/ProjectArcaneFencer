@@ -11,20 +11,17 @@ public class Stat
     {
         this.baseValue = baseValue;
         isDirty = true;
-    }
+    } 
 
     public void AddModifier(float value)
     {
         modifiers.Add(value);
-
-        Debug.Log("Updated Modifier: "+ value);
         isDirty = true; 
     }
 
     public void RemoveModifier(float value)
     {
-        modifiers.Remove(value);
-        Debug.Log("Updated Modifier: " + value);
+        modifiers.Remove(value); 
         isDirty = true; 
     }
 
