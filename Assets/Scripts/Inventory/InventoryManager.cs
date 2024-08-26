@@ -26,7 +26,8 @@ public class InventoryManager : MonoBehaviour
         equipmentManager = GetComponent<EquipmentManager>();
         InitializeItemControllerPool(MaxItems);
         inventoryItems.Clear();
-        currentItemControllerCount = 0; 
+        currentItemControllerCount = 0;
+        ToggleInventory();
     }
  
 
