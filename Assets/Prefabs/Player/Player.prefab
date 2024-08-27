@@ -27825,13 +27825,11 @@ MonoBehaviour:
   projectileSpawner: {fileID: 5859447497833641906}
   animator: {fileID: 9155739807401536979}
   inGameUI: {fileID: 0}
-  ParryParticleSystem: {fileID: 5859447497587930001}
-  MeleeHitPS: {fileID: 5859447497189340471}
   DashPS: {fileID: 5859447498101350201}
   BloodOnHit: {fileID: 7997588017572860310}
-  ProjectilesLayer:
+  EnemyProjectilesLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   EnemiesLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -27854,7 +27852,6 @@ MonoBehaviour:
   TripleProjectileSkill: {fileID: 11400000, guid: c386a76c0b00eac4fb9a58a50d806180,
     type: 2}
   <CurrentHealth>k__BackingField: 0
-  sword: {fileID: 5859447497833641905}
   MagicSphereShield: {fileID: 2553099896593140262}
   SwordTransform: {fileID: 2484103439864718357}
   SwordPS: {fileID: 11581943632396449}
@@ -27919,30 +27916,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dcc034499679478f6c7f2b595d1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllWeaponModifierList:
-  - {fileID: 11400000, guid: edf5ed0d76512764482d1086cece1ee5, type: 2}
-  - {fileID: 11400000, guid: 6ef4b350f81d33e4ea5aa1f84e14b0dd, type: 2}
-  - {fileID: 11400000, guid: 9ed89bc3d11a2b848be7c32096197918, type: 2}
-  - {fileID: 11400000, guid: 5ee4c422abb421e45ba12c99a8cc4568, type: 2}
-  - {fileID: 11400000, guid: 883a68f4b299ad6419eb0940d39f8671, type: 2}
-  - {fileID: 11400000, guid: c461534a09eeb6d49bbcf4a6ec369449, type: 2}
-  - {fileID: 11400000, guid: 5a1fec250cfda32488c4229bce17173e, type: 2}
-  - {fileID: 11400000, guid: a557c33622b7e674685dbc55a6f042e2, type: 2}
-  - {fileID: 11400000, guid: 5eba1e3b6233b4e4fb6317d4ff4a9350, type: 2}
-  - {fileID: 11400000, guid: 0f5ca0810cf614347bee8750b0e25b0e, type: 2}
-  - {fileID: 11400000, guid: 8cdd1754cfbfc8e45ab155b8a5a515f2, type: 2}
-  - {fileID: 11400000, guid: 41294f32f8b687f409317c39222ae11f, type: 2}
-  - {fileID: 11400000, guid: 3d932bfa52079ef45b3ffa13c5d422e8, type: 2}
-  - {fileID: 11400000, guid: 90f32db5f00c7b94e84d654a9b2d912d, type: 2}
-  - {fileID: 11400000, guid: 01ad3bbf229085e47974e12bb2bbabdf, type: 2}
-  - {fileID: 11400000, guid: 96234126555f69741b914ac1fc07a89d, type: 2}
-  - {fileID: 11400000, guid: 7ec3caa2c8435dc429efd0abaa2e4f24, type: 2}
-  - {fileID: 11400000, guid: 147f24279bc8cfb4a913507c325cf21d, type: 2}
-  - {fileID: 11400000, guid: 4924f211cb4947c4f82a16ba134a495e, type: 2}
-  - {fileID: 11400000, guid: de58acf8d7e0f5643a7c05f8edfd7007, type: 2}
-  - {fileID: 11400000, guid: 31bb418214916ec4bb108cac3950b518, type: 2}
-  - {fileID: 11400000, guid: b0ed1625a6bba1b449ff8d3696a5ea2e, type: 2}
+  ParryParticleSystem: {fileID: 0}
+  MeleeHitPS: {fileID: 0}
   baseDamage: 10
+  attackRadius: 0
   CriticalChance: 0
   attackStaminaCost: 10
   currentDamage: 0
@@ -42456,10 +42433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cb1624c22658e4dbe36e796d4d1aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 0}
+  playerController: {fileID: 0}
   itemSocketMappings:
   - itemType: 5
     socket: {fileID: 8994300231351670015}
+  weapon: {fileID: 0}
 --- !u!1001 &3235707022845197791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42560,9 +42538,9 @@ Cloth:
   m_SolverFrequency: 120
   m_SleepThreshold: 0.1
   m_Coefficients:
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0.2
     collisionSphereDistance: 3.4028235e+38
@@ -42572,7 +42550,7 @@ Cloth:
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0.2
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 3.4028235e+38
     collisionSphereDistance: 3.4028235e+38
@@ -42582,7 +42560,7 @@ Cloth:
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0.3
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 3.4028235e+38
     collisionSphereDistance: 3.4028235e+38
@@ -42592,9 +42570,9 @@ Cloth:
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0.2
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 0.1
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0.2
     collisionSphereDistance: 3.4028235e+38
@@ -42728,8 +42706,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.021989256, y: 0.2835061, z: 0.86273295}
-    m_Extent: {x: 0.28893048, y: 0.21265018, z: 0.5045753}
+    m_Center: {x: 0.007501006, y: 0.19669802, z: 0.8113594}
+    m_Extent: {x: 0.26639542, y: 0.15913133, z: 0.52178}
   m_DirtyAABB: 0
 --- !u!4 &3129213501568047668 stripped
 Transform:

@@ -6401,6 +6401,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee0790b34ada6941b3282f5ab420bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DoorSounds:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   doors:
   - {fileID: 8606726900807597890}
   - {fileID: 8606726901614370963}
