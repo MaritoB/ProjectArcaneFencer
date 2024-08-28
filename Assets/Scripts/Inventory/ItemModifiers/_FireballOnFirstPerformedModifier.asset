@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: _FireballOnFirstPerformedModifier
   m_EditorClassIdentifier: 
   modifierName: Fireball on First Attack
-  modifierDescription: '+1 to Fireball &  40% chance to cast it on First Attack. '
+  modifierDescription: 40% chance to cast it on 1st
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   TriggerChanceBase: 30

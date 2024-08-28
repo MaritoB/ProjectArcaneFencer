@@ -53,8 +53,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         owner = aOwner;
     }
     public void InformDeathToOwner()
-    {
-        Debug.Log("EnemyDeath");
+    { 
         if (SoulsPS != null)
         {
             SoulsPS.SetDestination(_playerTransform.transform);

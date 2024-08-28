@@ -9,12 +9,14 @@ public class DropManager : MonoBehaviour
     ItemPickUp ItemDrop;
     [SerializeField] ItemData GoldItemData;
     public List<ItemData> AllItemDataList;
-
+    WeaponFactory weaponFactory;
+    [SerializeField] int dropChance;
 
     private List<ItemPickUp> ItemDrops = new List<ItemPickUp>();
     private void Start()
     {
-        ItemDrop = ItemDropPrefab.GetComponent<ItemPickUp>(); 
+        ItemDrop = ItemDropPrefab.GetComponent<ItemPickUp>();
+        weaponFactory = GetComponent<WeaponFactory>();
     }
     private void Awake()
     {
@@ -74,6 +76,10 @@ public class DropManager : MonoBehaviour
         {
             newItemToDrop.AddItemData(newGold);
             newItemToDrop.gameObject.SetActive(true);
+        }
+        if (Random.Range(0, 100) < dropChance)
+        {
+            newItemToDrop.AddItemData(weaponFactory.CreateWeapon()); 
         }
         int randomNumberDrop = Random.Range(0, AllItemDataList.Count);
         ItemData newDropItem = Instantiate(AllItemDataList[randomNumberDrop]);

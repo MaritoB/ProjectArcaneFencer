@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274727431083456027}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7576426353059660541}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!114 &2664658710008933800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,11 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dcc034499679478f6c7f2b595d1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponModifiers:
-  - weaponModifier: {fileID: 11400000, guid: 883a68f4b299ad6419eb0940d39f8671, type: 2}
-    level: 2
-  - weaponModifier: {fileID: 11400000, guid: 41294f32f8b687f409317c39222ae11f, type: 2}
-    level: 3
   ParryParticleSystem: {fileID: 0}
   MeleeHitPS: {fileID: 0}
   baseDamage: 15
@@ -9825,7 +9820,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6354767362118650550}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9833,7 +9828,7 @@ Transform:
   - {fileID: 6275240835667891330}
   m_Father: {fileID: 714144912562802079}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6354767362119947958
 MeshFilter:
   m_ObjectHideFlags: 0

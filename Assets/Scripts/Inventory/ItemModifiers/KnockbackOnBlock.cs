@@ -16,7 +16,7 @@ public class KnockbackOnBlock : ItemModifierSO, IItemModifier
     public string GetDescription()
     {
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        return "Knockback enemy that hit your Magic Shield with " + currentKnockbackForce + " Force.";
+        return "Knockback on Block " + currentKnockbackForce + " Force.";
     }
 
     public void KnockBackEnemy(Enemy enemy)

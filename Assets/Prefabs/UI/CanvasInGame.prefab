@@ -1796,8 +1796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2c498c4d880c49b7614a14067436e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontSize: 8
-  criticalFontSize: 16
+  fontSize: 6
+  criticalFontSize: 12
   popupTextPrefab: {fileID: 7513216256997818257, guid: f2a7c3e479639fc408fdc9c1031006ae,
     type: 3}
 --- !u!1 &7822515080070710605

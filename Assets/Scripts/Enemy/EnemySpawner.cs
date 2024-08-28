@@ -51,8 +51,7 @@ public class EnemySpawner : MonoBehaviour
             }
             EnemyPoolDictionary.Add(enemyPoolInfo.enemyType, enemyPoolInfo);
             EnemyTypes.Add(enemyPoolInfo.enemyType);
-        }
-        Debug.Log(EnemyTypes.ToString());
+        } 
     }
     private void Awake()
     {

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: _DashFreedomModifier
   m_EditorClassIdentifier: 
   modifierName: Dash Freedom
-  modifierDescription: Hold Dash to keep dashing. Decrease Dash Stamina cost by -3
-    & Dash Duration by -0,05
+  modifierDescription: Chanelling dash
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   ModifiedDashTimeBase: 0.4
-  DashTimeLevelMultiplier: -0.05
-  DashCostLevelMultiplier: -3
+  DashTimeLevelMultiplier: -0.025
+  DashCostLevelMultiplier: -1
   ModifiedDashStaminaCostbase: 20

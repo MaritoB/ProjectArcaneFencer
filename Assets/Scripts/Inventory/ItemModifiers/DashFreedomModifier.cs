@@ -8,9 +8,7 @@ public class DashFreedomModifier : ItemModifierSO, IItemModifier
     public void ApplyModifier(PlayerController aPlayer)
     {
         aPlayer.playerStats.dashTime.AddModifier(DashTimeLevelMultiplier * modifierLevel);
-        aPlayer.playerStats.dashStaminaCost.AddModifier(DashCostLevelMultiplier * modifierLevel);
-        //aPlayer.playerData.DashTime = ModifiedDashTimeBase + DashTimeLevelMultiplier * modifierLevel;
-        //aPlayer.playerData.DashStaminaCost  = ModifiedDashStaminaCostbase +(int) DashCostLevelMultiplier*modifierLevel;
+        aPlayer.playerStats.dashStaminaCost.AddModifier(DashCostLevelMultiplier * modifierLevel); 
         aPlayer.DashChanellingPerk = true;
        
         //UpdateDescription();
@@ -24,8 +22,7 @@ public class DashFreedomModifier : ItemModifierSO, IItemModifier
     }
 
     public string GetDescription()
-    {
-
-        return "Hold Dash to keep dashing. Decrease Dash Stamina cost by "+ DashCostLevelMultiplier + " & Dash Duration by " + DashTimeLevelMultiplier;
+    { 
+        return "Channelling Dash";
     }
 }

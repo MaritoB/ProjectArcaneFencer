@@ -17,7 +17,7 @@ public class KnockBackModifier : ItemModifierSO, IItemModifier
     public string GetDescription()
     { 
         currentKnockbackForce = KnockBackForceBase + KnockBackForceMutiplier * modifierLevel;
-        return "Your Third Attack Knockback enemys with " + currentKnockbackForce + " Force.";
+        return "Knockback on 3rd " + currentKnockbackForce + " Force.";
     }
 
     public void KnockBackEnemy(Enemy enemy)

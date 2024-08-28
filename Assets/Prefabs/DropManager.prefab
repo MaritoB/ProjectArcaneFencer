@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4958817463995730317}
   - component: {fileID: 4958817463995730314}
+  - component: {fileID: 5125659460512196338}
+  - component: {fileID: 7022154730706682142}
   m_Layer: 0
   m_Name: DropManager
   m_TagString: Untagged
@@ -51,3 +53,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e23cbfcd6edb074a8b1794c8a480f36, type: 2}
   - {fileID: 11400000, guid: 59801fc2e9719dc4fa6bef9fc6aa3d2c, type: 2}
   - {fileID: 11400000, guid: 0f538359ccb43594694167877920743a, type: 2}
+--- !u!114 &5125659460512196338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4958817463995730316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec9bbef56237384fa8354e151063013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceLoader: {fileID: 7022154730706682142}
+  minBaseDamage: 10
+  maxBaseDamage: 50
+  minCriticalChance: 0
+  maxCriticalChance: 30
+  minAttackStaminaCost: 5
+  maxAttackStaminaCost: 20
+--- !u!114 &7022154730706682142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4958817463995730316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef0a316c52e48e4ea6ac6a3d3851cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemModifiersFolderPath: Assets/Scripts/Inventory/ItemModifiers
+  weaponPrefabsFolderPath: Assets/Prefabs/Items/Weapons
+  shieldPrefabsFolderPath: ShieldPrefabs

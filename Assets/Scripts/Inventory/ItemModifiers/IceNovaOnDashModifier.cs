@@ -18,7 +18,7 @@ public class IceNovaOnDashModifier : ItemModifierSO, IItemModifier
 
     public string GetDescription()
     {
-        return $"+1 to Ice Nova & {TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)}% chance to cast it on Dash.";
+        return  (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "  chance to cast Ice Nova on Dash.";
     }
 
     private void TryCastIceNova()

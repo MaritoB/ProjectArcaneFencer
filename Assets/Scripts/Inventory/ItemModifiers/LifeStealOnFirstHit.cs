@@ -19,7 +19,7 @@ public class LifeStealOnFirstHit : ItemModifierSO, IItemModifier
     public string GetDescription()
     {
         CurrentLifeSteal = LifeStealBase + LifeStealMultiplier * modifierLevel;
-        return  modifierDescription = "Your First Attack Recover " + CurrentLifeSteal + " HP per enemy hit.";
+        return  modifierDescription = "Your 1st Recover " + CurrentLifeSteal + " HP per enemy hit.";
     }
     public void LifeSteal(Enemy enemy)
     {

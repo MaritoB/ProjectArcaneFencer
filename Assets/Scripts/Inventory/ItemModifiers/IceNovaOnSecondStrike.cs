@@ -17,7 +17,7 @@ public class IceNovaOnSecondStrike : ItemModifierSO, IItemModifier
     }
     public string GetDescription()
     {
-        return "+1 to Ice Nova & " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast it on Second Attack. ";
+        return   (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast Ice Nova on 2nd. ";
     }
     public void TryCastIceNova()
     {

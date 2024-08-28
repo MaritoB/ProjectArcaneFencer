@@ -24,6 +24,15 @@ public class WeaponBase : MonoBehaviour
     }
     public int GetBaseDamage() { return baseDamage; }
     public int GetCurrentDamage() { return currentDamage; }
+    public void ConfiguerWeapon(int aBaseDamage, float aAttackRadius, int aCriticalCHance, int aStaminaCost)
+    {
+        baseDamage = aBaseDamage;
+        attackRadius = aAttackRadius;
+        CriticalChance = aCriticalCHance;
+        attackStaminaCost = aStaminaCost;
+        currentDamage = baseDamage;
+
+    }
     public void SetDamage(int aDamage)
     {
         if (aDamage < 0)
@@ -97,6 +106,16 @@ public class WeaponBase : MonoBehaviour
         } 
         ParryProjectile();
     }
+
+    internal void SetAttackStaminaCost(int aStaminaCost)
+    {
+        if (aStaminaCost < 0)
+        {
+            return;
+        }
+        attackStaminaCost = aStaminaCost;
+    }
+
     public void FirstMeleeAttack(float aWeaponDamagePercentage)
     { 
         Collider[] EnemyColliders = Physics.OverlapSphere(playerController.AttackTransform.position,  attackRadius , playerController.EnemiesLayer);

@@ -17,7 +17,7 @@ public class FireballOnFirstPerformedModifier : ItemModifierSO, IItemModifier
     }
     public string GetDescription()
     { 
-        return  (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast it on First Attack. ";
+        return  (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast Fireball on 1st. ";
     }
     public void TryCastFireBall()
     {

@@ -3,34 +3,37 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "_ChainLightningOnBlockModifier", menuName = "WeaponModifiers/ChainLightningOnBlockModifier")]
 public class ChainLightningOnBlockModifier : ItemModifierSO, IItemModifier
 {
-    PlayerController mPlayer; 
+    PlayerController player; 
     public int TriggerChanceBase, TriggerChanceMultiplier;
     int CurrentTriggerChance;
     public void ApplyModifier(PlayerController aPlayer)
     {
-        mPlayer = aPlayer;
+        player = aPlayer;
+        RemoveModifier(player);
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
-        aPlayer.OnBlockPerformed -= CastProjectile;
-        aPlayer.OnBlockPerformed += CastProjectile;
-       // mPlayer.mSkillManager.LevelUpChainLightning(modifierLevel);
-        GetDescription();
+        player.OnBlockPerformed += CastProjectile; 
     }
     public string GetDescription()
     {
-       return "+1 to Chain Lightning & "+(TriggerChanceBase + TriggerChanceMultiplier * ( modifierLevel +1 )) + "% chance to cast it when blocking melee damage.";
+       return (TriggerChanceBase + TriggerChanceMultiplier * ( modifierLevel +1 )) + "% chance to cast Chain Lightning on Block.";
     }
-    public void RemoveModifier(PlayerController aPlayer)
-    {
-        aPlayer.OnBlockPerformed -= CastProjectile;
-    }
+ 
     public void CastProjectile(Enemy aEnemy)
     {
         int number = Random.Range(0, 100);
         if (number < CurrentTriggerChance)
         {
-            Vector3 direction = (mPlayer.transform.position - aEnemy.transform.position).normalized;
-            mPlayer.mSkillManager.UseChainLightningSkill(direction);
+            Vector3 direction = (player.transform.position - aEnemy.transform.position).normalized;
+            player.mSkillManager.UseChainLightningSkill(direction);
         }
     }
 
+    public void RemoveModifier(PlayerController aPlayer)
+    {
+        if (aPlayer != null)
+        {
+            aPlayer.OnBlockPerformed -= CastProjectile;
+            aPlayer = null;
+        }
+    }
 }

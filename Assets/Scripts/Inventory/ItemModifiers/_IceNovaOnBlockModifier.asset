@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: _IceNovaOnBlockModifier
   m_EditorClassIdentifier: 
   modifierName: Ice Nova on Block
-  modifierDescription: '+1 to Ice Nova & 30% chance to cast it when blocking melee
-    Damage. '
+  modifierDescription: ' 30% Ice Nova on Block'
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   TriggerChanceBase: 20

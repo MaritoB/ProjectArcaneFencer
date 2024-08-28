@@ -16,17 +16,15 @@ public class IceNovaOnBlockModifier : ItemModifierSO, IItemModifier
     }
     public string GetDescription()
     {
-        return "+1 to Ice Nova & " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel)) + "% chance to cast it when blocking melee Damage. ";
+        return  (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel)) + "% chance to Ice Nova on Block. ";
     }
     public void TryCastIceNova(Enemy aEnemy)
     {
-        int number = Random.Range(0, 100);
-        Debug.Log("Try cast Ice Nova" + number+"/"+ currentTriggerChance);
+        int number = Random.Range(0, 100); 
         if (number < currentTriggerChance)
         {
             player.mSkillManager.UseIceNova(modifierLevel);
-        }
-
+        } 
     }
 
     public void RemoveModifier(PlayerController aPlayer)

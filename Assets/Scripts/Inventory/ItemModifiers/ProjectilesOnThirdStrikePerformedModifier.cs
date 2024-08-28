@@ -29,7 +29,7 @@ public class ProjectilesOnThirdStrikePerformedModifier : ItemModifierSO, IItemMo
     }
     public string GetDescription()
     {
-        return "Third Strike have " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast 3 Projectiles";
+        return "3rd have " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast 3 Projectiles";
     }
     public void TryCastTripleProjectiles()
     {

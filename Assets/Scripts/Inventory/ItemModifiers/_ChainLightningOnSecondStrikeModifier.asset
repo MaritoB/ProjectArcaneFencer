@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: _ChainLightningOnSecondStrikeModifier
   m_EditorClassIdentifier: 
   modifierName: Chain Lightning on Second Strike
-  modifierDescription: +1 to Chain Lightning & 60% chance to cast it hitting enemies
-    with your Second Attack.
+  modifierDescription: ' 60% Chain Lightning on 2nd'
   modifierLevel: 0
   modifierSprite: {fileID: 191927606, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   TriggerChanceBase: 50
