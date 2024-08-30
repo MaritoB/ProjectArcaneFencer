@@ -25,7 +25,7 @@ MonoBehaviour:
   - ItemModifier: {fileID: 11400000, guid: 8b4dc6cb7bca8cc47bc4b931022e1cf2, type: 2}
     level: 1
   - ItemModifier: {fileID: 11400000, guid: a557c33622b7e674685dbc55a6f042e2, type: 2}
-    level: 5
+    level: 2
   equipSlot: 5
   EquipableItemPrefab: {fileID: 1274727431083456027, guid: a6e1f5d1526beb44881e708f1aa02435,
     type: 3}

@@ -69,7 +69,8 @@ public class EnemySpawner : MonoBehaviour
         EnemyType newEnemy = EnemyTypes[Random.Range(0, EnemyTypes.Count)];
         if (newEnemy == EnemyType.BOSSSKELETON)
         {
-            newEnemy = EnemyType.MELEESKELETON;
+            // newEnemy = EnemyType.MELEESKELETON;
+            return GetRandomEnemy();
         }
         return newEnemy;
     }
@@ -141,7 +142,7 @@ public class EnemySpawner : MonoBehaviour
         CurrentRoomTransform = roomTransform;
         Vector3 localMinBounds = -roomTransform.localScale / 2;
         Vector3 localMaxBounds = roomTransform.localScale / 2;
-        Quaternion parentRotation = roomTransform.parent.rotation;
+        Quaternion parentRotation = roomTransform.rotation;
         Vector3 rotatedMinBounds = parentRotation * localMinBounds;
         Vector3 rotatedMaxBounds = parentRotation * localMaxBounds;
         Vector3 minBounds = roomTransform.position + rotatedMinBounds;

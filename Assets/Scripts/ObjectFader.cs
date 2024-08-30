@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObjectFader : MonoBehaviour
 {
     [SerializeField]
-    float fadeSpeed, fadeAmount;
+    float fadeSpeed = 7f;
+    [SerializeField] float  fadeAmount=0.2f;
     float[] originalOpacity;
     Material[] materials;
     public bool DoFade = false;
