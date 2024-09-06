@@ -20,12 +20,14 @@ MonoBehaviour:
   isStackable: 0
   colorMultiplier: {r: 0, g: 0, b: 0, a: 0}
   itemModifiers:
-  - ItemModifier: {fileID: 11400000, guid: c461534a09eeb6d49bbcf4a6ec369449, type: 2}
-    level: 1
-  - ItemModifier: {fileID: 11400000, guid: 0f5ca0810cf614347bee8750b0e25b0e, type: 2}
-    level: 2
-  - ItemModifier: {fileID: 11400000, guid: 8cdd1754cfbfc8e45ab155b8a5a515f2, type: 2}
+  - ItemModifier: {fileID: 11400000, guid: 97a2231e3d8f95d43b9dd1084b3428d5, type: 2}
+    level: 10
+  - ItemModifier: {fileID: 11400000, guid: d18a41afe67240342adf5ee82bad892a, type: 2}
     level: 3
+  - ItemModifier: {fileID: 11400000, guid: 0077ad6ba47176a4fa7358a39922377a, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 0f3198219e284fa4991857ad5a3146a6, type: 2}
+    level: 10
   equipSlot: 5
   EquipableItemPrefab: {fileID: 6919114440548682194, guid: 8cea24417298a81439d0282702b632ad,
     type: 3}

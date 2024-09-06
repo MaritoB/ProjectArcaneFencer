@@ -12,8 +12,18 @@ public class CharacterStats : MonoBehaviour
     public Stat recoverStaminaOnParry = new Stat(10f);
     public Stat staminaRecoveryRate = new Stat(10f); 
     public Stat staminaDrainPercentageOnBlock = new Stat(0.5f);
+    public Stat physicalResistance = new Stat(0);
+    public Stat magicResistance = new Stat(0);
+    public Stat fireResistance = new Stat(0);
+    public Stat coldResistance = new Stat(0);
+    public Stat lightningResistance = new Stat(0);
+    public Stat fireballLevel = new Stat(0);
+    public Stat iceNovaLevel = new Stat(0);
+    public Stat chainLightningLevel = new Stat(0);
+    public Stat KnockbackLevel = new Stat(0);
 
     private Dictionary<StatType, Stat> statMap;
+    private Dictionary<DamageType, StatType> ResistanceDictionary;
 
     private void Awake()
     {
@@ -26,8 +36,24 @@ public class CharacterStats : MonoBehaviour
             { StatType.DashTime, dashTime },
             { StatType.DashStaminaCost, dashStaminaCost },
             { StatType.RecoverStaminaOnParry, recoverStaminaOnParry },
-            { StatType.StaminaRecoveryRate, staminaRecoveryRate }, 
-            { StatType.StaminaDrainPercentageOnBlock, staminaDrainPercentageOnBlock }
+            { StatType.StaminaRecoveryRate, staminaRecoveryRate },
+            { StatType.StaminaDrainPercentageOnBlock, staminaDrainPercentageOnBlock },
+            { StatType.PhysicalResistance,physicalResistance },
+            { StatType.MagicResistance, magicResistance },
+            { StatType.FireResistance, fireResistance },
+            { StatType.ColdResistance,coldResistance },
+            { StatType.LightningResistance,lightningResistance},
+            { StatType.FireballLevel, fireballLevel },
+            { StatType.IceNovaLevel, iceNovaLevel },
+            { StatType.ChainLightningLevel, chainLightningLevel },
+            { StatType.KnockbackLevel, KnockbackLevel }
+        };
+        ResistanceDictionary = new Dictionary<DamageType, StatType> {
+            { DamageType.PHYSICAL, StatType.PhysicalResistance },
+            { DamageType.MAGIC, StatType.MagicResistance },
+            { DamageType.FIRE,  StatType.FireResistance },
+            { DamageType.COLD, StatType.ColdResistance },
+            { DamageType.LIGHTNING,  StatType.LightningResistance}
         };
     }
 
@@ -37,6 +63,18 @@ public class CharacterStats : MonoBehaviour
         {
             modifier.Apply(stat); 
         }
+    }
+    public float GetResistance(DamageType aDamageType)
+    {
+        StatType aStatType;
+        if (ResistanceDictionary.TryGetValue(aDamageType, out aStatType))
+        {
+            Stat stat;
+            if (statMap.TryGetValue(aStatType, out stat)){
+                return stat.GetValue();
+            }
+        }
+        return 0f;
     }
 
     public void RemoveModifier(StatModifier modifier)

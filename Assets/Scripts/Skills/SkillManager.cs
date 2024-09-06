@@ -1,56 +1,52 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum SkillEnum
+{
+    IceNova,
+    ChainLightning,
+    Fireball,
+    Knockback
+}
 
 public class SkillManager : MonoBehaviour
 {
-    [SerializeField] SkillSOBase mIceNovaSkill;
-    [SerializeField] SkillSOBase mChainLightningSkill;
-    [SerializeField] SkillSOBase mFireballSkill;
+    Dictionary<SkillEnum, SkillSOBase> SkillDictionary;
+    [SerializeField] SkillSOBase[] SkillArray;
 
     private void Start()
     {
-        mIceNovaSkill = Instantiate(mIceNovaSkill);
-        mChainLightningSkill = Instantiate(mChainLightningSkill);
-        mFireballSkill = Instantiate(mFireballSkill);
-        mFireballSkill.SetPlayer(transform);
-        mIceNovaSkill.SetPlayer(transform);
-        mChainLightningSkill.SetPlayer(transform);
-        mChainLightningSkill.StartSetUp();
-        mFireballSkill.StartSetUp();
+        SkillDictionary = new Dictionary<SkillEnum, SkillSOBase>();
+        foreach (SkillSOBase skill in SkillArray)
+        {
+            SkillSOBase newSkill = Instantiate(skill);
+            newSkill.SetPlayer(transform);
+            newSkill.StartSetUp();
+            SkillDictionary.Add(newSkill.GetSkillEnum(), newSkill);
+        }
     }
 
-    public void ResetSkillLevels()
+    public void UseSkill(SkillEnum skillEnum, Vector3 direction)
     {
-        mIceNovaSkill.ResetSkillLevel();
-        mChainLightningSkill.ResetSkillLevel();
-        mFireballSkill.ResetSkillLevel();
+        if (SkillDictionary.TryGetValue(skillEnum, out SkillSOBase skill))
+        {
+            skill.UseSkill(direction);
+        }
+        else
+        {
+            Debug.LogWarning($"Skill {skillEnum} not found in the dictionary!");
+        }
     }
-    public void UseIceNova(int aSkillLevel)
-    {
-        mIceNovaSkill.UseSkill(transform.position, aSkillLevel);
-    }
-    public void UseFireball(Vector3 aDirection)
-    {
-        mFireballSkill.UseSkill(aDirection);
-    }
-    internal void UseChainLightningSkill(Vector3 direction)
-    {
-        mChainLightningSkill.UseSkill(direction);
-    }
-    public void SetLevelFireball(int aLevel)
-    {
-        mFireballSkill.SetSkillLevel(aLevel);
-    }
- /*
-    internal void LevelUpIceNova(int aLevel)
-    {
-        mIceNovaSkill.LevelUpSkill(aLevel);
-    }
-    internal void LevelUpChainLightning(int aLevel)
-    {
-        mChainLightningSkill.LevelUpSkill(aLevel);
-    }
-  
 
-  */
+    public void SetLevel(SkillEnum skillEnum, int level)
+    {
+        if (SkillDictionary.TryGetValue(skillEnum, out SkillSOBase skill))
+        {
+            skill.SetSkillLevel(level);
+        }
+        else
+        {
+            Debug.LogWarning($"Skill {skillEnum} not found in the dictionary!");
+        }
+    }
 }

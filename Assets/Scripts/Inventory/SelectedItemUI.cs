@@ -94,7 +94,7 @@ public class SelectedItemUI : MonoBehaviour
         {
             if (aNewItem.itemModifiers[i].ItemModifier is IItemModifier modifier)
             {
-                ModifierTexts[i].text = modifier.GetDescription();
+                ModifierTexts[i].text = modifier.GetDescription(aNewItem.itemModifiers[i].level);
 
             }
             ModifierTexts[i].gameObject.SetActive(true);

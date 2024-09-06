@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public LayerMask wallLayer;
     private Transform _playerTransform = null;
 
+
+    protected AttackInfo attackInfo;
+
     [SerializeField] protected FloatingTextController damageIndicator;
     [SerializeField] protected int currentLevel = 0;
     [SerializeField] protected float currentAttackRange;
@@ -252,12 +255,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         if (!IsAlive || _playerTransform == null || StateMachine == null) return;
         StateMachine.CurrentState.PhysicsUpdate();
     }
-    private void Start()
+    public virtual void Start()
     {
         mRigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         GetComponent<CapsuleCollider>().enabled = true;
-        CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
+        CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel; 
+        attackInfo = new AttackInfo(enemyData.attackDamageBase, DamageType.PHYSICAL, false, false, 0f, gameObject);
         //StateMachine Initialize
         EnemyIdleBaseInstance = Instantiate(enemyStateData.idleStateData);
         EnemyChaseBaseInstance = Instantiate(enemyStateData.chaseStateData);
@@ -323,6 +327,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         CurrentHealth = enemyData.maxHealthBase + enemyData.maxHealthMultiplier * currentLevel;
         currentAttackDamage = enemyData.attackDamageBase + enemyData.attackDamageMultiplier * currentLevel;
         currentAttackRange = enemyData.attackRangeBase + enemyData.attackRangeMultiplier * currentLevel;
+        attackInfo = new AttackInfo(currentAttackDamage, DamageType.PHYSICAL, false, false, 0f, gameObject);
        
     }
 

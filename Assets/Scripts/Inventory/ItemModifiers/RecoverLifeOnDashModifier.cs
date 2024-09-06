@@ -10,13 +10,11 @@ public class RecoverLifeOnDashModifier : ItemModifierSO, IItemModifier
         LifeRecovery = RecoverLifeBase + RecoverLifeMultiplier * modifierLevel;
         player = aPlayer;
         aPlayer.OnDash -= RecoverLifeOnParry;
-        aPlayer.OnDash += RecoverLifeOnParry;
-
-        GetDescription();
+        aPlayer.OnDash += RecoverLifeOnParry; 
     }
-    public string GetDescription()
+    public string GetDescription(int aModifierLevel)
     {
-        return "Recover " + (RecoverLifeBase + RecoverLifeMultiplier * (modifierLevel+1)) + " HP on Dash";
+        return "Recover " + (RecoverLifeBase + RecoverLifeMultiplier * (aModifierLevel  )) + " HP on Dash";
     }
     public void RecoverLifeOnParry()
     {

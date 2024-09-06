@@ -24,12 +24,11 @@ public class ProjectileOnFirstPerformedModifier : ItemModifierSO, IItemModifier
             aPlayer.inventory.equipmentManager.weapon.OnFirstMeleePerformed += CastProjectile;
         }
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
-       
-        GetDescription();
+        
     }
-    public string GetDescription()
+    public string GetDescription(int aModifierLevel)
     {
-        return "Your First Attack has " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast  this Projectile Skill";
+        return "Your First Attack has " + (TriggerChanceBase + TriggerChanceMultiplier * (aModifierLevel  )) + "% chance to cast  this Projectile Skill";
     }
     public void CastProjectile()
     {

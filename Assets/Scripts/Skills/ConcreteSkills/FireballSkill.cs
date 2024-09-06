@@ -8,7 +8,7 @@ public class FireballSkill : SkillSOBase
     [SerializeField]
     DisableAfterHitEffect mDisableAfterHitEffect;
     AoEDamageOnHit mAoEDamageOnHitInstance = null;
-    DisableAfterHitEffect mDisableAfterHitEffectInstance = null;
+    //DisableAfterHitEffect mDisableAfterHitEffectInstance = null;
     [SerializeField]
     GameObject FireballProjectileSpawnerPrefab;
     ProjectileSpawner FireballProjectileSpawner;
@@ -22,17 +22,20 @@ public class FireballSkill : SkillSOBase
     public override void StartSetUp()
     {
         mAoEDamageOnHitInstance = Instantiate(mAoEDamageOnHit);
-        mDisableAfterHitEffectInstance = Instantiate(mDisableAfterHitEffect);
+        attackInfo = new AttackInfo(DamageBase, DamageType.FIRE, false, false, 0f, mPlayer.gameObject);
+        mAoEDamageOnHitInstance.SetAttackInfo(attackInfo);
+        mAoEDamageOnHitInstance.SetRadius(RadiusBase);
         GameObject obj = Instantiate(FireballProjectileSpawnerPrefab, mPlayer.transform);
         FireballProjectileSpawner = obj.GetComponent<ProjectileSpawner>();
         if (FireballProjectileSpawner != null)
         {
             FireballProjectileSpawner.ShootPosition = mPlayer.GetComponent<PlayerController>().AttackTransform;
-            FireballProjectileSpawner.SetNewProjectilePool(mAoEDamageOnHitInstance, mDisableAfterHitEffectInstance, ProjectileSpeedBase);
+            FireballProjectileSpawner.SetupProjectilePool(mAoEDamageOnHitInstance, mDisableAfterHitEffect);
+            //FireballProjectileSpawner.SetNewProjectilePool(mAoEDamageOnHitInstance, mDisableAfterHitEffectInstance, ProjectileSpeedBase);
         }
     }
-    public override void UseSkill(Vector3 APosition)
-    {
+    public override void UseSkill(Vector3 aDirection)
+    { 
         if (FireballProjectileSpawner == null)
         {
             GameObject obj = Instantiate(FireballProjectileSpawnerPrefab, mPlayer.transform);
@@ -41,21 +44,33 @@ public class FireballSkill : SkillSOBase
         if (FireballProjectileSpawner != null)
         {
             FireballProjectileSpawner.ShootPosition = mPlayer.GetComponent<PlayerController>().AttackTransform;
+        } 
+        if ((int)mPlayerStats.fireballLevel.GetValue() !=  currentSkillLevel)
+        {
+            UpdateSkillLevel();
         }
-        AudioManager.instance.PlayOneShot(FireballSfx, APosition);
+        AudioManager.instance.PlayOneShot(FireballSfx, mPlayer.transform.position);
         //Vector3 Direction = (APosition - mPlayer.position).normalized;
-        FireballProjectileSpawner.ShootProjectileToDirectionFromPool(APosition, FireballProjectileSpawner.ShootPosition.position);
+        FireballProjectileSpawner.ShootProjectileToDirectionFromPool(aDirection, FireballProjectileSpawner.ShootPosition.position);
     } 
-    public override void SetSkillLevel(int aNewlevel)
+    public void UpdateSkillLevel()
     {
-        if(mAoEDamageOnHitInstance == null || mDisableAfterHitEffectInstance == null) { return; }
-        skillLevel = aNewlevel;
-        int  currentDamage = DamageBase + DamageMultiplier * skillLevel;
-        float currentProjectileSpeed = ProjectileSpeedBase + ProjectileSpeedMultiplier * skillLevel;
-        float currentRadius = RadiusBase + RadiusMultiplier * skillLevel;
-        mAoEDamageOnHitInstance.SetDamage(currentDamage);
+        if (mAoEDamageOnHitInstance == null ) { return; }
+        currentSkillLevel =(int) mPlayerStats.fireballLevel.GetValue();
+        int currentDamage = DamageBase + DamageMultiplier * currentSkillLevel;
+        float currentProjectileSpeed = ProjectileSpeedBase + ProjectileSpeedMultiplier * currentSkillLevel;
+        float currentRadius = RadiusBase + RadiusMultiplier * currentSkillLevel;
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.FIRE, false, true, 0f, mPlayer.gameObject);
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        }
+
+        mAoEDamageOnHitInstance.SetAttackInfo(attackInfo);
         mAoEDamageOnHitInstance.SetRadius(currentRadius);
-        FireballProjectileSpawner.SetNewProjectilePool(mAoEDamageOnHitInstance, mDisableAfterHitEffectInstance, currentProjectileSpeed);
-    }
+    } 
 
 }

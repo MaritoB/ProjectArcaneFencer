@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bde8f2d8538664194098b65cd23552, type: 3}
+  m_Name: Skill-KnockbackSkill
+  m_EditorClassIdentifier: 
+  mPlayer: {fileID: 0}
+  skill: 3
+  ForceBase: 300
+  ForceMultiplier: 100
+  currentKnockbackForce: 0
+  knockbackRadiusBase: 1
+  radiusMultiplier: 0.1
+  currentRadius: 0
+  PSPrefab: {fileID: 1950508556573491729, guid: cc2dc18383c0e3c4f96f26dd033513e4,
+    type: 3}

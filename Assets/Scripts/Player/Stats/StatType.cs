@@ -13,7 +13,16 @@ public enum StatType
     StaminaRecoveryRate,
     ParryRadius,
     MeleeAttackRadius,
-    StaminaDrainPercentageOnBlock
+    StaminaDrainPercentageOnBlock,
+    PhysicalResistance,
+    MagicResistance,
+    FireResistance,
+    ColdResistance,
+    LightningResistance,
+    FireballLevel,
+    IceNovaLevel,
+    ChainLightningLevel,
+    KnockbackLevel
 }
 
 public static class StatTypeExtensions
@@ -31,7 +40,15 @@ public static class StatTypeExtensions
         { StatType.StaminaRecoveryRate, "Stamina Recovery Rate" },
         { StatType.ParryRadius, "Parry Radius" },
         { StatType.MeleeAttackRadius, "Melee Attack Radius" },
-        { StatType.StaminaDrainPercentageOnBlock, "Stamina Drain Percentage on Block" }
+        { StatType.StaminaDrainPercentageOnBlock, "Stamina Drain Percentage on Block" },
+        { StatType.PhysicalResistance, "Physical Resistance" },
+        { StatType.MagicResistance, "Magic Resistance" },
+        { StatType.FireResistance, "Fire Resistance" },
+        { StatType.ColdResistance, "Cold Resistance" },
+        { StatType.LightningResistance, "Lightning Resistance" },
+        { StatType.FireballLevel, "Fireball Level" },
+        { StatType.IceNovaLevel, "Ice Nova Level" },
+        { StatType.ChainLightningLevel, "Chain Lightning Level" } 
     };
 
     // Método de extensión para obtener el nombre de un stat basado en StatType

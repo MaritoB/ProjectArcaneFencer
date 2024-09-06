@@ -10,15 +10,14 @@ public class IceNovaSkill : SkillSOBase
     ParticleSystem IceNovaEffect;
     [SerializeField]
     FMODUnity.EventReference IceNovaSfx;
-    [SerializeField] float RadiusBase, RadiusMultiplier;
+    [SerializeField] float RadiusBase, RadiusMultiplier; 
     float currentRadius;
 
     [SerializeField] int DamageBase, DamageMultiplier;
     int currentDamage;
 
-    public override void UseSkill(Vector3 APosition)
-    {
-        Debug.Log("Using Ice Nova");
+    public override void UseSkill(Vector3 aDirection)
+    { 
         if (IceNovaEffect == null)
         {
             if (IceNovaEffectPrefab != null)
@@ -27,17 +26,21 @@ public class IceNovaSkill : SkillSOBase
                 IceNovaEffect = obj.GetComponent<ParticleSystem>();
             }
         }
-        IceNovaEffect.transform.position = APosition;
-        AudioManager.instance.PlayOneShot(IceNovaSfx, APosition);
-        IceNovaEffect.Emit(25 * skillLevel);
-        Collider[] enemiesColliders = Physics.OverlapSphere(APosition, currentRadius, EnemyLayer);
-        AttackInfo newAttack = new AttackInfo(currentDamage, true, false, mPlayer.gameObject);
+
+        if ((int)mPlayerStats.iceNovaLevel.GetValue() != currentSkillLevel)
+        {
+            UpdateSkillLevel();
+        }
+        IceNovaEffect.transform.position = mPlayer.transform.position;
+        AudioManager.instance.PlayOneShot(IceNovaSfx, mPlayer.transform.position);
+        IceNovaEffect.Emit(25 * currentSkillLevel);
+        Collider[] enemiesColliders = Physics.OverlapSphere(mPlayer.transform.position, currentRadius, EnemyLayer);
         foreach (Collider enemy in enemiesColliders)
         {
             IDamageable damageableEnemy = enemy.GetComponent<IDamageable>();
             if (damageableEnemy != null)
             {
-                damageableEnemy.TakeDamage(newAttack);
+                damageableEnemy.TakeDamage(attackInfo);
             }
         }
     }
@@ -47,6 +50,14 @@ public class IceNovaSkill : SkillSOBase
 
         currentDamage = DamageBase + DamageMultiplier * aSkillLevel;
         currentRadius = RadiusBase + RadiusMultiplier * aSkillLevel;
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.COLD, false, true, 0f, mPlayer.gameObject);
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        }
         IceNovaEffectPrefab.transform.localScale = Vector3.one * currentRadius; 
 
         if (IceNovaEffect == null)
@@ -61,24 +72,47 @@ public class IceNovaSkill : SkillSOBase
         AudioManager.instance.PlayOneShot(IceNovaSfx, APosition);
         IceNovaEffect.Emit(25 * aSkillLevel);
         Collider[] enemiesColliders = Physics.OverlapSphere(APosition, currentRadius, EnemyLayer);
-        AttackInfo newAttack = new AttackInfo(currentDamage, true, false, mPlayer.gameObject);
         foreach (Collider enemy in enemiesColliders)
         {
             IDamageable damageableEnemy = enemy.GetComponent<IDamageable>();
             if (damageableEnemy != null)
             {
-                damageableEnemy.TakeDamage(newAttack);
+                damageableEnemy.TakeDamage(attackInfo);
             }
         }
     }
-
+    public void UpdateSkillLevel()
+    {
+        currentSkillLevel = (int)mPlayerStats.iceNovaLevel.GetValue();
+        currentDamage = DamageBase + DamageMultiplier * currentSkillLevel;
+        currentRadius = RadiusBase + RadiusMultiplier * currentSkillLevel;
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.COLD, false, true, 0f, mPlayer.gameObject);
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        } 
+        IceNovaEffectPrefab.transform.localScale = Vector3.one * currentRadius;
+    }
+    /*
     public override void SetSkillLevel(int aNewlevel)
     {
         skillLevel++;
         currentDamage = DamageBase + DamageMultiplier * skillLevel;
         currentRadius = RadiusBase + RadiusMultiplier * skillLevel;
-        IceNovaEffectPrefab.transform.localScale = Vector3.one * currentRadius;
-        Debug.Log("IceNova lvl " + skillLevel + ", Damage " + currentDamage + ", Radius  "+ currentRadius);
+        if(attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.COLD, false, true, 0f, mPlayer.gameObject); 
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        }
+
+        IceNovaEffectPrefab.transform.localScale = Vector3.one * currentRadius; 
     }
+     */
 
 }

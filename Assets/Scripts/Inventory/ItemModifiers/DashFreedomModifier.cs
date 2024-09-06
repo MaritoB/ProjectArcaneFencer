@@ -21,8 +21,8 @@ public class DashFreedomModifier : ItemModifierSO, IItemModifier
         aPlayer.playerStats.dashTime.RemoveModifier(DashTimeLevelMultiplier * modifierLevel);
     }
 
-    public string GetDescription()
+    public string GetDescription(int aModifierLevel)
     { 
-        return "Channelling Dash";
+        return "Channelling Dash lvl " + aModifierLevel;
     }
 }

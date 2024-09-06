@@ -1,16 +1,19 @@
 using UnityEngine;
 using TMPro;
 
+
 public class PopupText : MonoBehaviour
 {
-    [SerializeField]TextMeshPro mText;
-    [SerializeField] Color mOriginalColor;
-    private float duration = 2f;
+	[SerializeField] TextMeshPro mText;
+	[SerializeField] Color mOriginalColor;
+	private float duration = 2f;
 	private float fadeDuration = 2f;
 	private Vector3 moveDirection = new Vector3(0, 1, 0);
 	private float moveSpeed = 2f;
 	private float currentSpeed;
 	private float timer;
+
+
 
     private void FixedUpdate()
 	{

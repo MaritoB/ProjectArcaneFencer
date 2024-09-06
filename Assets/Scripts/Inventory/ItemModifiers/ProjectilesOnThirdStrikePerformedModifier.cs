@@ -24,12 +24,11 @@ public class ProjectilesOnThirdStrikePerformedModifier : ItemModifierSO, IItemMo
             aPlayer.inventory.equipmentManager.weapon.OnThirdMeleePerformed += TryCastTripleProjectiles;
         }
         CurrentTriggerChance = TriggerChanceBase + TriggerChanceMultiplier * modifierLevel;
-       
-        GetDescription();
+        
     }
-    public string GetDescription()
+    public string GetDescription(int aModifierLevel)
     {
-        return "3rd have " + (TriggerChanceBase + TriggerChanceMultiplier * (modifierLevel + 1)) + "% chance to cast 3 Projectiles";
+        return "3rd have " + (TriggerChanceBase + TriggerChanceMultiplier * (aModifierLevel)) + "% chance to cast 3 Projectiles";
     }
     public void TryCastTripleProjectiles()
     {

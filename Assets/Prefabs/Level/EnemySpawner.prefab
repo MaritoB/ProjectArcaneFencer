@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6124859166169528182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.328867, y: -0.63518363, z: 5.4744277}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05263158, y: 0.5, z: 0.071428575}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,12 +49,12 @@ MonoBehaviour:
     prefab: {fileID: 754349982783443275, guid: 6c83a480390296146bb83babe4d1fbd9, type: 3}
     poolSize: 10
     pool: []
-  - enemyType: 2
+  - enemyType: 3
     prefab: {fileID: 8715147753852310770, guid: 419874e3b9540454dac1dc893e38f98f,
       type: 3}
     poolSize: 10
     pool: []
-  - enemyType: 3
+  - enemyType: 4
     prefab: {fileID: 8715147753852310770, guid: e1406d518e3b9764288913594050c4bb,
       type: 3}
     poolSize: 10
@@ -62,5 +62,14 @@ MonoBehaviour:
   - enemyType: 1
     prefab: {fileID: 8932216912398441921, guid: ad49c0c9c27c83f49a79b46dc0e48f41,
       type: 3}
+    poolSize: 10
+    pool: []
+  - enemyType: 5
+    prefab: {fileID: 7193207011747870309, guid: 06f17d80bb60f644c91835406dc2ed01,
+      type: 3}
+    poolSize: 10
+    pool: []
+  - enemyType: 2
+    prefab: {fileID: 754349982783443275, guid: aa21933a38be993498eda5bc03b40485, type: 3}
     poolSize: 10
     pool: []

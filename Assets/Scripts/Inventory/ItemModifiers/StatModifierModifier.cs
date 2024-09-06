@@ -7,6 +7,8 @@ public class StatModifierModifier : ItemModifierSO, IItemModifier
     
     public void ApplyModifier(PlayerController aPlayer)
     {
+        modifier = Instantiate(modifier);
+        modifier.value *= modifierLevel;
         aPlayer.playerStats.ApplyModifier(modifier);
     }
 
@@ -15,8 +17,8 @@ public class StatModifierModifier : ItemModifierSO, IItemModifier
         aPlayer.playerStats.RemoveModifier(modifier);
     }
 
-    public string GetDescription()
+    public string GetDescription(int aModifierLevel)
     {
-        return modifier.GetDescription();
+        return modifier.GetDescription(aModifierLevel);
     }
 }

@@ -7,11 +7,10 @@ using UnityEngine;
 public class AoEDamageOnHit : OnHitEffectSOBase
 {
     [SerializeField]
-    float radius;
-    [SerializeField]
-    int damage;
+    float radius; 
     [SerializeField]
     LayerMask EnemyLayer;
+    AttackInfo attackInfo;
     public override void OnHitEffect(Collider collider)
     {
         Collider[] enemiesColliders =  Physics.OverlapSphere(collider.transform.position, radius, EnemyLayer);
@@ -20,14 +19,14 @@ public class AoEDamageOnHit : OnHitEffectSOBase
             IDamageable damageableEnemy = enemy.GetComponent<IDamageable>();
             if (damageableEnemy != null)
             {
-                damageableEnemy.TakeDamage(new AttackInfo(damage, true, false, null));
+                damageableEnemy.TakeDamage(attackInfo);
             }
         }
     }
 
-    public void SetDamage(int aDamage)
+    public void SetAttackInfo(AttackInfo aAttackInfo)
     {
-        damage = aDamage;
+        attackInfo = aAttackInfo;
     }
     public void SetRadius(float aRadius)
     {

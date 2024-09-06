@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ee1e54a9a4ce408727ef788ada639, type: 3}
   m_Name: Skill-FireballSkill
   m_EditorClassIdentifier: 
-  skillLevel: 0
   mPlayer: {fileID: 0}
+  skill: 2
   mAoEDamageOnHit: {fileID: 11400000, guid: da771af9ae7f4514db30793bfaee0be6, type: 2}
   mDisableAfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5,
     type: 2}

@@ -69,8 +69,8 @@ public class EnemySpawner : MonoBehaviour
         EnemyType newEnemy = EnemyTypes[Random.Range(0, EnemyTypes.Count)];
         if (newEnemy == EnemyType.BOSSSKELETON)
         {
-            // newEnemy = EnemyType.MELEESKELETON;
-            return GetRandomEnemy();
+             newEnemy = EnemyType.RANGEDSKELETON;
+            //return GetRandomEnemy();
         }
         return newEnemy;
     }

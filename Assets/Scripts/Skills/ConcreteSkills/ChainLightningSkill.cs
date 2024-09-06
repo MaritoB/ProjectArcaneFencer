@@ -22,22 +22,26 @@ public class ChainLightningSkill : SkillSOBase
 
     public override void StartSetUp()
     {
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(DamageBase, DamageType.LIGHTNING, false, true, 0f, mPlayer.gameObject);
+        }
+        else
+        {
+            attackInfo.damage = DamageBase;
+        }
         damageOnHitInstance = Instantiate(damageOnHit);
-        chainHitEffectInstance = Instantiate(chainHitEffect);
+        damageOnHitInstance.SetAttackInfo(attackInfo);
         GameObject obj = Instantiate(ChainLightningSpawnerPrefab, mPlayer.transform);
         ChainLightningSpawner = obj.GetComponent<ProjectileSpawner>();
         if (ChainLightningSpawner != null)
         {
             ChainLightningSpawner.ShootPosition = mPlayer.GetComponent<PlayerController>().AttackTransform;
-            ChainLightningSpawner.SetNewProjectilePool(damageOnHitInstance, chainHitEffectInstance, ProjectileSpeedBase);
-        }
-
-
-
+            ChainLightningSpawner.SetupProjectilePool(damageOnHitInstance, chainHitEffect);
+        } 
     }
-    public override void UseSkill(Vector3 APosition)
+    public override void UseSkill(Vector3 aDirection)
     {
-        Debug.Log("Using skill Chain Lightning");
         if (ChainLightningSpawner == null)
         {
             GameObject obj = Instantiate(ChainLightningSpawnerPrefab, mPlayer.transform);
@@ -46,11 +50,37 @@ public class ChainLightningSkill : SkillSOBase
         if (ChainLightningSpawner != null)
         {
             ChainLightningSpawner.ShootPosition = mPlayer.GetComponent<PlayerController>().AttackTransform;
-        } 
-        AudioManager.instance.PlayOneShot(chainLightningSfx, APosition);
-        Vector3 Direction =( APosition - mPlayer.position).normalized;
-        ChainLightningSpawner.ShootProjectileToDirectionFromPool(Direction, ChainLightningSpawner.ShootPosition.position);
+        }
+
+        if ((int)mPlayerStats.chainLightningLevel.GetValue() != currentSkillLevel)
+        {
+            UpdateSkillLevel();
+        }
+        AudioManager.instance.PlayOneShot(chainLightningSfx, mPlayer.transform.position);
+        //Vector3 Direction =( APosition - mPlayer.position).normalized;
+        ChainLightningSpawner.ShootProjectileToDirectionFromPool(aDirection, ChainLightningSpawner.ShootPosition.position);
     }
+
+    public void UpdateSkillLevel()
+    {
+        if (damageOnHitInstance == null ) { return; }
+        currentSkillLevel = (int)mPlayerStats.chainLightningLevel.GetValue();
+        int currentDamage = DamageBase + DamageMultiplier * currentSkillLevel;
+        float currentProjectileSpeed = ProjectileSpeedBase + ProjectileSpeedMultiplier * currentSkillLevel;
+        currentRadius = RadiusBase + RadiusMultiplier * currentSkillLevel;
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.LIGHTNING, false, true, 0f, mPlayer.gameObject);
+            Debug.LogWarning("Creating attack Info on SetSkillLevel");
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        }
+        damageOnHitInstance.SetAttackInfo(attackInfo);
+        //chainHitEffectInstance.LevelUpEffect(currentSkillLevel, currentRadius);
+    }
+    /*
     public override void SetSkillLevel(int aNewlevel)
     {
         if(damageOnHitInstance == null || chainHitEffectInstance == null) { return; }
@@ -58,9 +88,19 @@ public class ChainLightningSkill : SkillSOBase
         int  currentDamage = DamageBase + DamageMultiplier * skillLevel;
         float currentProjectileSpeed = ProjectileSpeedBase + ProjectileSpeedMultiplier * skillLevel;
         currentRadius = RadiusBase + RadiusMultiplier * skillLevel;
-        damageOnHitInstance.SetDamage(currentDamage);
+        if (attackInfo == null)
+        {
+            attackInfo = new AttackInfo(currentDamage, DamageType.LIGHTNING, false, true, 0f, mPlayer.gameObject);
+            Debug.LogWarning("Creating attack Info on SetSkillLevel");
+        }
+        else
+        {
+            attackInfo.damage = currentDamage;
+        }
+        damageOnHitInstance.SetAttackInfo(attackInfo);
         chainHitEffectInstance.LevelUpEffect(skillLevel, currentRadius);
-        ChainLightningSpawner.SetNewProjectilePool(damageOnHitInstance, chainHitEffectInstance, currentProjectileSpeed);
+        //ChainLightningSpawner.SetNewProjectilePool(damageOnHitInstance, chainHitEffectInstance, currentProjectileSpeed);
     }
+     */
 
 }

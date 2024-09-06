@@ -607,7 +607,7 @@ MonoBehaviour:
   currentAttackRate: 0
   currentAttackDamage: 0
   <CurrentHealth>k__BackingField: 0
-  animator: {fileID: 0}
+  animator: {fileID: 8764456519428808523}
   attackPosition: {fileID: 0}
   IsAttacking: 0
   CanMove: 1
@@ -616,6 +616,8 @@ MonoBehaviour:
   IsStunned: 0
   SoulsPS: {fileID: 5282748190610777995}
   projectileSpawner: {fileID: 8715147753852310779}
+  AfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5, type: 2}
+  OnHitEffect: {fileID: 11400000, guid: 5c2d844f499dd6a4e8790e8c19f9b9ba, type: 2}
 --- !u!54 &8715147753852310769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -644,8 +646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de31479297aff5d46bf7b5f0b196f3c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHitEffect: {fileID: 11400000, guid: 5c2d844f499dd6a4e8790e8c19f9b9ba, type: 2}
-  AfterHitEffect: {fileID: 11400000, guid: 9e9866c68f6c05044ad89787deb5bcb5, type: 2}
+  OnHitEffect: {fileID: 0}
+  AfterHitEffect: {fileID: 0}
   ProjectilePrefab: {fileID: 9171072717131984124, guid: 6bcda585ca856ca4b98fbfae60e367f5,
     type: 3}
   ShootPosition: {fileID: 8715147754167513207}

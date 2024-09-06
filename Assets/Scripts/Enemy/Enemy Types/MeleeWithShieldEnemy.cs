@@ -20,7 +20,7 @@ public class MeleeWithShieldEnemy : Enemy
         foreach (Collider player in HitPlayers)
         {
             player.GetComponent<IDamageable>().
-                TakeDamage(new AttackInfo(currentAttackDamage, false, false, this.gameObject));
+                TakeDamage(attackInfo);
         }
     }
     public override void TakeDamage(AttackInfo aAttackInfo)

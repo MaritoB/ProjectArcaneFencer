@@ -16,11 +16,11 @@ public class ItemModifierUI: MonoBehaviour
         ItemNameText.text = aModifier.modifierName;
         if(aModifier is IItemModifier modifierInterface)
         {
-            modifierInterface.GetDescription();
+            modifierInterface.GetDescription(aModifier.modifierLevel);
         } 
         ItemDescriptionText.text = aModifier.modifierDescription;
         ItemLevelText.text = aModifier.modifierLevel.ToString();
-        ItemImage.sprite = aModifier.modifierSprite;
+       // ItemImage.sprite = aModifier.modifierSprite;
         modifierSO = aModifier;
         playerInGameUI = aPlayerInGameUI;
 

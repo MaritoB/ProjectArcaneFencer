@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -9,7 +10,7 @@ public class ProjectileSpawner : MonoBehaviour
     [SerializeField]
     OnHitEffectSOBase OnHitEffect;
     [SerializeField]
-    AfterHitEffectSOBase AfterHitEffect;
+    AfterHitEffectSOBase AfterHitEffect; 
     [SerializeField]
     private ProjectileBehaviour ProjectilePrefab;
     [SerializeField]
@@ -18,21 +19,17 @@ public class ProjectileSpawner : MonoBehaviour
     private float CastRate;
     private float CurrentCastRate;
 
-
-
-    public void SetNewProjectilePool(OnHitEffectSOBase onHitEffectSOBase, AfterHitEffectSOBase afterHitEffectSOBase, float ProjectileSpeed)
+    public void SetupProjectilePool( OnHitEffectSOBase aOnHitEffectSOBase, AfterHitEffectSOBase afterHitEffectSOBase)
     {
-        OnHitEffect = onHitEffectSOBase;
+        OnHitEffect = aOnHitEffectSOBase; 
         AfterHitEffect = afterHitEffectSOBase;
-        ProjectilePool.Clear();
-        ProjectilePool = new ObjectPool<ProjectileBehaviour>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject, false, 5, 10);
-
-    }
+        ProjectilePool = new ObjectPool<ProjectileBehaviour>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject, false, 5, 10); 
+    } 
+ 
 
     private void Update()
     {
-        CurrentCastRate -= Time.deltaTime;
-
+        CurrentCastRate -= Time.deltaTime; 
     }
     private void Awake()
     {

@@ -23,10 +23,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     PlayerInGameUI inGameUI;
     [SerializeField]
     public ParticleSystem DashPS, BloodOnHit;
-    public delegate void OnDashDelegate();
-    public event OnDashDelegate OnDash;
-    public delegate void OnBlockPerformedDelegate(Enemy enemy);
-    public event OnBlockPerformedDelegate OnBlockPerformed;
+    public event WeaponBase.PerformedEventDelegate OnDash;
+    public event WeaponBase.HitEventDelegate OnBlockHit;
     public LayerMask EnemyProjectilesLayer, EnemiesLayer;
     [SerializeField]
     float CurrentStamina;
@@ -137,6 +135,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         PlayerStateMachine.Initialize(mPlayerRunState);
 
     }
+
     public void RecoverStamina(float aAmount)
     {
         if(aAmount < 0)
@@ -293,17 +292,26 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(AttackInfo aAttackInfo)
     {
         if (aAttackInfo == null) return;
-
+        float currentDamage = aAttackInfo.damage;
+        if (currentDamage < 0) return;
+        float Resistance = playerStats.GetResistance(aAttackInfo.damageType);
+        if (Resistance != 0)
+        {
+            Resistance = Mathf.Clamp(Resistance, -75f, 75f);
+            currentDamage *= (1 - Resistance / 100f);
+        }
+         
         if (isBlocking)
         {
-            if (UseStamina(aAttackInfo.damage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
+            if (UseStamina(currentDamage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
             {
                 if (aAttackInfo.Source != null)
                 {
                     Enemy enemy = aAttackInfo.Source.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        OnBlockPerformed?.Invoke(enemy);
+                        
+                        OnBlockHit?.Invoke(enemy.gameObject, (enemy.transform.position - transform.position).normalized);
                     }
                 }
                 AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
@@ -314,11 +322,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 TurnOffShield();
             }
         }
-        CurrentHealth -= aAttackInfo.damage;
+        CurrentHealth -= currentDamage;
         if (BloodOnHit != null)
         {
             inGameUI.TakeDamageUIAnimation();
-            BloodOnHit.Emit(aAttackInfo.damage / 3);
+            BloodOnHit.Emit((int)currentDamage / 3);
             AudioManager.instance.PlayOneShot(playerSoundData.PlayerOnHit, transform.position);
 
 
@@ -334,13 +342,26 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(int aDamageAmount, GameObject aSource)
+  /*
+    public void TakeDamage(AttackInfo aAttackInfo, GameObject aSource)
     {
-        if(aDamageAmount< 0) return;
-
+        if (aAttackInfo == null)
+        if (aAttackInfo == null)
+        {
+            Debug.Log("null attack info ");
+            return;
+        }
+        float currentDamage = aAttackInfo.damage;
+        if (currentDamage < 0) return;
+        float Resistance = playerStats.GetResistance(aAttackInfo.damageType);
+        if (Resistance != 0)
+        {
+            Resistance = Mathf.Clamp(Resistance, -75f, 75f);
+            currentDamage *= (1 - Resistance/100f);
+        }
         if (isBlocking)
         {
-            if (UseStamina(aDamageAmount * playerStats.staminaDrainPercentageOnBlock.GetValue()))
+            if (UseStamina(currentDamage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
             {
                 if (aSource != null)
                 {
@@ -358,11 +379,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 TurnOffShield();
             }
         }
-        CurrentHealth -= aDamageAmount;
+        CurrentHealth -= currentDamage;
         if(BloodOnHit != null)
         {
             inGameUI.TakeDamageUIAnimation();
-            BloodOnHit.Emit(aDamageAmount/3);
+            BloodOnHit.Emit((int)currentDamage / 3);
             AudioManager.instance.PlayOneShot(playerSoundData.PlayerOnHit, transform.position);
 
 
@@ -378,11 +399,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
     }
+   */
 
     public void Death()
     {
         //inventory.equipmentManager.weapon.ResetAllModifiers();
-        mSkillManager.ResetSkillLevels();
+        //mSkillManager.ResetSkillLevels();
         animator.SetTrigger("Death");
         AudioManager.instance.TurnOffMusic();
         AudioManager.instance.PlayOneShot(playerSoundData.PlayerDeath, transform.position);

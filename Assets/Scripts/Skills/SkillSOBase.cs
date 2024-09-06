@@ -4,10 +4,16 @@ using UnityEngine;
 public class SkillSOBase : ScriptableObject, ISkillStrategy
 {
     [SerializeField]
-    protected int skillLevel;
-    [SerializeField]
     protected Transform mPlayer;
+    protected AttackInfo attackInfo;
+    protected CharacterStats mPlayerStats;
+    protected int currentSkillLevel; 
+    [SerializeField] protected SkillEnum skill;
 
+    public SkillEnum GetSkillEnum()
+    {
+        return skill;
+    }
     public virtual void SetSkillLevel(int aAdditionalLevel)
     {
     }
@@ -15,13 +21,8 @@ public class SkillSOBase : ScriptableObject, ISkillStrategy
     public void SetPlayer(Transform aTransform)
     {
         mPlayer = aTransform;
-    }
-
-    public void ResetSkillLevel()
-    {
-        skillLevel = 0; 
-    }
-
+        mPlayerStats = mPlayer.gameObject.GetComponent<PlayerController>().playerStats;
+    } 
     public virtual void UseSkill()
     {
     }

@@ -1,8 +1,15 @@
 using UnityEngine;
-using System.Collections.Generic; 
-
+using System.Collections.Generic;
+[System.Serializable]
+public struct DamageTypeColor
+{
+    public DamageType type;
+    public Color color;
+}
 public class PopupTextPool : MonoBehaviour
 {
+    public DamageTypeColor[] typeColorArray; 
+    System.Collections.Generic.Dictionary<DamageType, Color> ColorDictionary;
     public static PopupTextPool Instance;
     [SerializeField] int fontSize, criticalFontSize;
 
@@ -15,6 +22,11 @@ public class PopupTextPool : MonoBehaviour
     private void Start()
     {
         mPopupText = popupTextPrefab.GetComponent<PopupText>();
+        ColorDictionary = new Dictionary<DamageType, Color>();
+        foreach (DamageTypeColor typeColor in typeColorArray)
+        {
+            ColorDictionary.Add(typeColor.type, typeColor.color);
+        }
         cameraRotation = Camera.main.transform.rotation;
     }
     private void Awake()
@@ -26,8 +38,10 @@ public class PopupTextPool : MonoBehaviour
             {
                 return;
             }
-            PreInstantiate(TextPool, mPopupText, 10);
-           
+            PreInstantiate(TextPool, mPopupText, 10); 
+
+ 
+
         }
         else
         {
@@ -82,9 +96,10 @@ public class PopupTextPool : MonoBehaviour
     {
         if (aAttackInfo == null) return;
         PopupText newPopup = GetFloatingText();
-
+        Color color = Color.white ;
+        ColorDictionary.TryGetValue(aAttackInfo.damageType, out color);
         newPopup.Setup(aAttackInfo.damage.ToString(),
-            aAttackInfo.isMagic ? Color.cyan : Color.white,
+            color,
             aAttackInfo.isCritical ? criticalFontSize : fontSize,
             aPosition, cameraRotation) ;
     }

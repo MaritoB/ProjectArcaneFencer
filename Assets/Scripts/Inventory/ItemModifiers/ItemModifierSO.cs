@@ -3,7 +3,7 @@ public interface IItemModifier
 {
     void ApplyModifier(PlayerController aPlayer);
     void RemoveModifier(PlayerController aPlayer);
-    string GetDescription();
+    string GetDescription(int aModifierLevel);
 }
 
 public abstract class ItemModifierSO : ScriptableObject  
@@ -11,6 +11,6 @@ public abstract class ItemModifierSO : ScriptableObject
     public string modifierName;
     public string modifierDescription;
     public int modifierLevel;
-    public Sprite modifierSprite;
+    //public Sprite modifierSprite;
      
 }

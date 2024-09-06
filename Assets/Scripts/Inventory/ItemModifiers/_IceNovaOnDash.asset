@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: _IceNovaOnDash
+  m_EditorClassIdentifier: Assembly-CSharp::ChanceToUseASkillOnPerformedModifier
+  modifierName: 
+  modifierDescription: 
+  modifierLevel: 0
+  eventType: 0
+  skill: 0
+  TriggerChanceBase: 0
+  TriggerChanceMultiplier: 0

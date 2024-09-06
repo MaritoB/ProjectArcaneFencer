@@ -16,6 +16,7 @@ public class ProjectileBehaviour : MonoBehaviour
     Rigidbody _rigidBody;
     MeshRenderer _meshRenderer;
     SphereCollider _sphereCollider;
+    Vector3 _direction;
     public delegate void OnDisableCallback(ProjectileBehaviour instance);
     public OnDisableCallback Disable;
     float _currentLifeTime;
@@ -36,9 +37,13 @@ public class ProjectileBehaviour : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
         _sphereCollider = GetComponent<SphereCollider>();
     }
-
+    public Vector3 GetDirection()
+    {
+        return _direction;
+    }
     public void Fire(Vector3 aDirection, Vector3 OriginPosition)
     {
+        _direction = aDirection;
         gameObject.SetActive(true);
         transform.position = OriginPosition; 
         _currentLifeTime = _lifeTime;
@@ -47,8 +52,8 @@ public class ProjectileBehaviour : MonoBehaviour
     public void ChangeDirection(Vector3 aNewTargetPosition)
     {
         if(aNewTargetPosition == null) { return; }
-        Vector3 NewDirection = (aNewTargetPosition - transform.position).normalized;
-        _rigidBody.velocity = NewDirection * _baseProjectilSpeed;
+        _direction = (aNewTargetPosition - transform.position).normalized;
+        _rigidBody.velocity = _direction * _baseProjectilSpeed;
         _currentLifeTime = _lifeTime;
 
     }
