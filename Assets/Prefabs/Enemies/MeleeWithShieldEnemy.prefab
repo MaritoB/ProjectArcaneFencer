@@ -1179,14 +1179,24 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8494975434433538955}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: c951f7ec2366e9f47b0d2730d64de3ca, type: 3}
   m_Controller: {fileID: 9100000, guid: 501b05f149da28c4eb5c658375997d55, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip01 L Thigh'\n\tTransform 'Bip01 R Thigh'\n\tTransform
+    'Bip01'\n\tTransform 'Bip01 Pelvis'\n\tTransform 'Bip01 L Finger1'\n\tTransform
+    'Bip01 L Finger01'\n\tTransform 'Bip01 R Finger1'\n\tTransform 'Bip01 R Finger11'\n\tTransform
+    'Bip01 Head'\n\tTransform 'Bip01 L Toe0'\n\tand more ...\n\tFrom animation clip
+    'Skeleton-Run'\n\tFrom animation clip 'Skeleton-Slash1'\n\tFrom animation clip
+    'Skeleton-Idle'\n\tFrom animation clip 'Skeleton-Death'\n\tFrom animation clip
+    'Skeleton-Fall'\n\tFrom animation clip 'Skeleton-Rise'\n\tFrom animation clip
+    'Skeleton-Rise'\n\tFrom animation clip 'Skeleton-Impact'\n\tFrom animation clip
+    'Skeleton-Walk&Block'\n\tFrom animation clip 'Skeleton-Block'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

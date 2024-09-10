@@ -6,14 +6,22 @@ public class PlayerSimpleRun : PlayerMovementBase
 {
     private void HandleMovement(Vector2 aInputVector)
     {
-        Vector3 MovementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
-        MovementVector = Quaternion.Euler(0, player.mCamera.eulerAngles.y, 0) * MovementVector;
-        player.RotateTowardMovementVector();
-        Vector3 newVelocity = MovementVector * player.playerStats.movementSpeed.GetValue() * Time.deltaTime;
-        newVelocity.y = player.mRigidbody.velocity.y;
+        // Crear el vector de movimiento en relación con la orientación de la cámara
+        Vector3 movementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
+        movementVector = Quaternion.Euler(0, player.mCamera.transform.eulerAngles.y, 0) * movementVector;
+
+        // Calcular el valor de giro hacia el mouse
+        float turnAmount = player.RotateAndCalculateTurnTowardMouse();
+
+        // Actualizar la velocidad del personaje
+        Vector3 newVelocity = movementVector * player.playerStats.movementSpeed.GetValue() * Time.deltaTime;
+        newVelocity.y = player.mRigidbody.velocity.y;  // Mantener la componente Y actual
         player.mRigidbody.velocity = newVelocity;
-        player.animator.SetFloat("Velocity", player.mRigidbody.velocity.magnitude);
+
+        // Actualizar el Animator con el movimiento y rotación actuales
+        player.UpdateAnimator(turnAmount, new  Vector2(aInputVector.x,   aInputVector.y));
     }
+
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();

@@ -38,7 +38,7 @@ public class PlayerDash  : PlayerMovementBase
         else
         {
             Vector3 MovementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
-            MovementVector = Quaternion.Euler(0, player.mCamera.eulerAngles.y, 0) * MovementVector;
+            MovementVector = Quaternion.Euler(0, player.mCamera.transform.eulerAngles.y, 0) * MovementVector;
             DashVelocity = MovementVector * player.playerStats.dashSpeed.GetValue(); 
             Direction = Quaternion.Euler(0f, player.mCamera.transform.eulerAngles.y, 0f) * MovementVector;
             var rotation = Quaternion.LookRotation(Direction);

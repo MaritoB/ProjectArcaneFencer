@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public int CurrentLevel = 0;
     public PlayerInputActions playerInputActions;
     public Rigidbody mRigidbody;
-    public Transform mCamera;
+    public Camera mCamera;
     [SerializeField]
     private int RotationSpeed;
     [SerializeField]
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public ParticleSystem DashPS, BloodOnHit;
     public event WeaponBase.PerformedEventDelegate OnDash;
     public event WeaponBase.HitEventDelegate OnBlockHit;
-    public LayerMask EnemyProjectilesLayer, EnemiesLayer;
+    public LayerMask EnemyProjectilesLayer, EnemiesLayer, GroundLayer;
     [SerializeField]
     float CurrentStamina;
     bool isAlive = true;
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public bool isAttacking = false;
     public bool CanAttack = true;
     public bool DashChanellingPerk = false;
+    public float rotationSpeed;
     #region
     public StateMachine PlayerStateMachine;
     [SerializeField]
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         CurrentHealth = playerStats.maxHealth.GetValue();
         CurrentStamina = playerStats.maxStamina.GetValue();
 
-        mCamera = Camera.main.gameObject.transform;
+        mCamera = Camera.main;
         inGameUI.SetPlayer(this);
         inventory = GetComponentInChildren<InventoryManager>();
         mRigidbody = GetComponent<Rigidbody>();
@@ -289,6 +290,79 @@ public class PlayerController : MonoBehaviour, IDamageable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, RotationSpeed);
 
     }
+    public void UpdateAnimator(float turnAmount, Vector2 inputVector)
+    {
+        // Magnitud total de la velocidad para controlar la animación de movimiento
+        float velocityMagnitude = mRigidbody.velocity.magnitude;
+
+        // Obtener la dirección de la cámara en el plano XZ
+        Vector3 cameraForward = mCamera.transform.forward;
+        cameraForward.y = 0; // Ignorar componente Y
+        cameraForward.Normalize();
+
+        Vector3 cameraRight = mCamera.transform.right;
+        cameraRight.y = 0; // Ignorar componente Y
+        cameraRight.Normalize();
+
+        // Crear el vector de movimiento en relación con la entrada del usuario
+        Vector3 movementDirection = new Vector3(inputVector.x, 0, inputVector.y).normalized;
+
+        // Transformar el vector de movimiento en el espacio de la cámara
+        Vector3 adjustedMovementDirection = cameraForward * movementDirection.z + cameraRight * movementDirection.x;
+
+        // Obtener el "forward" y "right" en función de la orientación del personaje
+        float forwardMovement = Vector3.Dot(adjustedMovementDirection, transform.forward);
+        float rightMovement = Vector3.Dot(adjustedMovementDirection, transform.right);
+
+        // Asegurarse de que los valores sean correctos y no estén invertidos
+        // Dependiendo de la rotación del jugador en relación a la cámara, puede ser necesario invertir el signo.
+        forwardMovement = Mathf.Clamp(forwardMovement, -1f, 1f);
+        rightMovement = Mathf.Clamp(rightMovement, -1f, 1f);
+
+        // Actualizar las variables en el Animator
+        animator.SetFloat("Velocity", velocityMagnitude);
+        animator.SetFloat("ForwardMovement", forwardMovement);  // Movimiento hacia adelante o atrás
+        animator.SetFloat("RightMovement", rightMovement);      // Movimiento lateral (strafe)
+        animator.SetFloat("Turn", turnAmount);                  // Turno es el valor de giro calculado previamente
+    }
+
+
+    public float RotateAndCalculateTurnTowardMouse()
+    {
+        // Crear un rayo desde la posición de la cámara hacia la posición del mouse
+        Ray ray = mCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Detectar el suelo para obtener la posición de destino (asegúrate de que el suelo esté en la capa GroundLayer)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, GroundLayer))
+        {
+            // Obtener la posición en el suelo donde el mouse apunta
+            Vector3 targetPosition = hit.point;
+            targetPosition.y = transform.position.y; // Mantener la misma altura del personaje
+
+            // Dirección hacia la que queremos rotar
+            Vector3 directionToLook = (targetPosition - transform.position).normalized;
+
+            if (directionToLook != Vector3.zero)
+            {
+                // Calcular la rotación deseada hacia la dirección del mouse
+                Quaternion targetRotation = Quaternion.LookRotation(directionToLook);
+
+                // Aplicar suavemente la rotación con la velocidad de rotación definida
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                // Calcular el ángulo entre la dirección actual y la dirección hacia el mouse
+                float angleToMouse = Vector3.SignedAngle(transform.forward, directionToLook, Vector3.up);
+
+                // Normalizar el ángulo entre -1 y 1 (para el Animator)
+                return Mathf.Clamp(angleToMouse / 180f, -1f, 1f); // Normaliza el ángulo entre -1 y 1
+            }
+        }
+
+        return 0f; // Si no golpea nada, no hay rotación
+    }
+
+
     public void TakeDamage(AttackInfo aAttackInfo)
     {
         if (aAttackInfo == null) return;
