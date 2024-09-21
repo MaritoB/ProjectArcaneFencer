@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52509bed85784d1489c148005561aa71, type: 3}
+  m_Name: ShieldLong
+  m_EditorClassIdentifier: 
+  id: ShieldLong
+  displayName: Long Shield
+  icon: {fileID: 21300000, guid: a332f9cc2040f6042a04c65fa9e4a000, type: 3}
+  goldPrice: 200
+  quantity: 1
+  isStackable: 0
+  colorMultiplier: {r: 0, g: 0, b: 0, a: 0}
+  itemModifiers:
+  - ItemModifier: {fileID: 11400000, guid: 8b4dc6cb7bca8cc47bc4b931022e1cf2, type: 2}
+    level: 10
+  - ItemModifier: {fileID: 11400000, guid: b9870b84e1461604b8ee328800ed2c62, type: 2}
+    level: 6
+  equipSlot: 6
+  EquipableItemPrefab: {fileID: 100000, guid: 2e33a5dcb752bcf42aeba1ff5eab0bc5, type: 3}

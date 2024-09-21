@@ -6,39 +6,38 @@ using UnityEngine;
 public class PlayerBlock : PlayerBlockSOBase
 {
     public float idleBlockingStaminaCost;
+    float blockingMovementSpeed;
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        player.animator.SetTrigger("BlockStart");
+        player.animator.SetBool("IsBlocking", true) ;
         player.isBlocking = true;
-        player.animator.SetFloat("Velocity", 0f);
-        player.mRigidbody.velocity = Vector3.zero;
+        blockingMovementSpeed = player.playerStats.movementSpeed.GetValue();
+        blockingMovementSpeed *=  0.6f;  
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        player.animator.SetBool("IsBlocking", false);
         player.isBlocking = false;
     }
 
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        player.RotateTowardMovementVector();
-        player.mRigidbody.velocity = Vector3.zero;
-        if (!player.UseStamina(idleBlockingStaminaCost * Time.deltaTime))
+        player.RotateAndCalculateTurnTowardMouse();
+        if (!player.UseStamina(idleBlockingStaminaCost * Time.deltaTime)|| player.playerInputActions.Player.Block.WasReleasedThisFrame())
         {
-            player.TurnOffShield();
+            player.ChangeStateToRun();
         }
-        if (player.playerInputActions.Player.Block.WasReleasedThisFrame())
-        {
-            player.TurnOffShield();
-        }
+ 
     }
 
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
+        player.HandleMovement(blockingMovementSpeed);
     }
     public override void Initialize(GameObject aGameObject, PlayerController aPlayer)
     {

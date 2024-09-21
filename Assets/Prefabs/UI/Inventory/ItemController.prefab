@@ -287,6 +287,7 @@ MonoBehaviour:
   NormalColor: {r: 0.8666667, g: 0.7764706, b: 0.6156863, a: 1}
   HighlitedColor: {r: 0.6156863, g: 0.6272154, b: 0.8666667, a: 1}
   itemParent: {fileID: 6754388168116041697}
+  UIitem3D: {fileID: 0}
 --- !u!1 &2803841518707280370
 GameObject:
   m_ObjectHideFlags: 0

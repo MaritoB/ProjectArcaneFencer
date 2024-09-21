@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectedItemUI : MonoBehaviour
-{ 
+{
     private const int MaxModifiers = 6;
     [SerializeField] float rotationSpeed = 50;
-
     [SerializeField] private Transform ModifiersContent;
     [SerializeField] private GameObject ItemModifierTextPrefab;
-    public GameObject ItemModelUIParent, ItemModelUI; 
+    public GameObject ItemModelUIParent, ItemModelUI;
     [SerializeField] TMPro.TextMeshProUGUI ItemName;
     TMPro.TextMeshProUGUI[] ModifierTexts;
-    Dictionary<EquipableItemData, GameObject> ItemModelsDictionary;
+    Dictionary<EquipableItemData, GameObject> ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
     EquipableItemData DisplayedItem;
+
+    private void Awake()
+    {
+        if (ModifiersContent == null || ItemModifierTextPrefab == null || ItemName == null || ItemModelUIParent == null)
+        {
+            Debug.LogError("Some references are missing in the Inspector!");
+        }
+    }
+
     void Start()
     {
         ModifierTexts = new TMPro.TextMeshProUGUI[MaxModifiers];
@@ -23,79 +31,77 @@ public class SelectedItemUI : MonoBehaviour
             ModifierTexts[i] = tmpItem.GetComponent<TMPro.TextMeshProUGUI>();
             tmpItem.SetActive(false);
         }
-        ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
     }
+
     private void FixedUpdate()
-    { 
-        ItemModelUIParent.transform.Rotate(Vector3.left, rotationSpeed  * Time.fixedDeltaTime);
+    {
+        if (ItemModelUIParent == null) return;
+        ItemModelUIParent.transform.Rotate(Vector3.left, rotationSpeed * Time.fixedDeltaTime);
     }
+
+    /*
     public void RemoveItem(EquipableItemData itemToRemove)
     {
-        if (itemToRemove == null)
-        {
-            Debug.LogWarning("The item to remove is null.");
-            return;
-        }
+        if (itemToRemove == null) return;
 
         if (ItemModelsDictionary.TryGetValue(itemToRemove, out GameObject itemModel))
         {
             ItemModelsDictionary.Remove(itemToRemove);
             Destroy(itemModel);
-            Debug.Log(itemToRemove.name + " was removed and its model destroyed.");
-        }
-        else
-        {
-            Debug.LogWarning("The item was not found in the dictionary.");
         }
 
         ClearItem();
     }
+
     public void AddNewItemToDictionary(EquipableItemData aNewItemEquipable)
     {
-        if (aNewItemEquipable == null || aNewItemEquipable.EquipableItemPrefab == null)
-        {
-            Debug.LogWarning("Item null. cant be added to dictionary.");
-            return;
-        } 
+        if (aNewItemEquipable == null || aNewItemEquipable.EquipableItemPrefab == null) return;
+
         GameObject newModel = Instantiate(aNewItemEquipable.EquipableItemPrefab, ItemModelUIParent.transform);
-         
         SetLayerForAllChildren(newModel.transform, 5);
-         
+
         if (!ItemModelsDictionary.ContainsKey(aNewItemEquipable))
         {
             ItemModelsDictionary.Add(aNewItemEquipable, newModel);
         }
-        else
-        {
-            Debug.LogWarning("El ítem ya existe en el diccionario. No se agregó nuevamente.");
-        }
     }
-     
+
     private void SetLayerForAllChildren(Transform parentTransform, int layer)
     {
         parentTransform.gameObject.layer = layer;
         foreach (Transform child in parentTransform)
         {
-            child.gameObject.layer = layer; 
+            child.gameObject.layer = layer;
             SetLayerForAllChildren(child, layer);
         }
     }
-
+     */
+    public void AddNewItemToDictionary(EquipableItemData aNewItemEquipable)
+    {
+        UIUtilities.AddNewItemToDictionary(aNewItemEquipable, ItemModelUIParent.transform, ItemModelsDictionary);
+    }
+    public void RemoveItem(EquipableItemData itemToRemove)
+    {
+        UIUtilities.RemoveItemFromDictionary(itemToRemove, ItemModelsDictionary);
+        ClearItem();
+    }
     public void DisplayNewItem(EquipableItemData aNewItem)
     {
-        if (aNewItem == DisplayedItem || aNewItem == null)
-        {
-            return;
-        }
+        if (aNewItem == DisplayedItem || aNewItem == null) return;
+
         ClearItem();
         DisplayedItem = aNewItem;
         ItemName.text = aNewItem.displayName;
-        for (int i = 0; i < aNewItem.itemModifiers.Count; i++)
+
+        for (int i = 0; i < aNewItem.itemModifiers.Count && i < ModifierTexts.Length; i++)
         {
+            if (aNewItem.itemModifiers[i].ItemModifier == null)
+            {
+                Debug.Log("NULL item Modifiers");
+            }
             if (aNewItem.itemModifiers[i].ItemModifier is IItemModifier modifier)
             {
                 ModifierTexts[i].text = modifier.GetDescription(aNewItem.itemModifiers[i].level);
-
             }
             ModifierTexts[i].gameObject.SetActive(true);
         }
@@ -104,11 +110,8 @@ public class SelectedItemUI : MonoBehaviour
         {
             itemModel.SetActive(true);
         }
-        else
-        {
-            Debug.LogWarning("The item model was not found in the dictionary.");
-        }
     }
+
     private void ClearItem()
     {
         foreach (var model in ItemModelsDictionary.Values)
@@ -124,5 +127,4 @@ public class SelectedItemUI : MonoBehaviour
             text.gameObject.SetActive(false);
         }
     }
-
 }

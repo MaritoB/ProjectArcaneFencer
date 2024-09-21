@@ -184,13 +184,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TurnOnShield()
     {
         isBlocking = true;
+        //animator.SetBool("IsBlocking", true);
         //MagicSphereShield.gameObject.SetActive(true);
-        AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
+        //AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
     }
     public void TurnOffShield()
     {
-        isBlocking = false;
-        animator.SetTrigger("BlockFinish");
+        isBlocking = false; 
+        animator.SetBool("IsBlocking", false); 
     }
     public float GetCurrentStamina() { return CurrentStamina; }
     public void PerfomrProjectileAttackSkill()
@@ -290,6 +291,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, RotationSpeed);
 
     }
+    public void HandleMovement( float movementSpeed)
+    {
+        Vector2 InputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        Vector3 movementVector = new Vector3(InputVector.x, 0, InputVector.y).normalized;
+        movementVector = Quaternion.Euler(0, mCamera.transform.eulerAngles.y, 0) * movementVector;
+        float turnAmount = RotateAndCalculateTurnTowardMouse();
+        Vector3 newVelocity = movementVector * movementSpeed * Time.deltaTime;
+        newVelocity.y = mRigidbody.velocity.y;  // Mantener la componente Y actual
+        mRigidbody.velocity = newVelocity;
+        UpdateAnimator(turnAmount, new Vector2(InputVector.x, InputVector.y));
+    }
     public void UpdateAnimator(float turnAmount, Vector2 inputVector)
     {
         // Magnitud total de la velocidad para controlar la animación de movimiento
@@ -374,26 +386,40 @@ public class PlayerController : MonoBehaviour, IDamageable
             Resistance = Mathf.Clamp(Resistance, -75f, 75f);
             currentDamage *= (1 - Resistance / 100f);
         }
-         
-        if (isBlocking)
+
+        if (aAttackInfo.Source != null)
         {
-            if (UseStamina(currentDamage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
+            float isFacing = Vector3.Dot((aAttackInfo.Source.transform.position - transform.position).normalized, transform.forward.normalized);
+            Debug.Log(isFacing);
+            if (isFacing > 0.8f)
             {
-                if (aAttackInfo.Source != null)
+                if (isBlocking)
                 {
-                    Enemy enemy = aAttackInfo.Source.GetComponent<Enemy>();
-                    if (enemy != null)
+                    if (UseStamina(currentDamage * playerStats.staminaDrainPercentageOnBlock.GetValue()))
                     {
-                        
-                        OnBlockHit?.Invoke(enemy.gameObject, (enemy.transform.position - transform.position).normalized);
+                        if (aAttackInfo.Source != null)
+                        {
+                            OnBlockHit?.Invoke(aAttackInfo.Source, (aAttackInfo.Source.transform.position - transform.position).normalized);
+                            animator.SetTrigger("BlockImpact");
+                            //Enemy enemy = aAttackInfo.Source.GetComponent<Enemy>();
+                            //if (enemy != null)
+                            //{
+
+                            //    OnBlockHit?.Invoke(enemy.gameObject, (enemy.transform.position - transform.position).normalized);
+                            //}
+                        }
+                        AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
+                        return;
+                    }
+                    else
+                    {
+                        TurnOffShield();
                     }
                 }
-                AudioManager.instance.PlayOneShot(playerSoundData.PlayerShield, transform.position);
-                return;
             }
-            else
+            else if (isFacing <0)
             {
-                TurnOffShield();
+                Debug.Log("Backhit , interrupt? critical?");
             }
         }
         CurrentHealth -= currentDamage;

@@ -11,7 +11,7 @@ public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        player.animator.SetTrigger("Attack1");
+        player.animator.SetTrigger("Attack");
         player.animator.SetFloat("Velocity", 0f);
         player.mRigidbody.velocity = Vector3.zero;
         player.isAttacking = true;
@@ -37,7 +37,8 @@ public class PlayerAttackMeleeParryProjectile : PlayerAttackSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        player.RotateTowardMovementVector();
+        player.RotateAndCalculateTurnTowardMouse();
+        //aaplayer.RotateTowardMovementVector();
         //player.mRigidbody.velocity = Vector3.zero;
 
         if (player.playerInputActions.Player.Attack.WasPressedThisFrame() && player.TryAttack())

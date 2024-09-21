@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52509bed85784d1489c148005561aa71, type: 3}
+  m_Name: Sword4
+  m_EditorClassIdentifier: 
+  id: Sword4
+  displayName: Iron Pain
+  icon: {fileID: 21300000, guid: 08d5ec2d201ece949a5e428ba3ea0e63, type: 3}
+  goldPrice: 100
+  quantity: 1
+  isStackable: 0
+  colorMultiplier: {r: 0, g: 0, b: 0, a: 0}
+  itemModifiers:
+  - ItemModifier: {fileID: 11400000, guid: c461534a09eeb6d49bbcf4a6ec369449, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 0279d26a92bc17040829ea92586c9462, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 8b4dc6cb7bca8cc47bc4b931022e1cf2, type: 2}
+    level: 5
+  equipSlot: 5
+  EquipableItemPrefab: {fileID: 100000, guid: 5ecbb52257b2baa43805a79a4457dea7, type: 3}

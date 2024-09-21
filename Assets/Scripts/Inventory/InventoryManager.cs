@@ -1,12 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class InventoryManager : MonoBehaviour
 {
-    private const int MaxItems = 30; // Límite máximo de ítems
-    private const int InventoryWidth = 6; // Ancho de la cuadrícula del inventario
-    private const int InventoryHeight = 5; // Altura de la cuadrícula del inventario
+    private const int MaxItems = 30;
+    private const int InventoryWidth = 6;
+    private const int InventoryHeight = 5;
     [SerializeField] private int currentItemControllerCount = 0;
 
     private int currentSelectionIndex = 0;
@@ -16,25 +15,26 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Transform itemContent;
     [SerializeField] private GameObject itemControllerPrefab;
     [SerializeField] private GameObject inventoryCanvas;
-    [SerializeField] public  EquipmentManager equipmentManager;
+    [SerializeField] public EquipmentManager equipmentManager;
     [SerializeField] private SelectedItemUI selectedItemUI;
-
-
 
     private void Start()
     {
         equipmentManager = GetComponent<EquipmentManager>();
+        if (equipmentManager == null)
+        {
+            Debug.LogError("EquipmentManager no está asignado correctamente.");
+        }
         InitializeItemControllerPool(MaxItems);
         inventoryItems.Clear();
         currentItemControllerCount = 0;
         ToggleInventory();
     }
- 
 
     private void Update()
     {
-        if (!inventoryCanvas.activeInHierarchy) return;
-        HandleInput();
+        //if (!inventoryCanvas.activeInHierarchy || equipmentManager == null) return;
+        //HandleInput();
     }
 
     private void InitializeItemControllerPool(int poolSize)
@@ -43,18 +43,17 @@ public class InventoryManager : MonoBehaviour
         {
             GameObject tmpItem = Instantiate(itemControllerPrefab, itemContent);
             tmpItem.SetActive(false);
-            itemControllerPool.Add(tmpItem.GetComponent<ItemController>());
+            ItemController Controller = tmpItem.GetComponent<ItemController>();
+            Controller.Initialize(this);
+            itemControllerPool.Add(Controller);
         }
     }
 
     public void AddItem(ItemData newItem)
     {
-
-        if (newItem == null)
-        {
-            return;
-        }
+        if (newItem == null) return;
         newItem = Instantiate(newItem);
+
         if (newItem.isStackable)
         {
             ItemData existingItem = inventoryItems.Find(item => item.id == newItem.id);
@@ -66,19 +65,18 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // Si el inventario está lleno, no se puede agregar el ítem
         if (inventoryItems.Count >= MaxItems)
         {
             Debug.Log("Inventario lleno");
             return;
         }
 
-        // Agregar el nuevo ítem al inventario
         if (newItem is EquipableItemData equipableItem)
         {
             equipmentManager.InstatiateItem(equipableItem);
             selectedItemUI.AddNewItemToDictionary(equipableItem);
         }
+
         inventoryItems.Add(newItem);
         AssignItemToController(newItem);
     }
@@ -92,8 +90,8 @@ public class InventoryManager : MonoBehaviour
             if (existingItem.quantity <= 0)
             {
                 inventoryItems.Remove(existingItem);
-                if(existingItem is EquipableItemData equipable)
-                { 
+                if (existingItem is EquipableItemData equipable)
+                {
                     selectedItemUI.RemoveItem(equipable);
                 }
                 DeactivateItemController(existingItem);
@@ -115,10 +113,9 @@ public class InventoryManager : MonoBehaviour
         else
         {
             ListItemControllers();
-            HighlightSelectedItem();    
-            inventoryCanvas.SetActive(true); 
+            HighlightSelectedItem();
+            inventoryCanvas.SetActive(true);
         }
-
     }
 
     private void AssignItemToController(ItemData itemData)
@@ -155,7 +152,6 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (ItemController controller in itemControllerPool)
         {
-           // controller.ResetItemController();
             controller.gameObject.SetActive(false);
             currentItemControllerCount = 0;
         }
@@ -172,7 +168,6 @@ public class InventoryManager : MonoBehaviour
 
         currentSelectionIndex += direction;
 
-        // Mantener la selección dentro de los límites de la cuadrícula
         if (currentSelectionIndex < 0)
         {
             currentSelectionIndex = currentItemControllerCount - 1;
@@ -181,30 +176,36 @@ public class InventoryManager : MonoBehaviour
         {
             currentSelectionIndex = 0;
         }
-        /*
-        else if (currentSelectionIndex % InventoryWidth == 0 && direction == -1)
-        {
-            currentSelectionIndex += InventoryWidth - 1;
-        }
-        else if ((currentSelectionIndex + 1) % InventoryWidth == 0 && direction == 1)
-        {
-            currentSelectionIndex -= InventoryWidth - 1;
-        }
-         */
 
         HighlightSelectedItem();
     }
 
-    private void HighlightSelectedItem()
+    public void HighlightSelectedItem()
     {
         if (currentSelectionIndex < inventoryItems.Count)
         {
             var selectedItem = itemControllerPool[currentSelectionIndex];
             selectedItem.SelectItemController();
-            if(selectedItemUI!= null && selectedItem.GetItemData() is EquipableItemData equipable)
+            if (selectedItemUI != null && selectedItem.GetItemData() is EquipableItemData equipable)
             {
                 selectedItemUI.DisplayNewItem(equipable);
             }
+        }
+    }
+    public void HighlightSelectedItemWithMouse(ItemController selectedItem)
+    { 
+        selectedItem.SelectItemController();
+        if (selectedItemUI != null && selectedItem.GetItemData() is EquipableItemData equipable)
+        {
+            selectedItemUI.DisplayNewItem(equipable);
+        }
+    }
+    public void EquipItemWithMouse(ItemController selectedItem)
+    {
+        ItemData itemData = selectedItem.GetItemData();
+        if (itemData is EquipableItemData equipableItem)
+        {
+            equipmentManager?.EquipItem(equipableItem);
         }
     }
 
@@ -216,58 +217,47 @@ public class InventoryManager : MonoBehaviour
             selectedItem.DeselectItemController();
         }
     }
+    public void DeselectItem(ItemController selectedItem)
+    { 
+        selectedItem = itemControllerPool[currentSelectionIndex];
+        selectedItem.DeselectItemController();
+  
+    }
     private void HandleInput()
     {
         if (currentItemControllerCount == 0) return;
+
         if (Input.GetKeyDown(KeyCode.W))
         {
-            MoveSelection(-InventoryWidth); // Mueve hacia arriba
+            MoveSelection(-InventoryWidth);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            MoveSelection(InventoryWidth); // Mueve hacia abajo
+            MoveSelection(InventoryWidth);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            MoveSelection(-1); // Mueve hacia la izquierda
+            MoveSelection(-1);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            MoveSelection(1); // Mueve hacia la derecha
+            MoveSelection(1);
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            EquipSelectedItem(); // Equipar el ítem seleccionado
+            EquipSelectedItem();
         }
     }
+
     private void EquipSelectedItem()
     {
         if (currentSelectionIndex < inventoryItems.Count)
         {
             ItemData selectedItem = inventoryItems[currentSelectionIndex];
-            if (selectedItem != null)
+            if (selectedItem is EquipableItemData equipableItem)
             {
-                if (selectedItem is EquipableItemData equipableItem)
-                { 
-
-                    if (equipmentManager != null)
-                    {
-                        equipmentManager.EquipItem(equipableItem);
-                    }
-                    else
-                    {
-                        Debug.LogError("No se encontró un EquipmentManager en el GameObject.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("El ítem seleccionado no es equipable.");
-                }
+                equipmentManager?.EquipItem(equipableItem);
             }
         }
     }
-
-
- 
-} 
- 
+}

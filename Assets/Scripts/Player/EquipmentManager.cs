@@ -4,10 +4,11 @@ using System.Collections.Generic;
 public class EquipmentManager : MonoBehaviour
 {
     private Dictionary<EquipmentSocket, EquipableItemData> equippedItems = new Dictionary<EquipmentSocket, EquipableItemData>();
-    [SerializeField] public Dictionary<EquipmentSocket, Transform> itemSockets = new Dictionary<EquipmentSocket, Transform>();
+    [SerializeField] public Dictionary<EquipmentSocket, ItemSocketMapping> itemSockets = new Dictionary<EquipmentSocket, ItemSocketMapping>();
 
     [SerializeField]private PlayerController playerController;
 
+    Dictionary<EquipableItemData, GameObject> EquipmentItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
     [SerializeField]
     private List<ItemSocketMapping> itemSocketMappings;
     public WeaponBase weapon;
@@ -17,14 +18,14 @@ public class EquipmentManager : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         foreach (var mapping in itemSocketMappings)
         {
-            itemSockets[mapping.itemType] = mapping.socket;
+            itemSockets[mapping.itemType] = mapping;
         }
     }
     public void InstatiateItem(EquipableItemData aEquipableItem)
     {
-        if (aEquipableItem.EquipableItemPrefab != null && itemSockets.TryGetValue(aEquipableItem.equipSlot, out Transform socket))
+        if (aEquipableItem.EquipableItemPrefab != null && itemSockets.TryGetValue(aEquipableItem.equipSlot, out ItemSocketMapping socket))
         {
-            aEquipableItem.EquipableItemPrefab = Instantiate(aEquipableItem.EquipableItemPrefab, socket);
+            aEquipableItem.EquipableItemPrefab = Instantiate(aEquipableItem.EquipableItemPrefab, socket.socket);
             aEquipableItem.EquipableItemPrefab.SetActive(false);
         }
     }
@@ -64,22 +65,31 @@ public class EquipmentManager : MonoBehaviour
         }
          */
 
-        if (item.EquipableItemPrefab != null && itemSockets.TryGetValue(item.equipSlot, out Transform socket))
+        if (item.EquipableItemPrefab != null && itemSockets.TryGetValue(item.equipSlot, out ItemSocketMapping socket))
         {
-            item.EquipableItemPrefab.SetActive(true); 
+            UIUtilities.AddNewItemToDictionary(item, socket.ItemModelUIParent.transform, EquipmentItemModelsDictionary);
+            if (EquipmentItemModelsDictionary.TryGetValue(item, out GameObject itemModel))
+            {
+                itemModel.SetActive(true);
+            }
+            // socket.ItemModelUI = Instantiate(item.EquipableItemPrefab, socket.ItemModelUIParent.transform);
+            //socket.ItemModelUI.SetActive(true);
+            item.EquipableItemPrefab.SetActive(true);
         }
 
         Debug.Log(item.name + " equipado en el slot " + item.equipSlot);
     }
-
     public void UnequipItem(EquipableItemData item)
     {
         if (item != null && equippedItems.ContainsKey(item.equipSlot))
         {
             item.Unequip(playerController); 
             item.EquipableItemPrefab.SetActive(false);
-            equippedItems.Remove(item.equipSlot);  
-            Debug.Log(item.name + " fue desequipado del slot " + item.equipSlot);
+            equippedItems.Remove(item.equipSlot);
+            if (EquipmentItemModelsDictionary.TryGetValue(item, out GameObject itemModel))
+            {
+                itemModel.SetActive(false);
+            }
         }
     }
 
@@ -94,6 +104,7 @@ public struct ItemSocketMapping
 {
     public EquipmentSocket itemType;
     public Transform socket;
+    public GameObject ItemModelUIParent, ItemModelUI;
 }
 
 

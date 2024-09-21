@@ -51,7 +51,7 @@ public class ChanceToUseASkillOnPerformedModifier : ItemModifierSO, IItemModifie
         int number = Random.Range(0, 100);
         if (number < currentTriggerChance)
         {  
-            player.mSkillManager.UseSkill(skill, player.transform.position);
+            player.mSkillManager.UseSkill(skill, player.transform.forward);
         }
     }
 

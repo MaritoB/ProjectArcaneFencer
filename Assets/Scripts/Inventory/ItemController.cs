@@ -1,9 +1,9 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-    using TMPro;
-    using UnityEngine;
-    using UnityEngine.UI;
-
-public class ItemController : MonoBehaviour
+public class ItemController : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     [SerializeField] TextMeshProUGUI unitPriceText;
     [SerializeField] TextMeshProUGUI itemQuantityText;
@@ -16,17 +16,25 @@ public class ItemController : MonoBehaviour
     [SerializeField] RectTransform itemParent;
     public GameObject UIitem3D = null;
 
+    private InventoryManager inventoryManager;
 
-    public void SetNewItemData(ItemData aItemData) { 
+    // Inicializar el InventoryManager
+    public void Initialize(InventoryManager manager)
+    {
+        inventoryManager = manager;
+    }
+
+    public void SetNewItemData(ItemData aItemData)
+    {
         itemData = aItemData;
         if (itemData is EquipableItemData equipable)
         {
             itemIcon.gameObject.SetActive(false);
             itemQuantityText.gameObject.SetActive(false);
-            if(UIitem3D == null)
+            if (UIitem3D == null)
             {
                 UIitem3D = Instantiate(equipable.EquipableItemPrefab, itemParent);
-                SetLayerForAllChildren(UIitem3D.transform,5);
+                SetLayerForAllChildren(UIitem3D.transform, 5);
             }
             UIitem3D.SetActive(true);
         }
@@ -34,10 +42,10 @@ public class ItemController : MonoBehaviour
         {
             itemIcon.gameObject.SetActive(true);
             itemQuantityText.gameObject.SetActive(true);
-
         }
-        UpdateItemControllerUI(); 
+        UpdateItemControllerUI();
     }
+
     private void SetLayerForAllChildren(Transform parentTransform, int layer)
     {
         parentTransform.gameObject.layer = layer;
@@ -47,18 +55,22 @@ public class ItemController : MonoBehaviour
             SetLayerForAllChildren(child, layer);
         }
     }
+
     public void SelectItemController()
     {
         BackgroundImage.color = HighlitedColor;
     }
+
     public void DeselectItemController()
     {
         BackgroundImage.color = NormalColor;
     }
+
     public Button GetButton()
     {
         return button;
     }
+
     public void UpdateItemControllerUI()
     {
         if (itemData.quantity == 0)
@@ -80,14 +92,40 @@ public class ItemController : MonoBehaviour
     {
         Destroy(UIitem3D);
         itemData = null;
-        /*
-        button.onClick.RemoveAllListeners();
-        unitPriceText.text = "#";
-        itemQuantityText.text = "#"; 
-         */
-    } 
+    }
+
     public ItemData GetItemData()
     {
         return itemData;
+    }
+
+    // Detectar cuando el mouse entra sobre el ítem
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("Mouse sobre el item.");  // Para verificar si funciona
+        if (inventoryManager != null)
+        {
+            inventoryManager.HighlightSelectedItemWithMouse(this);
+        }
+    }
+
+    // Detectar clic (clic derecho en este caso)
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (inventoryManager != null)
+            {
+                inventoryManager.EquipItemWithMouse(this);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (inventoryManager != null)
+        {
+            inventoryManager.DeselectItem(this);
+        }
     }
 }

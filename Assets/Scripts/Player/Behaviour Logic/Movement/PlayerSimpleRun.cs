@@ -4,23 +4,17 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(fileName = "Simple-Run", menuName = "Player Logic/Movement Logic/Simple Run ")]
 public class PlayerSimpleRun : PlayerMovementBase
 {
-    private void HandleMovement(Vector2 aInputVector)
-    {
-        // Crear el vector de movimiento en relación con la orientación de la cámara
-        Vector3 movementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
-        movementVector = Quaternion.Euler(0, player.mCamera.transform.eulerAngles.y, 0) * movementVector;
-
-        // Calcular el valor de giro hacia el mouse
-        float turnAmount = player.RotateAndCalculateTurnTowardMouse();
-
-        // Actualizar la velocidad del personaje
-        Vector3 newVelocity = movementVector * player.playerStats.movementSpeed.GetValue() * Time.deltaTime;
-        newVelocity.y = player.mRigidbody.velocity.y;  // Mantener la componente Y actual
-        player.mRigidbody.velocity = newVelocity;
-
-        // Actualizar el Animator con el movimiento y rotación actuales
-        player.UpdateAnimator(turnAmount, new  Vector2(aInputVector.x,   aInputVector.y));
-    }
+    float movementSpeed;
+    //private void HandleMovement(Vector2 aInputVector)
+    //{ 
+    //    Vector3 movementVector = new Vector3(aInputVector.x, 0, aInputVector.y).normalized;
+    //    movementVector = Quaternion.Euler(0, player.mCamera.transform.eulerAngles.y, 0) * movementVector; 
+    //    float turnAmount = player.RotateAndCalculateTurnTowardMouse(); 
+    //    Vector3 newVelocity = movementVector * movementSpeed * Time.deltaTime;
+    //    newVelocity.y = player.mRigidbody.velocity.y;  // Mantener la componente Y actual
+    //    player.mRigidbody.velocity = newVelocity; 
+    //    player.UpdateAnimator(turnAmount, new  Vector2(aInputVector.x,   aInputVector.y));
+    //}
 
     public override void DoEnterLogic()
     {
@@ -36,6 +30,7 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Attack.started += AttackEvent;
         player.playerInputActions.Player.Block.performed += BlockEvent;
         player.playerInputActions.Player.Inventory.performed += InventoryEvent;
+        movementSpeed = player.playerStats.movementSpeed.GetValue();
 
     }
     public void InputCleanUp()
@@ -109,7 +104,7 @@ public class PlayerSimpleRun : PlayerMovementBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-        HandleMovement(player.playerInputActions.Player.Movement.ReadValue<Vector2>());
+        player.HandleMovement(movementSpeed);
     }
 
     public override void ResetValues()

@@ -6,6 +6,7 @@ public class ProjectileBehaviour : MonoBehaviour
 {
     IProjectileOnHitEffect OnHitEffect;
     IProjectileAfterHitEffect AfterHitEffect;
+    [SerializeField] Transform Effects;
     // Start is called before the first frame update
     [SerializeField] float _baseProjectilSpeed;
     [SerializeField] float _lifeTime;
@@ -47,6 +48,7 @@ public class ProjectileBehaviour : MonoBehaviour
         gameObject.SetActive(true);
         transform.position = OriginPosition; 
         _currentLifeTime = _lifeTime;
+        transform.forward = -aDirection;
         _rigidBody.velocity = aDirection * _baseProjectilSpeed;
     }
     public void ChangeDirection(Vector3 aNewTargetPosition)
@@ -72,6 +74,10 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         AfterHitEffect.ResetAfterHitEffect();
         gameObject.SetActive(true);
+        if(Effects != null)
+        {
+            Effects.gameObject.SetActive(true);
+        }
         _meshRenderer.enabled = true;
         _sphereCollider.enabled = true;
         _currentLifeTime = _lifeTime;
@@ -110,6 +116,10 @@ public class ProjectileBehaviour : MonoBehaviour
     public void DisableProjectile()
     {
         _meshRenderer.enabled = false;
+        if (Effects != null)
+        {
+            Effects.gameObject.SetActive(false);
+        }
         _sphereCollider.enabled = false;
         _rigidBody.velocity = Vector3.zero;
         isReadyToDisable = true;

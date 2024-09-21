@@ -48,7 +48,9 @@ public static class StatTypeExtensions
         { StatType.LightningResistance, "Lightning Resistance" },
         { StatType.FireballLevel, "Fireball Level" },
         { StatType.IceNovaLevel, "Ice Nova Level" },
-        { StatType.ChainLightningLevel, "Chain Lightning Level" } 
+        { StatType.ChainLightningLevel, "Chain Lightning Level" },
+        { StatType.KnockbackLevel, "Knockback Level" }
+
     };
 
     // Método de extensión para obtener el nombre de un stat basado en StatType
