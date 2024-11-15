@@ -5,20 +5,25 @@ public class EquipmentManager : MonoBehaviour
 {
     private Dictionary<EquipmentSocket, EquipableItemData> equippedItems = new Dictionary<EquipmentSocket, EquipableItemData>();
     [SerializeField] public Dictionary<EquipmentSocket, ItemSocketMapping> itemSockets = new Dictionary<EquipmentSocket, ItemSocketMapping>();
-
     [SerializeField]private PlayerController playerController;
-
     Dictionary<EquipableItemData, GameObject> EquipmentItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
     [SerializeField]
     private List<ItemSocketMapping> itemSocketMappings;
-    public WeaponBase weapon;
-
+    public WeaponBase weapon; 
+    [SerializeField] private StatsUI statsUI;
     private void Start()
     {
         playerController = GetComponentInParent<PlayerController>();
         foreach (var mapping in itemSocketMappings)
         {
             itemSockets[mapping.itemType] = mapping;
+        }
+        if (statsUI != null)
+        {
+            statsUI.DisplayStast();
+            playerController.UpdateStaminaUI();
+            playerController.UpdateHealthUI();
+
         }
     }
     public void InstatiateItem(EquipableItemData aEquipableItem)
@@ -75,8 +80,14 @@ public class EquipmentManager : MonoBehaviour
             // socket.ItemModelUI = Instantiate(item.EquipableItemPrefab, socket.ItemModelUIParent.transform);
             //socket.ItemModelUI.SetActive(true);
             item.EquipableItemPrefab.SetActive(true);
-        }
+        } 
+        if (statsUI != null)
+        {
+            statsUI.DisplayStast();
+            playerController.UpdateStaminaUI();
+            playerController.UpdateHealthUI();
 
+        }
         Debug.Log(item.name + " equipado en el slot " + item.equipSlot);
     }
     public void UnequipItem(EquipableItemData item)
@@ -90,6 +101,12 @@ public class EquipmentManager : MonoBehaviour
             {
                 itemModel.SetActive(false);
             }
+        }
+        if (statsUI != null)
+        {
+            statsUI.DisplayStast();
+            playerController.UpdateStaminaUI();
+            playerController.UpdateHealthUI();
         }
     }
 

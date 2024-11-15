@@ -115,6 +115,18 @@ public class PlayerInGameUI : MonoBehaviour
         }
         animator.SetTrigger("FadeInLoadNextLevel");
     }
+    public void FadeInTeleportNextLevel()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        animator.SetTrigger("FadeInTeleport");
+    }
+    public void TeleportPlayer()
+    {
+        playerController.Teleport();
+    }
 
     public void UpdateCurrentHealthUI(float aCurrentHealth, float aMaxHealth)
     {
@@ -127,7 +139,7 @@ public class PlayerInGameUI : MonoBehaviour
             float HealthPercentage = aCurrentHealth / aMaxHealth;
             CurrentHealthSize.x = HealthPercentage * MaxHealthSize.x;
             CurrentHealth.sizeDelta = CurrentHealthSize;
-            HealthText.text = aCurrentHealth +"/"+ aMaxHealth;
+            HealthText.text =(int) aCurrentHealth +"/"+ aMaxHealth;
         }
     }
     public void UpdateCurrentStaminaUI(float aCurrentStamina, float aMaxStamina)

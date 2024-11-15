@@ -25,6 +25,7 @@ public class CharacterStats : MonoBehaviour
     private Dictionary<StatType, Stat> statMap;
     private Dictionary<DamageType, StatType> ResistanceDictionary;
 
+
     private void Awake()
     {
         statMap = new Dictionary<StatType, Stat>
@@ -83,5 +84,9 @@ public class CharacterStats : MonoBehaviour
         {
             modifier.Remove(stat);
         }
+    }
+    public Dictionary<StatType, Stat> GetStats()
+    {
+        return statMap;
     }
 }

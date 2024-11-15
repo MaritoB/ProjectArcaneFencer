@@ -13,7 +13,9 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
     public PlayerController playerController;
     public Transform BossCamera;
     public Transform FocusPoint;
+    public bool SpawnPause = false;
     // Start is called before the first frame update
+    public PortalBehaviour TPtoBase;
     void Start()
     {
         InfiniteHorde.enemies.Clear();
@@ -75,6 +77,7 @@ public class InfiniteRoomEvent : MonoBehaviour, IOwner
                 playerController.LevelUP();
                 BossCamera.gameObject.SetActive(false);
                 AudioManager.instance.FinishBossMusic();
+                TPtoBase.ActivatePortal();
             }
             if ((CurrentLevel % 5) == 0)
             {

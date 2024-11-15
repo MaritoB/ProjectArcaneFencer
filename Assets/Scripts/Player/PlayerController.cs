@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] Transform SwordTransform;
     [SerializeField] Transform SwordPS;
     public Transform AttackTransform;
+    public Vector3 PositionToTeleport;
     public void LevelUP()
     {
         CurrentLevel++;
@@ -110,6 +111,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void LoadNextLevel()
     {
         inGameUI.FadeInLoadNextLevel();
+    }
+    public void FadeToTeleport(Vector3 aPoint)
+    {
+        inGameUI.FadeInTeleportNextLevel();
+        // check?
+        PositionToTeleport = aPoint;
+    }
+    public void Teleport()
+    { 
+        transform.position = PositionToTeleport;
     }
     public void Initialize()
     {
@@ -441,7 +452,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerStats.maxHealth.GetValue());
         }
     }
-
+    public void UpdateHealthUI()
+    {
+        if (inGameUI != null)
+        {
+            inGameUI.UpdateCurrentHealthUI(CurrentHealth, playerStats.maxHealth.GetValue());
+        }
+    }
   /*
     public void TakeDamage(AttackInfo aAttackInfo, GameObject aSource)
     {
