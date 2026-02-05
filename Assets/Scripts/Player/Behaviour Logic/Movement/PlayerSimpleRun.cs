@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,9 +31,18 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Attack.started += AttackEvent;
         player.playerInputActions.Player.Block.performed += BlockEvent;
         player.playerInputActions.Player.Inventory.performed += InventoryEvent;
+        player.playerInputActions.Player.Close.performed += CloseUI;
+
         movementSpeed = player.playerStats.movementSpeed.GetValue();
 
     }
+
+    private void CloseUI(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.HideAll();
+        player.inventory.CloseInventory();
+    }
+
     public void InputCleanUp()
     {
         player.playerInputActions.Player.Dash.performed -= DashEvent;
@@ -40,6 +50,7 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Attack.started -= AttackEvent;
         player.playerInputActions.Player.Block.performed -= BlockEvent;
         player.playerInputActions.Player.Inventory.performed -= InventoryEvent;
+        player.playerInputActions.Player.Close.performed -= CloseUI;
     }
     private void BlockEvent(InputAction.CallbackContext context)
     {

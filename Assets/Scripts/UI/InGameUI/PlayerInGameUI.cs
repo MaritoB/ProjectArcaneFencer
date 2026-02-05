@@ -30,11 +30,7 @@ public class PlayerInGameUI : MonoBehaviour
         MaxStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
         CurrentHealthSize = new Vector2(MaxHealth.rect.width, MaxHealth.rect.height);
         CurrentStaminaSize = new Vector2(MaxStamina.rect.width, MaxStamina.rect.height);
-        if (RemainingPoints > 0)
-        {
-            //SetupSkillUI();
 
-        } 
     }
     public void SetPlayer(PlayerController playerController)
     {
@@ -130,12 +126,13 @@ public class PlayerInGameUI : MonoBehaviour
 
     public void UpdateCurrentHealthUI(float aCurrentHealth, float aMaxHealth)
     {
-        if (aCurrentHealth < 0)
-        {
-            aCurrentHealth = 0;
-        }
+        
         if (CurrentHealth != null)
         {
+            if (aCurrentHealth < 0)
+            {
+                aCurrentHealth = 0;
+            }
             float HealthPercentage = aCurrentHealth / aMaxHealth;
             CurrentHealthSize.x = HealthPercentage * MaxHealthSize.x;
             CurrentHealth.sizeDelta = CurrentHealthSize;
@@ -144,12 +141,12 @@ public class PlayerInGameUI : MonoBehaviour
     }
     public void UpdateCurrentStaminaUI(float aCurrentStamina, float aMaxStamina)
     {
-        if (aCurrentStamina < 0)
-        {
-            aCurrentStamina = 0;
-        }
         if (CurrentStamina != null)
         {
+            if (aCurrentStamina < 0)
+            {
+                aCurrentStamina = 0;
+            }
             float staminaPercentage = aCurrentStamina / aMaxStamina;
             CurrentStaminaSize.x = staminaPercentage * MaxStaminaSize.x;
             CurrentStamina.sizeDelta = CurrentStaminaSize;
@@ -169,24 +166,5 @@ public class PlayerInGameUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManagerSingleton.Instance.LoadScene(0);
-    }
-    /*
-    internal void ApplyNewWeaponModifier(WeaponModifierSO aMod)
-    {
-        playerController.inventory.equipmentManager.weapon.ApplyNewWeaponModifier(aMod);
-        RemainingPoints--;
-        if(RemainingPoints > 0) 
-        {
-            //SetupSkillUI();
-        }
-        else{
-            CloseModifiersPanel();
-        }
-    }
-     */
-    void CloseModifiersPanel()
-    {
-        aWeaponModPanel.gameObject.SetActive(false);
-        Time.timeScale = 1f;
-    }
+    } 
 }

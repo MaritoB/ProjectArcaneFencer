@@ -107,6 +107,18 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerInputActions.Player.Enable();
         Initialize();
     }
+    public void DisableInputs()
+    {
+        playerInputActions.Player.Disable();
+        playerInputActions.Player.Close.Enable();
+
+    }
+    public void EnableInputs()
+    {
+        playerInputActions.Player.Enable(); 
+        playerInputActions.Player.Close.Enable();
+
+    }
 
     public void LoadNextLevel()
     {
@@ -553,6 +565,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
     }
+   
     public bool TryAttack()
     {
         if (!CanAttack)

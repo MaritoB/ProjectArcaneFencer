@@ -23,20 +23,13 @@ public class InventoryManager : MonoBehaviour
         equipmentManager = GetComponent<EquipmentManager>();
         if (equipmentManager == null)
         {
-            Debug.LogError("EquipmentManager no está asignado correctamente.");
+            Debug.LogError("EquipmentManager no estï¿½ asignado correctamente.");
         }
         InitializeItemControllerPool(MaxItems);
         inventoryItems.Clear();
         currentItemControllerCount = 0;
-        ToggleInventory();
+        //ToggleInventory();
     }
-
-    private void Update()
-    {
-        //if (!inventoryCanvas.activeInHierarchy || equipmentManager == null) return;
-        //HandleInput();
-    }
-
     private void InitializeItemControllerPool(int poolSize)
     {
         for (int i = 0; i < poolSize; i++)
@@ -107,15 +100,19 @@ public class InventoryManager : MonoBehaviour
     {
         if (inventoryCanvas.activeInHierarchy)
         {
-            DeselectItem();
-            inventoryCanvas.SetActive(false);
+            CloseInventory();
         }
         else
         {
             ListItemControllers();
-            HighlightSelectedItem();
-            inventoryCanvas.SetActive(true);
+            HighlightSelectedItem(); 
+            UIManager.Instance.OpenInvetory();
         }
+    }
+    public void CloseInventory()
+    { 
+        DeselectItem();
+        UIManager.Instance.CloseInventory();
     }
 
     private void AssignItemToController(ItemData itemData)

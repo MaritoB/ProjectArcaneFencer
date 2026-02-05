@@ -44,17 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2750fff1e22ed6d43bef54fd22f8e8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicVolumen: 0.05
   MusicCombatBase:
     Guid:
-      Data1: 715864504
-      Data2: 1256982595
-      Data3: -52502107
-      Data4: -36607540
-    Path: event:/Music/GameMusic
+      Data1: 358964581
+      Data2: 1301258918
+      Data3: 1701757341
+      Data4: 458983843
+    Path: event:/Music/Combat
   MusicBoss:
     Guid:
-      Data1: 1101702499
-      Data2: 1336520378
-      Data3: 1767935642
-      Data4: 1163611943
-    Path: event:/Music/BossMusic
+      Data1: 617612549
+      Data2: 1331717150
+      Data3: -323470662
+      Data4: -1492718675
+    Path: event:/Music/Boss
+  BossVolumen: 0.7

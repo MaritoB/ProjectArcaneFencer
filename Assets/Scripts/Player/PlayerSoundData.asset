@@ -56,11 +56,11 @@ MonoBehaviour:
     Path: event:/Player/Dash
   PlayerShield:
     Guid:
-      Data1: 435673196
-      Data2: 1195132529
-      Data3: 69341060
-      Data4: 1972732464
-    Path: event:/Player/Shield
+      Data1: 1842758619
+      Data2: 1135041144
+      Data3: -1900926543
+      Data4: -2018979608
+    Path: event:/Enemy/Block
   PlayerParry:
     Guid:
       Data1: -599296036

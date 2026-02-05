@@ -21,8 +21,8 @@ public class EquipmentManager : MonoBehaviour
         if (statsUI != null)
         {
             statsUI.DisplayStast();
-            playerController.UpdateStaminaUI();
-            playerController.UpdateHealthUI();
+           // playerController.UpdateStaminaUI();
+           // playerController.UpdateHealthUI();
 
         }
     }
