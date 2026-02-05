@@ -26,14 +26,13 @@ public class ItemPickUp : MonoBehaviour
     {
         foreach (var item in mItems)
         {
-            inventory.AddItem(item);
+            if(inventory.AddItem(item)) gameObject.SetActive(false);
             if(item.id == "Gold")
             {
                 PopupTextPool.Instance.ShowPopUpGoldPickUp(transform.position +Vector3.down, item.quantity.ToString());
 
             }
-        }
-        gameObject.SetActive(false);
+        } 
     }
     private void OnTriggerEnter(Collider other)
     {

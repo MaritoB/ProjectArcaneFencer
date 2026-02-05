@@ -33,7 +33,7 @@ public class ItemController : MonoBehaviour, IPointerEnterHandler, IPointerClick
             itemQuantityText.gameObject.SetActive(false);
             if (UIitem3D == null)
             {
-                UIitem3D = Instantiate(equipable.EquipableItemPrefab, itemParent);
+                UIitem3D = Instantiate(equipable.EquipableItemPrefab, itemParent); 
                 SetLayerForAllChildren(UIitem3D.transform, 5);
             }
             UIitem3D.SetActive(true);

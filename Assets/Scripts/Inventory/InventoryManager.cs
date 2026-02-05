@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
-    private const int MaxItems = 30;
+    private const int MaxItems = 15;
     private const int InventoryWidth = 6;
     private const int InventoryHeight = 5;
     [SerializeField] private int currentItemControllerCount = 0;
@@ -35,16 +35,16 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject tmpItem = Instantiate(itemControllerPrefab, itemContent);
-            tmpItem.SetActive(false);
+            //tmpItem.SetActive(false);
             ItemController Controller = tmpItem.GetComponent<ItemController>();
             Controller.Initialize(this);
             itemControllerPool.Add(Controller);
         }
     }
 
-    public void AddItem(ItemData newItem)
+    public bool AddItem(ItemData newItem)
     {
-        if (newItem == null) return;
+        if (newItem == null) return false;
         newItem = Instantiate(newItem);
 
         if (newItem.isStackable)
@@ -54,14 +54,14 @@ public class InventoryManager : MonoBehaviour
             {
                 existingItem.quantity += newItem.quantity;
                 UpdateItemControllerUI(existingItem);
-                return;
+                return true;
             }
         }
 
         if (inventoryItems.Count >= MaxItems)
         {
             Debug.Log("Inventario lleno");
-            return;
+            return false;
         }
 
         if (newItem is EquipableItemData equipableItem)
@@ -72,6 +72,9 @@ public class InventoryManager : MonoBehaviour
 
         inventoryItems.Add(newItem);
         AssignItemToController(newItem);
+
+        Debug.Log("item quantity:"+ inventoryItems.Count);
+        return true;
     }
 
     public void RemoveItem(ItemData itemToRemove, int quantityToRemove)
@@ -132,7 +135,7 @@ public class InventoryManager : MonoBehaviour
         if (controller != null)
         {
             controller.ResetItemController();
-            controller.gameObject.SetActive(false);
+            //controller.gameObject.SetActive(false);
         }
     }
 
@@ -219,33 +222,7 @@ public class InventoryManager : MonoBehaviour
         selectedItem = itemControllerPool[currentSelectionIndex];
         selectedItem.DeselectItemController();
   
-    }
-    private void HandleInput()
-    {
-        if (currentItemControllerCount == 0) return;
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            MoveSelection(-InventoryWidth);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            MoveSelection(InventoryWidth);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            MoveSelection(-1);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            MoveSelection(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            EquipSelectedItem();
-        }
-    }
-
+    } 
     private void EquipSelectedItem()
     {
         if (currentSelectionIndex < inventoryItems.Count)
