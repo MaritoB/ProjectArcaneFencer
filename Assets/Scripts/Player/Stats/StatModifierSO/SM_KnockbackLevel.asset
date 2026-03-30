@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7373de92625e1e749bf5dad4166932db, type: 3}
   m_Name: SM_KnockbackLevel
   m_EditorClassIdentifier: 
-  statType: 19
+  statType: 20
   value: 1

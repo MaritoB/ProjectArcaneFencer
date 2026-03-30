@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7373de92625e1e749bf5dad4166932db, type: 3}
   m_Name: SM_ChainLightningLevel
   m_EditorClassIdentifier: 
-  statType: 18
+  statType: 19
   value: 1

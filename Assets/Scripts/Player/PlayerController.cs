@@ -1,4 +1,4 @@
-
+ï»¿
 using SkeletonEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -319,18 +319,34 @@ public class PlayerController : MonoBehaviour, IDamageable
         Vector2 InputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
         Vector3 movementVector = new Vector3(InputVector.x, 0, InputVector.y).normalized;
         movementVector = Quaternion.Euler(0, mCamera.transform.eulerAngles.y, 0) * movementVector;
-        float turnAmount = RotateAndCalculateTurnTowardMouse();
-        Vector3 newVelocity = movementVector * movementSpeed * Time.deltaTime;
+        float turnAmount = RotateAndCalculateTurnTowardMouse(); 
+        Vector3 mouseDirection = GetMouseDirection(); // Necesitas devolver esta direcciÃ³n desde tu mÃ©todo
+
+        // ðŸ”¹ Calcular alineaciÃ³n
+        float alignment = Vector3.Dot(movementVector.normalized, mouseDirection.normalized);
+
+        // ðŸ”¹ Si se mueve hacia el mouse, aumentar velocidad
+        float speedMultiplier = 1f;
+
+        if (alignment > 0.7f) // Ajusta este valor (0.8 â‰ˆ 36Â° de diferencia)
+        {
+            speedMultiplier = 1.25f; // Corre mÃ¡s rÃ¡pido
+        }
+        if (alignment < -0.7f) // Ajusta este valor (0.8 â‰ˆ 36Â° de diferencia)
+        {
+            speedMultiplier = 0.8f; // Corre mÃ¡s lento
+        }
+        Vector3 newVelocity = movementVector * movementSpeed * speedMultiplier * Time.deltaTime;
         newVelocity.y = mRigidbody.velocity.y;  // Mantener la componente Y actual
         mRigidbody.velocity = newVelocity;
         UpdateAnimator(turnAmount, new Vector2(InputVector.x, InputVector.y));
     }
     public void UpdateAnimator(float turnAmount, Vector2 inputVector)
     {
-        // Magnitud total de la velocidad para controlar la animación de movimiento
+        // Magnitud total de la velocidad para controlar la animaciÃ³n de movimiento
         float velocityMagnitude = mRigidbody.velocity.magnitude;
 
-        // Obtener la dirección de la cámara en el plano XZ
+        // Obtener la direcciÃ³n de la cÃ¡mara en el plano XZ
         Vector3 cameraForward = mCamera.transform.forward;
         cameraForward.y = 0; // Ignorar componente Y
         cameraForward.Normalize();
@@ -339,64 +355,83 @@ public class PlayerController : MonoBehaviour, IDamageable
         cameraRight.y = 0; // Ignorar componente Y
         cameraRight.Normalize();
 
-        // Crear el vector de movimiento en relación con la entrada del usuario
+        // Crear el vector de movimiento en relaciÃ³n con la entrada del usuario
         Vector3 movementDirection = new Vector3(inputVector.x, 0, inputVector.y).normalized;
 
-        // Transformar el vector de movimiento en el espacio de la cámara
+        // Transformar el vector de movimiento en el espacio de la cÃ¡mara
         Vector3 adjustedMovementDirection = cameraForward * movementDirection.z + cameraRight * movementDirection.x;
 
-        // Obtener el "forward" y "right" en función de la orientación del personaje
+        // Obtener el "forward" y "right" en funciÃ³n de la orientaciÃ³n del personaje
         float forwardMovement = Vector3.Dot(adjustedMovementDirection, transform.forward);
         float rightMovement = Vector3.Dot(adjustedMovementDirection, transform.right);
 
-        // Asegurarse de que los valores sean correctos y no estén invertidos
-        // Dependiendo de la rotación del jugador en relación a la cámara, puede ser necesario invertir el signo.
+        // Asegurarse de que los valores sean correctos y no estÃ©n invertidos
+        // Dependiendo de la rotaciÃ³n del jugador en relaciÃ³n a la cÃ¡mara, puede ser necesario invertir el signo.
         forwardMovement = Mathf.Clamp(forwardMovement, -1f, 1f);
         rightMovement = Mathf.Clamp(rightMovement, -1f, 1f);
 
         // Actualizar las variables en el Animator
         animator.SetFloat("Velocity", velocityMagnitude);
-        animator.SetFloat("ForwardMovement", forwardMovement);  // Movimiento hacia adelante o atrás
+        animator.SetFloat("ForwardMovement", forwardMovement);  // Movimiento hacia adelante o atrÃ¡s
         animator.SetFloat("RightMovement", rightMovement);      // Movimiento lateral (strafe)
         animator.SetFloat("Turn", turnAmount);                  // Turno es el valor de giro calculado previamente
     }
 
 
     public float RotateAndCalculateTurnTowardMouse()
-    {
-        // Crear un rayo desde la posición de la cámara hacia la posición del mouse
+    { 
+        /*
+         */
+        // Crear un rayo desde la posiciÃ³n de la cÃ¡mara hacia la posiciÃ³n del mouse
         Ray ray = mCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Detectar el suelo para obtener la posición de destino (asegúrate de que el suelo esté en la capa GroundLayer)
+        // Detectar el suelo para obtener la posiciÃ³n de destino (asegÃºrate de que el suelo estÃ© en la capa GroundLayer)
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, GroundLayer))
         {
-            // Obtener la posición en el suelo donde el mouse apunta
+            // Obtener la posiciÃ³n en el suelo donde el mouse apunta
             Vector3 targetPosition = hit.point;
             targetPosition.y = transform.position.y; // Mantener la misma altura del personaje
 
-            // Dirección hacia la que queremos rotar
+            // DirecciÃ³n hacia la que queremos rotar
             Vector3 directionToLook = (targetPosition - transform.position).normalized;
 
             if (directionToLook != Vector3.zero)
             {
-                // Calcular la rotación deseada hacia la dirección del mouse
+                // Calcular la rotaciÃ³n deseada hacia la direcciÃ³n del mouse
                 Quaternion targetRotation = Quaternion.LookRotation(directionToLook);
 
-                // Aplicar suavemente la rotación con la velocidad de rotación definida
+                // Aplicar suavemente la rotaciÃ³n con la velocidad de rotaciÃ³n definida
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-                // Calcular el ángulo entre la dirección actual y la dirección hacia el mouse
+                // Calcular el Ã¡ngulo entre la direcciÃ³n actual y la direcciÃ³n hacia el mouse
                 float angleToMouse = Vector3.SignedAngle(transform.forward, directionToLook, Vector3.up);
 
-                // Normalizar el ángulo entre -1 y 1 (para el Animator)
-                return Mathf.Clamp(angleToMouse / 180f, -1f, 1f); // Normaliza el ángulo entre -1 y 1
+                // Normalizar el Ã¡ngulo entre -1 y 1 (para el Animator)
+                return Mathf.Clamp(angleToMouse / 180f, -1f, 1f); // Normaliza el Ã¡ngulo entre -1 y 1
             }
         }
 
-        return 0f; // Si no golpea nada, no hay rotación
+        return 0f; // Si no golpea nada, no hay rotaciÃ³n
     }
+    public Vector3 GetMouseDirection()
+    {
+        Ray ray = mCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, GroundLayer))
+        {
+            Vector3 targetPosition = hit.point;
+            targetPosition.y = transform.position.y;
+
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            direction.y = 0;
+
+            return direction;
+        }
+
+        return Vector3.zero;
+    }
 
     public void TakeDamage(AttackInfo aAttackInfo)
     {

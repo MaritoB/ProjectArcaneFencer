@@ -106,6 +106,7 @@ public class ItemController : MonoBehaviour, IPointerEnterHandler, IPointerClick
         if (inventoryManager != null)
         {
             inventoryManager.HighlightSelectedItemWithMouse(this);
+            SelectItemController();
         }
     }
 
@@ -126,6 +127,7 @@ public class ItemController : MonoBehaviour, IPointerEnterHandler, IPointerClick
         if (inventoryManager != null)
         {
             inventoryManager.DeselectItem(this);
+            DeselectItemController();
         }
     }
 }

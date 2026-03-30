@@ -15,5 +15,5 @@ MonoBehaviour:
   modifierName: 
   modifierDescription: 
   modifierLevel: 0
-  modifierSprite: {fileID: 0}
+  ModifierTypes: 0100000007000000
   modifier: {fileID: 11400000, guid: 93568018613a6c54dabc1cdc45bc4a82, type: 2}

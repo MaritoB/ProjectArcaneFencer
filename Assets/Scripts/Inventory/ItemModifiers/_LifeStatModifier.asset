@@ -15,5 +15,5 @@ MonoBehaviour:
   modifierName: Increase Life
   modifierDescription: 
   modifierLevel: 0
-  modifierSprite: {fileID: 0}
+  ModifierTypes: 06000000
   modifier: {fileID: 11400000, guid: 8bf9b19bcac849845a8d1f9faf99662c, type: 2}

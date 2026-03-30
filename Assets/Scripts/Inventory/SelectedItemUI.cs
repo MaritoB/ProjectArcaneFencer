@@ -11,7 +11,7 @@ public class SelectedItemUI : MonoBehaviour
     public GameObject ItemModelUIParent, ItemModelUI;
     [SerializeField] TMPro.TextMeshProUGUI ItemName;
     TMPro.TextMeshProUGUI[] ModifierTexts;
-    Dictionary<EquipableItemData, GameObject> ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
+   // Dictionary<EquipableItemData, GameObject> ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
     EquipableItemData DisplayedItem;
 
     private void Awake()
@@ -33,13 +33,13 @@ public class SelectedItemUI : MonoBehaviour
         }
     }
 
+    /*
     private void FixedUpdate()
     {
         if (ItemModelUIParent == null) return;
         ItemModelUIParent.transform.Rotate(Vector3.left, rotationSpeed * Time.fixedDeltaTime);
     }
 
-    /*
     public void RemoveItem(EquipableItemData itemToRemove)
     {
         if (itemToRemove == null) return;
@@ -75,14 +75,14 @@ public class SelectedItemUI : MonoBehaviour
             SetLayerForAllChildren(child, layer);
         }
     }
-     */
     public void AddNewItemToDictionary(EquipableItemData aNewItemEquipable)
     {
         UIUtilities.AddNewItemToDictionary(aNewItemEquipable, ItemModelUIParent.transform, ItemModelsDictionary);
     }
+     */
     public void RemoveItem(EquipableItemData itemToRemove)
     {
-        UIUtilities.RemoveItemFromDictionary(itemToRemove, ItemModelsDictionary);
+        //UIUtilities.RemoveItemFromDictionary(itemToRemove, ItemModelsDictionary);
         ClearItem();
     }
     public void DisplayNewItem(EquipableItemData aNewItem)
@@ -101,23 +101,25 @@ public class SelectedItemUI : MonoBehaviour
             }
             if (aNewItem.itemModifiers[i].ItemModifier is IItemModifier modifier)
             {
-                ModifierTexts[i].text = modifier.GetDescription(aNewItem.itemModifiers[i].level);
+                ModifierTexts[i].text = "|+| "+modifier.GetDescription(aNewItem.itemModifiers[i].level);
             }
             ModifierTexts[i].gameObject.SetActive(true);
         }
-
+        /*
         if (ItemModelsDictionary.TryGetValue(aNewItem, out GameObject itemModel))
         {
             itemModel.SetActive(true);
         }
+         */
     }
 
     private void ClearItem()
-    {
+    { /*
         foreach (var model in ItemModelsDictionary.Values)
         {
             model.SetActive(false);
         }
+       */
 
         ItemName.text = "";
 

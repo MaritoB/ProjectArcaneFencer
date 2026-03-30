@@ -46,12 +46,25 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] int CriticalChance;
     [SerializeField] int attackStaminaCost;
     [SerializeField] int currentDamage;
+    [SerializeField] MeshRenderer EffectMesh;
 
     AttackInfo attackInfo;
     private void Start()
     {
         currentDamage = baseDamage;
     }
+    public void ChangeEffectMaterial(Material aMaterial)
+    {
+        if (aMaterial == null)
+        {
+            EffectMesh.gameObject.SetActive(false);
+        }
+        else
+        {   
+            EffectMesh.material = aMaterial;
+        }
+    }
+
     public void SubscribeToEvent(HitEventTypes eventType, HitEventDelegate handler)
     {
         if (handler == null)

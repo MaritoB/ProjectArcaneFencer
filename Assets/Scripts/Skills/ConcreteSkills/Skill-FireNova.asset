@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6154f0abc7e160646b1ee9fffe0486d1, type: 3}
+  m_Name: Skill-FireNova
+  m_EditorClassIdentifier: 
+  mPlayer: {fileID: 0}
+  skill: 4
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  FireNovaEffectPrefab: {fileID: 1337242488471618507, guid: b42474b5a26e02049b09e21303bc312a,
+    type: 3}
+  FireNovaSfx:
+    Guid:
+      Data1: -1424687256
+      Data2: 1204987129
+      Data3: -1426061122
+      Data4: 446753247
+    Path: event:/Enemy/EnemyAttack 2
+  RadiusBase: 0.5
+  RadiusMultiplier: 0.1
+  DamageBase: 10
+  DamageMultiplier: 5

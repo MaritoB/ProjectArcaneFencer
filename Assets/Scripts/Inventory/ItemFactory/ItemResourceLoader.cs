@@ -8,13 +8,29 @@ public class ItemResourceLoader : MonoBehaviour
     [SerializeField] private List<GameObject> weaponPrefabs;
     [SerializeField] private List<GameObject> shieldPrefabs;
 
- 
+
     public List<ItemModifierSO> GetRandomModifiers(int numberOfModifiers)
     {
         if (itemModifiers == null || itemModifiers.Count == 0) return new List<ItemModifierSO>();
 
         // Shuffle the list using Fisher-Yates algorithm
         List<ItemModifierSO> shuffledModifiers = new List<ItemModifierSO>(itemModifiers);
+        for (int i = shuffledModifiers.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            ItemModifierSO temp = shuffledModifiers[i];
+            shuffledModifiers[i] = shuffledModifiers[j];
+            shuffledModifiers[j] = temp;
+        }
+
+        return shuffledModifiers.GetRange(0, Mathf.Clamp(numberOfModifiers, 1, shuffledModifiers.Count));
+    }
+    public List<ItemModifierSO> GetRandomModifiers(int numberOfModifiers, ModifierType TypeFilter)
+    {
+        if (itemModifiers == null || itemModifiers.Count == 0) return new List<ItemModifierSO>();
+
+        // Shuffle the list using Fisher-Yates algorithm
+        List<ItemModifierSO> shuffledModifiers = new List<ItemModifierSO>(itemModifiers.FindAll(x=> x.isThisType(TypeFilter)));
         for (int i = shuffledModifiers.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);

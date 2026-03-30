@@ -3,10 +3,11 @@ using UnityEngine;
 
 public enum SkillEnum
 {
-    IceNova,
     ChainLightning,
     Fireball,
-    Knockback
+    IceNova,
+    Knockback,
+    FireNova
 }
 
 public class SkillManager : MonoBehaviour

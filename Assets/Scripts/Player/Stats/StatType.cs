@@ -21,6 +21,7 @@ public enum StatType
     LightningResistance,
     FireballLevel,
     IceNovaLevel,
+    FireNovaLevel,
     ChainLightningLevel,
     KnockbackLevel
 }
@@ -48,6 +49,7 @@ public static class StatTypeExtensions
         { StatType.LightningResistance, "Lightning Resistance" },
         { StatType.FireballLevel, "Fireball Level" },
         { StatType.IceNovaLevel, "Ice Nova Level" },
+        { StatType.FireNovaLevel, "Fire Nova Level" },
         { StatType.ChainLightningLevel, "Chain Lightning Level" },
         { StatType.KnockbackLevel, "Knockback Level" }
 

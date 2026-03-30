@@ -12,7 +12,11 @@ public class WeaponFactory : MonoBehaviour
     [SerializeField] private int maxCriticalChance = 30;
     [SerializeField] private int minAttackStaminaCost = 5;
     [SerializeField] private int maxAttackStaminaCost = 20;
-    [SerializeField] private int maxModifiers = 4;
+    [SerializeField] private int maxModifiers = 6;
+    [SerializeField] private int GoldModifier = 17;
+    private int GoldPrice = 0;
+
+    [SerializeField]  Material FireEffect, ColdEffect, LightningEffect, MagicEffect, PhysicEffect;
 
     public EquipableItemData CreateWeaponItemData()
     {
@@ -37,14 +41,48 @@ public class WeaponFactory : MonoBehaviour
             Debug.LogError("No weapon prefab found.");
             return null;
         }
+        ModifierType aType = (ModifierType)Random.Range(0, 6);
         itemData.name = "new Sword";
         itemData.isStackable = false;
         itemData.id = "newSword";
-        itemData.quantity = 1; 
-        itemData.EquipableItemPrefab = weaponPrefab;
+        itemData.quantity = 1;
+        itemData.EquipableItemPrefab = Instantiate(weaponPrefab);
+        WeaponBase weapon = itemData.EquipableItemPrefab.GetComponent<WeaponBase>(); 
+        if( weapon != null)
+        {
+             
+            switch (aType)
+            {
+                case ModifierType.Fire:
+                    weapon.ChangeEffectMaterial( FireEffect);
+                    itemData.displayName = "Flame";
+                    break;
+                case ModifierType.Cold:
+                    weapon.ChangeEffectMaterial(ColdEffect);
+                    itemData.displayName = "Ice";
+                    break;
+                case ModifierType.Lightning:
+                    weapon.ChangeEffectMaterial(LightningEffect);
+                    itemData.displayName = "Light";
+                    break;
+                case ModifierType.Physic:
+                    weapon.ChangeEffectMaterial(PhysicEffect);
+                    itemData.displayName = "Brutal";
+                    break;
+                case ModifierType.Magic:
+                    weapon.ChangeEffectMaterial(MagicEffect);
+                    itemData.displayName = "Astral ";
+                    break;
+                default:
+                    weapon.ChangeEffectMaterial(null) ;
+                    break;
+            }
 
+        }
         // Set random modifiers
-        List<ItemModifierSO> randomModifiers = resourceLoader.GetRandomModifiers(Random.Range(1, maxModifiers));
+        int nModifiers = Random.Range(1, maxModifiers);
+        List<ItemModifierSO> randomModifiers = resourceLoader.GetRandomModifiers(nModifiers,aType);
+        itemData.goldPrice = nModifiers * GoldModifier;
         itemData.itemModifiers = CreateItemModifierLevels(randomModifiers);
 
         // Example values

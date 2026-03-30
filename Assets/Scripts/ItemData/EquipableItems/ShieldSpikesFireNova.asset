@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52509bed85784d1489c148005561aa71, type: 3}
+  m_Name: ShieldSpikesFireNova
+  m_EditorClassIdentifier: 
+  id: Fire Nova Shield
+  displayName: Fire Nova Shield
+  icon: {fileID: 21300000, guid: a332f9cc2040f6042a04c65fa9e4a000, type: 3}
+  goldPrice: 200
+  quantity: 1
+  isStackable: 0
+  colorMultiplier: {r: 0, g: 0, b: 0, a: 0}
+  itemModifiers:
+  - ItemModifier: {fileID: 11400000, guid: ff30eb3a9c4cf0f44b073b20be919172, type: 2}
+    level: 3
+  - ItemModifier: {fileID: 11400000, guid: 0279d26a92bc17040829ea92586c9462, type: 2}
+    level: 5
+  - ItemModifier: {fileID: 11400000, guid: fe1e3b5580d480e43a3eb2fc8cdadb92, type: 2}
+    level: 5
+  - ItemModifier: {fileID: 11400000, guid: 0077ad6ba47176a4fa7358a39922377a, type: 2}
+    level: 5
+  equipSlot: 6
+  EquipableItemPrefab: {fileID: 100000, guid: 6e99873bbe9ddc947b25719ad431b573, type: 3}

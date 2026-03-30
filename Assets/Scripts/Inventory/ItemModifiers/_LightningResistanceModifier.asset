@@ -15,4 +15,5 @@ MonoBehaviour:
   modifierName: 
   modifierDescription: 
   modifierLevel: 0
+  ModifierTypes: 0200000005000000
   modifier: {fileID: 11400000, guid: f306e10544cbb394a9c1c6a611e896cd, type: 2}

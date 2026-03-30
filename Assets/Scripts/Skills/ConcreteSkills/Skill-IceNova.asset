@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4471158cf8d814f83fe9dc386108a0, type: 3}
   m_Name: Skill-IceNova
   m_EditorClassIdentifier: 
-  skillLevel: 0
   mPlayer: {fileID: 0}
+  skill: 2
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 64

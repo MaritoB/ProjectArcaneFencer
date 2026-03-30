@@ -10,18 +10,23 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private PlayerInGameUI PlayerInGameUI;
+    /*
+       private void Awake()
+       {
+           if (Instance != null)
+           {
+               Destroy(gameObject);
+               return;
+           }
 
+           Instance = this;
+           DontDestroyOnLoad(gameObject); 
+
+       }
+     */
     private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject); 
-
+    {  
+        Instance = this;  
     }
 
     private void OnEnable()

@@ -15,6 +15,7 @@ MonoBehaviour:
   modifierName: 
   modifierDescription: 
   modifierLevel: 0
+  ModifierTypes: 0300000007000000
   eventType: 2
   skill: 3
   TriggerChanceBase: 100

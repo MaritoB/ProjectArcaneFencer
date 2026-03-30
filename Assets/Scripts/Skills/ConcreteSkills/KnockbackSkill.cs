@@ -28,7 +28,7 @@ public class KnockbackSkill : SkillSOBase
     public override void UseSkill(Vector3 aDirection)
     {
 
-        if ((int)mPlayerStats.KnockbackLevel.GetValue() != currentSkillLevel)
+        if ((int)mPlayerStats.knockbackLevel.GetValue() != currentSkillLevel)
         {
             UpdateSkillLevel();
         }

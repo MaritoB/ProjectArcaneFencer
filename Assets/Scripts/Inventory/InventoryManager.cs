@@ -67,7 +67,7 @@ public class InventoryManager : MonoBehaviour
         if (newItem is EquipableItemData equipableItem)
         {
             equipmentManager.InstatiateItem(equipableItem);
-            selectedItemUI.AddNewItemToDictionary(equipableItem);
+          //  selectedItemUI.AddNewItemToDictionary(equipableItem);
         }
 
         inventoryItems.Add(newItem);

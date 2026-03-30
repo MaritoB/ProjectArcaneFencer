@@ -81,12 +81,12 @@ public class DropManager : MonoBehaviour
         {
             newItemToDrop.AddItemData(weaponFactory.CreateWeapon()); 
         }
+        /*
         int randomNumberDrop = Random.Range(0, AllItemDataList.Count);
         ItemData newDropItem = Instantiate(AllItemDataList[randomNumberDrop]);
-        
         newItemToDrop.AddItemData(newDropItem);
-
-
+         */
+         
     }
 
 }
