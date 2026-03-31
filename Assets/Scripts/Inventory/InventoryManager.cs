@@ -104,6 +104,7 @@ public class InventoryManager : MonoBehaviour
         if (inventoryCanvas.activeInHierarchy)
         {
             CloseInventory();
+            selectedItemUI.CloseUI();
         }
         else
         {
@@ -115,6 +116,8 @@ public class InventoryManager : MonoBehaviour
     public void CloseInventory()
     { 
         DeselectItem();
+
+        selectedItemUI.CloseUI();
         UIManager.Instance.CloseInventory();
     }
 
@@ -215,6 +218,7 @@ public class InventoryManager : MonoBehaviour
         {
             var selectedItem = itemControllerPool[currentSelectionIndex];
             selectedItem.DeselectItemController();
+            //selectedItemUI.CloseUI();
         }
     }
     public void DeselectItem(ItemController selectedItem)

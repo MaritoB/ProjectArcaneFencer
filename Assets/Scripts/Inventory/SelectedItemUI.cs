@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectedItemUI : MonoBehaviour
 {
-    private const int MaxModifiers = 6;
+    private const int MaxModifiers = 10;
     [SerializeField] float rotationSpeed = 50;
     [SerializeField] private Transform ModifiersContent;
     [SerializeField] private GameObject ItemModifierTextPrefab;
-    public GameObject ItemModelUIParent, ItemModelUI;
+    public GameObject ItemModelUIParent, ItemModelUI, ParentUI;
     [SerializeField] TMPro.TextMeshProUGUI ItemName;
     TMPro.TextMeshProUGUI[] ModifierTexts;
    // Dictionary<EquipableItemData, GameObject> ItemModelsDictionary = new Dictionary<EquipableItemData, GameObject>();
@@ -31,6 +32,7 @@ public class SelectedItemUI : MonoBehaviour
             ModifierTexts[i] = tmpItem.GetComponent<TMPro.TextMeshProUGUI>();
             tmpItem.SetActive(false);
         }
+        
     }
 
     /*
@@ -87,11 +89,18 @@ public class SelectedItemUI : MonoBehaviour
     }
     public void DisplayNewItem(EquipableItemData aNewItem)
     {
+        
         if (aNewItem == DisplayedItem || aNewItem == null) return;
 
         ClearItem();
         DisplayedItem = aNewItem;
         ItemName.text = aNewItem.displayName;
+        WeaponBase weapon = aNewItem.EquipableItemPrefab.GetComponent<WeaponBase>();
+        if (weapon != null)
+        {
+            ModifierTexts[0].text = weapon.GetWeaponInfoText();
+            ModifierTexts[0].gameObject.SetActive(true);
+        }
 
         for (int i = 0; i < aNewItem.itemModifiers.Count && i < ModifierTexts.Length; i++)
         {
@@ -101,10 +110,11 @@ public class SelectedItemUI : MonoBehaviour
             }
             if (aNewItem.itemModifiers[i].ItemModifier is IItemModifier modifier)
             {
-                ModifierTexts[i].text = "|+| "+modifier.GetDescription(aNewItem.itemModifiers[i].level);
+                ModifierTexts[i+1].text = "|+| "+modifier.GetDescription(aNewItem.itemModifiers[i].level);
             }
-            ModifierTexts[i].gameObject.SetActive(true);
+            ModifierTexts[i+1].gameObject.SetActive(true);
         }
+        ParentUI.SetActive(true);
         /*
         if (ItemModelsDictionary.TryGetValue(aNewItem, out GameObject itemModel))
         {
@@ -128,5 +138,10 @@ public class SelectedItemUI : MonoBehaviour
             text.text = "";
             text.gameObject.SetActive(false);
         }
+    }
+
+    internal void CloseUI()
+    {
+        ParentUI.SetActive(false);
     }
 }

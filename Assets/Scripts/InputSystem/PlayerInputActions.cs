@@ -80,6 +80,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stats"",
+                    ""type"": ""Button"",
+                    ""id"": ""62841e53-fdac-486c-85d8-7f065e350d96"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skills"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd9843ee-cabc-4fcb-8381-4eb318275feb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -291,6 +309,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Close"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""545b27a0-3301-4aaa-bcc1-cfaaeb7da237"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8e5c563-4595-4b80-a3ab-0bb7e5beee1b"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skills"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -322,6 +362,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_Close = m_Player.FindAction("Close", throwIfNotFound: true);
+        m_Player_Stats = m_Player.FindAction("Stats", throwIfNotFound: true);
+        m_Player_Skills = m_Player.FindAction("Skills", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -389,6 +431,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_Close;
+    private readonly InputAction m_Player_Stats;
+    private readonly InputAction m_Player_Skills;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -399,6 +443,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @Close => m_Wrapper.m_Player_Close;
+        public InputAction @Stats => m_Wrapper.m_Player_Stats;
+        public InputAction @Skills => m_Wrapper.m_Player_Skills;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +472,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Close.started += instance.OnClose;
             @Close.performed += instance.OnClose;
             @Close.canceled += instance.OnClose;
+            @Stats.started += instance.OnStats;
+            @Stats.performed += instance.OnStats;
+            @Stats.canceled += instance.OnStats;
+            @Skills.started += instance.OnSkills;
+            @Skills.performed += instance.OnSkills;
+            @Skills.canceled += instance.OnSkills;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -448,6 +500,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Close.started -= instance.OnClose;
             @Close.performed -= instance.OnClose;
             @Close.canceled -= instance.OnClose;
+            @Stats.started -= instance.OnStats;
+            @Stats.performed -= instance.OnStats;
+            @Stats.canceled -= instance.OnStats;
+            @Skills.started -= instance.OnSkills;
+            @Skills.performed -= instance.OnSkills;
+            @Skills.canceled -= instance.OnSkills;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -491,5 +549,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
+        void OnStats(InputAction.CallbackContext context);
+        void OnSkills(InputAction.CallbackContext context);
     }
 }

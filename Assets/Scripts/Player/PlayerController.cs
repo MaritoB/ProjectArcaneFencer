@@ -1,5 +1,6 @@
 ﻿
 using SkeletonEditor;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private ProjectileSpawner projectileSpawner;
     public Animator animator;
     [SerializeField]
-    PlayerInGameUI inGameUI;
+    PlayerInGameUI inGameUI; 
     [SerializeField]
     public ParticleSystem DashPS, BloodOnHit;
     public event WeaponBase.PerformedEventDelegate OnDash;
@@ -69,6 +70,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] Transform SwordTransform;
     [SerializeField] Transform SwordPS;
     public Transform AttackTransform;
+
+ 
+
     public Vector3 PositionToTeleport;
     public void LevelUP()
     {
@@ -369,8 +373,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Dependiendo de la rotación del jugador en relación a la cámara, puede ser necesario invertir el signo.
         forwardMovement = Mathf.Clamp(forwardMovement, -1f, 1f);
         rightMovement = Mathf.Clamp(rightMovement, -1f, 1f);
-
+        float currentAttackSpeed = 1;
+        if (inventory.equipmentManager.weapon != null)
+        { 
+            currentAttackSpeed = (0.3f + inventory.equipmentManager.weapon.GetAttackSpeed());
+        }
+        currentAttackSpeed = playerStats.attackSpeed.GetValue() != 0 ? (currentAttackSpeed * playerStats.attackSpeed.GetValue() * 0.01f) : currentAttackSpeed;
         // Actualizar las variables en el Animator
+        animator.SetFloat("AttackSpeed", currentAttackSpeed);
         animator.SetFloat("Velocity", velocityMagnitude);
         animator.SetFloat("ForwardMovement", forwardMovement);  // Movimiento hacia adelante o atrás
         animator.SetFloat("RightMovement", rightMovement);      // Movimiento lateral (strafe)
@@ -609,17 +619,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         if(inventory.equipmentManager.weapon == null)
         {
-            Debug.Log("null Weapon");
+            
             return false;
         }
 
-        if (inventory.equipmentManager.weapon.GetAttackStaminaCost() > CurrentStamina)
+        if (inventory.equipmentManager.weapon.GetAttackSpeed() > CurrentStamina)
         {
             return false;
         }
         else
         {
-            CurrentStamina -= inventory.equipmentManager.weapon.GetAttackStaminaCost();
+            CurrentStamina -= inventory.equipmentManager.weapon.GetAttackSpeed();
             UpdateStaminaUI();
             CanAttack = false;
             return true;

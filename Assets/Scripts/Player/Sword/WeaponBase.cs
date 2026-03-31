@@ -46,6 +46,7 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] int CriticalChance;
     [SerializeField] int attackStaminaCost;
     [SerializeField] int currentDamage;
+    [SerializeField] float attackSpeed;
     [SerializeField] MeshRenderer EffectMesh;
 
     AttackInfo attackInfo;
@@ -63,6 +64,10 @@ public class WeaponBase : MonoBehaviour
         {   
             EffectMesh.material = aMaterial;
         }
+    }
+    public string GetWeaponInfoText()
+    {
+        return "|+| Damage: " + baseDamage + "\n|+| AttackSpeed: " + attackSpeed + "\n|+| Critical chance: " + CriticalChance + "\n|+| Range: " + attackRadius + "\n|+| Attack Cost: " + attackStaminaCost;
     }
 
     public void SubscribeToEvent(HitEventTypes eventType, HitEventDelegate handler)
@@ -213,11 +218,12 @@ public class WeaponBase : MonoBehaviour
     }
     public int GetBaseDamage() { return baseDamage; }
     public int GetCurrentDamage() { return currentDamage; }
-    public void ConfiguerWeapon(int aBaseDamage, float aAttackRadius, int aCriticalChance, int aStaminaCost)
+    public void ConfiguerWeapon(int aBaseDamage, float aAttackRadius, float aAttackSpeed, int aCriticalChance, int aStaminaCost)
     {
 
         baseDamage = aBaseDamage;
         attackRadius = aAttackRadius;
+        attackSpeed = aAttackSpeed;
         CriticalChance = aCriticalChance;
         attackStaminaCost = aStaminaCost;
         currentDamage = baseDamage;
@@ -389,9 +395,9 @@ public class WeaponBase : MonoBehaviour
     {
         OnThirdMeleePerformed?.Invoke();
     } 
-    internal float GetAttackStaminaCost()
+    public float GetAttackSpeed()
     {
-        return attackStaminaCost;
+        return attackSpeed;
     }
 
 }

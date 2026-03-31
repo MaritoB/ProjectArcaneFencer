@@ -23,7 +23,8 @@ public enum StatType
     IceNovaLevel,
     FireNovaLevel,
     ChainLightningLevel,
-    KnockbackLevel
+    KnockbackLevel, 
+    AttackSpeed
 }
 
 public static class StatTypeExtensions
@@ -51,7 +52,8 @@ public static class StatTypeExtensions
         { StatType.IceNovaLevel, "Ice Nova Level" },
         { StatType.FireNovaLevel, "Fire Nova Level" },
         { StatType.ChainLightningLevel, "Chain Lightning Level" },
-        { StatType.KnockbackLevel, "Knockback Level" }
+        { StatType.KnockbackLevel, "Knockback Level" },
+        { StatType.AttackSpeed, "Attack Speed " }
 
     };
 

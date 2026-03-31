@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private PlayerInGameUI PlayerInGameUI;
+    [SerializeField] private StatsUI stats;
     /*
        private void Awake()
        {
@@ -42,6 +43,14 @@ public class UIManager : MonoBehaviour
     {
         inventoryUI.SetActive(true);
     }
+    public void OpenStast()
+    {
+        stats.DisplayStast();
+    }
+    public void ToggleStats()
+    {
+        stats.ToggleStats();
+    }
     public void CloseInventory()
     { 
          inventoryUI.SetActive(false);  
@@ -67,7 +76,7 @@ public class UIManager : MonoBehaviour
     public void HideAll()
     {
         
-        if( !inventoryUI.activeSelf && !skillTreeUI.activeSelf)
+        if( !inventoryUI.activeSelf && !skillTreeUI.activeSelf && !stats.gameObject.activeSelf)
         {
             GameManager.Instance.Pause();
         }
@@ -75,6 +84,20 @@ public class UIManager : MonoBehaviour
         //combatUI.SetActive(false);
         inventoryUI.SetActive(false);
         skillTreeUI.SetActive(false);
+        stats.CloseStatsUI();
     }
 
+    internal void ToggleSkillTree()
+    {
+        if (skillTreeUI.activeInHierarchy)
+        {
+
+            skillTreeUI.SetActive(false);
+        }
+        else
+        {
+            skillTreeUI.SetActive(true);
+
+        }
+    }
 }

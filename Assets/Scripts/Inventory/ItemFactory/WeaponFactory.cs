@@ -6,12 +6,16 @@ public class WeaponFactory : MonoBehaviour
     [SerializeField] private ItemResourceLoader resourceLoader;
     [SerializeField] private int minBaseDamage = 10;
     [SerializeField] private int maxBaseDamage = 20;
+    [SerializeField] private float minPower = 0.3f;
+    [SerializeField] private float maxPower = 1f;
+    [SerializeField] private float minAttackSpeed = -0.5f;
+    [SerializeField] private float maxAttackSpeed = 1.5f;
     [SerializeField] private float minRadius = 0.5f;
     [SerializeField] private float maxRadius = 1.5f;
     [SerializeField] private int minCriticalChance = 0;
     [SerializeField] private int maxCriticalChance = 30;
-    [SerializeField] private int minAttackStaminaCost = 5;
-    [SerializeField] private int maxAttackStaminaCost = 20;
+    [SerializeField] private int minAttackStaminaCost = 30;
+    [SerializeField] private int maxAttackStaminaCost = 50;
     [SerializeField] private int maxModifiers = 6;
     [SerializeField] private int GoldModifier = 17;
     private int GoldPrice = 0;
@@ -121,10 +125,50 @@ public class WeaponFactory : MonoBehaviour
     }
 
     private void ConfigureWeaponBase(WeaponBase weaponBase)
-    {
-        weaponBase.ConfiguerWeapon(Random.Range(minBaseDamage, maxBaseDamage + 1),
-            1,
-            Random.Range(minCriticalChance, maxCriticalChance + 1),
-            Random.Range(minAttackStaminaCost, maxAttackStaminaCost + 1));
+    { /*
+        int baseDmg = Random.Range(minBaseDamage, maxBaseDamage);
+        float percentage = baseDmg / maxBaseDamage;
+        float attackSpeed = Random.Range(minAttackSpeed, maxAttackSpeed);
+        attackSpeed /= percentage;
+        float radius = Random.Range(minRadius, maxRadius);
+        radius *= percentage;
+        int staminaCost = Random.Range(minAttackStaminaCost, maxAttackStaminaCost);
+        int Crit = Random.Range(minCriticalChance, maxCriticalChance); 
+        staminaCost = (int)(staminaCost * percentage);
+        weaponBase.ConfiguerWeapon(baseDmg, radius, attackSpeed, (int)Crit, staminaCost) ;
+       */
+        float powerBudget = Random.Range(minPower, maxPower);
+
+        // Distribución de poder
+        float dmgWeight = Random.Range(0.3f, 0.5f);
+        float speedWeight = Random.Range(0.2f, 0.4f);
+        float radiusWeight = Mathf.Clamp01(1f - dmgWeight - speedWeight);
+
+        // Aplicar presupuesto
+        float damage01 = powerBudget * dmgWeight;
+        float speed01 = powerBudget * speedWeight;
+        float radius01 = powerBudget * radiusWeight;
+
+        // Convertir a valores reales
+        int damage = Mathf.RoundToInt(
+            Mathf.Lerp(minBaseDamage, maxBaseDamage, damage01)
+        );
+
+        float attackSpeed = Mathf.Lerp(
+            maxAttackSpeed, // inverso!
+            minAttackSpeed,
+            speed01
+        );
+
+        float radius = Mathf.Lerp(minRadius, maxRadius, radius01);
+
+        int staminaCost = Mathf.RoundToInt(
+            Mathf.Lerp(minAttackStaminaCost, maxAttackStaminaCost, dmgWeight)
+        );
+
+        int critChance = Random.Range(minCriticalChance, maxCriticalChance);
+
+        weaponBase.ConfiguerWeapon(damage, radius, attackSpeed, critChance, staminaCost);
     }
+
 }

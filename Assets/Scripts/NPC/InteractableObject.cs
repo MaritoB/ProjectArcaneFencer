@@ -11,6 +11,7 @@ public class InteractableObject: MonoBehaviour, IInteractable
     [SerializeField]
     SphereCollider InteractableArea; 
     [SerializeField] LayerMask playerLayerMask;
+    [SerializeField] PortalBehaviour portal;
 
     public void Interact()
     {
@@ -21,9 +22,7 @@ public class InteractableObject: MonoBehaviour, IInteractable
     {
         if (playerLayerMask == (playerLayerMask | (1 << other.gameObject.layer)))
         {
-            Debug.Log("Hello");
-
-
+            portal.ActivatePortal(); 
         }
     }
     private void OnTriggerExit(Collider other)

@@ -31,6 +31,8 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Attack.started += AttackEvent;
         player.playerInputActions.Player.Block.performed += BlockEvent;
         player.playerInputActions.Player.Inventory.performed += InventoryEvent;
+        player.playerInputActions.Player.Skills.performed += SkillEvent;
+        player.playerInputActions.Player.Stats.performed += StatEvent;
         player.playerInputActions.Player.Close.performed += CloseUI;
 
         movementSpeed = player.playerStats.movementSpeed.GetValue();
@@ -50,8 +52,16 @@ public class PlayerSimpleRun : PlayerMovementBase
         player.playerInputActions.Player.Attack.started -= AttackEvent;
         player.playerInputActions.Player.Block.performed -= BlockEvent;
         player.playerInputActions.Player.Inventory.performed -= InventoryEvent;
+        player.playerInputActions.Player.Skills.performed -= SkillEvent;
+        player.playerInputActions.Player.Stats.performed -= StatEvent;
         player.playerInputActions.Player.Close.performed -= CloseUI;
     }
+
+    private void SkillEvent(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.ToggleSkillTree();
+    }
+
     private void BlockEvent(InputAction.CallbackContext context)
     {
         if (!player.isBlocking)
@@ -62,6 +72,10 @@ public class PlayerSimpleRun : PlayerMovementBase
     private void InventoryEvent(InputAction.CallbackContext context)
     {
         player.inventory.ToggleInventory();
+    }
+    private void StatEvent(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.ToggleStats();
     }
 
     private void AttackEvent(InputAction.CallbackContext context)

@@ -22,6 +22,7 @@ public class CharacterStats : MonoBehaviour
     public Stat fireNovaLevel = new Stat(1);
     public Stat chainLightningLevel = new Stat(1);
     public Stat knockbackLevel = new Stat(1);
+    public Stat attackSpeed = new Stat(0);
 
     private Dictionary<StatType, Stat> statMap;
     private Dictionary<DamageType, StatType> ResistanceDictionary;
@@ -49,7 +50,8 @@ public class CharacterStats : MonoBehaviour
             { StatType.IceNovaLevel, iceNovaLevel },
             { StatType.FireNovaLevel, fireNovaLevel },
             { StatType.ChainLightningLevel, chainLightningLevel },
-            { StatType.KnockbackLevel, knockbackLevel }
+            { StatType.KnockbackLevel, knockbackLevel },
+            { StatType.AttackSpeed, attackSpeed },
         };
         ResistanceDictionary = new Dictionary<DamageType, StatType> {
             { DamageType.PHYSICAL, StatType.PhysicalResistance },

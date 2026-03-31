@@ -99,11 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParryParticleSystem: {fileID: 0}
   MeleeHitPS: {fileID: 0}
-  baseDamage: 10
+  baseDamage: 5
   attackRadius: 1
-  CriticalChance: 0
+  CriticalChance: 1
   attackStaminaCost: 0
   currentDamage: 0
+  attackSpeed: 0
+  EffectMesh: {fileID: 0}
 --- !u!1 &1913229000568713844
 GameObject:
   m_ObjectHideFlags: 0
